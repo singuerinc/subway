@@ -1,9 +1,40 @@
-import Stop from "./stop";
+import Route from "./route";
 
 const ctx = document.getElementById("canvas").getContext("2d");
 
-const catalunya = new Stop(ctx, "catalunya", {x: 5, y: 5});
-catalunya.render();
+const route = {
+    stops: [
+        {
+            id: "catalunya",
+            position: {
+                x: 10,
+                y: 10
+            }
+        },
+        {
+            id: "urquinaona",
+            position: {
+                x: 15,
+                y: 15
+            }
+        },
+        {
+            id: "arc-de-triomf",
+            position: {
+                x: 25,
+                y: 25
+            }
+        },
+        {
+            id: "marina",
+            position: {
+                x: 35,
+                y: 35
+            }
+        }
+    ]
+};
 
-const urquinaona = new Stop(ctx, "urquinaona", {x: 15, y: 15}, catalunya);
-urquinaona.render();
+const red = new Route(ctx, "1", route, "#FF0000");
+red.render();
+red.start();
