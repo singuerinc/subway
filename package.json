@@ -4,6 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "devDependencies": {
+    "animejs": "^2.0.2",
     "webpack": "^3.0.0",
     "webpack-dev-server": "^2.5.0"
   },
