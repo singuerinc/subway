@@ -2,16 +2,20 @@ import anime from "animejs";
 import Utils from "./utils";
 
 export default class Train {
-    constructor(ctx, id, currentStop) {
+    constructor(id, currentStop) {
         console.log(`Train ${id} created.`);
         this._id = id;
         this._currentStop = currentStop;
         this._parent = parent;
-        this._ctx = ctx;
         this.position = currentStop.position;
         this._moving = false;
         this.speed = 100;
         this._cargo = 1;
+
+        this._canvas = document.createElement("canvas");
+        this._canvas.width = 500;
+        this._canvas.height = 500;
+        this._ctx = this._canvas.getContext("2d");
     }
 
     set position(value) {
@@ -40,6 +44,9 @@ export default class Train {
                 return reject();
             }
 
+            // get current stop cargo
+            this.cargo += this._currentStop.releaseCargo();
+
             // this._currentStop = stop;
             // this.position = this._currentStop.position;
             const dx = stop.position.x - this.position.x;
@@ -49,13 +56,14 @@ export default class Train {
             anime({
                 targets: this.position,
                 easing: "easeInOutQuart",
-                duration: distance * 250 * this._cargo,
+                duration: distance * 25 * this._cargo,
                 x: stop.position.x,
                 y: stop.position.y,
                 begin: () => {
                     this._moving = true;
                 },
                 update: () => {
+                    this._ctx.clearRect(0, 0, 500, 500);
                     this._ctx.beginPath();
                     this._ctx.fillStyle = "rgba(0, 0, 0, 0.1)";
                     this._ctx.arc(Utils.convert(this.position.x), Utils.convert(this.position.y), 7, 0, 2 * Math.PI);
@@ -87,10 +95,11 @@ export default class Train {
         // }
     }
 
-    // render() {
+    render() {
+        return this._canvas;
     //     this._ctx.beginPath();
     //     this._ctx.fillStyle = "#000";
     //     this._ctx.arc(Utils.convert(this.position.x), Utils.convert(this.position.y), 7, 0, 2 * Math.PI);
     //     this._ctx.fill();
-    // }
+    }
 }

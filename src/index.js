@@ -35,6 +35,9 @@ const route = {
     ]
 };
 
-const red = new Route(ctx, "1", route, "#FF0000");
-red.render();
+const red = new Route("1", route, "#FF0000");
 red.start();
+
+setInterval(() => {
+    ctx.drawImage(red.render(), 500, 500);
+}, 100);

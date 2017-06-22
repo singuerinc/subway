@@ -4,32 +4,39 @@ import Stop from "./stop";
 import Train from "./train";
 
 export default class Route {
-    constructor(ctx, id, routeInfo, color) {
+    constructor(id, routeInfo, color) {
         console.log(`Route ${id} created.`);
-        this._ctx = ctx;
         this._routeInfo = routeInfo;
         this._color = color;
         this._stops = [];
+
+        this._canvas = document.createElement("canvas");
+        this._canvas.width = 500;
+        this._canvas.height = 500;
+        this._ctx = this._canvas.getContext("2d");
 
         let lastStop;
 
         for (let s in this._routeInfo.stops) {
             const info = this._routeInfo.stops[s];
-            const stop = new Stop(this._ctx, info.id, info.position, lastStop, this._color);
+            const stop = new Stop(info.id, info.position, lastStop, this._color);
 
             this._stops.push(stop);
 
             lastStop = stop;
         }
 
-        this._t = new Train(ctx, "t1", this._stops[0]);
+        this._t = new Train("t1", this._stops[0]);
     }
 
     render() {
+        this._ctx.clearRect(0, 0, 500, 500);
         this._stops.forEach((s) => {
-            console.log(s);
-            s.render();
+            // console.log(s);
+            this._ctx.drawImage(s.render(), 500, 500);
         });
+
+        return this._canvas;
 
         // this._t.render();
     }
