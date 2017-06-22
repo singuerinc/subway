@@ -12,20 +12,12 @@ export default class RailWay extends PIXI.Graphics {
 
         let parentStation;
         stations.forEach((station, key) => {
-            console.log("station --->", station);
             if (typeof parentStation !== "undefined") {
                 this.lineStyle(5, this._color);
-                console.log(station.parentStation.x, station.parentStation.y);
-                this.moveTo(station.parentStation.x, station.parentStation.y);
+                this.moveTo(parentStation.x, parentStation.y);
                 this.lineTo(station.x, station.y);
-                parentStation = station;
             }
+            parentStation = station;
         }, this);
-        
-        
-
-        
-    }
-
-    
+    }   
 }
