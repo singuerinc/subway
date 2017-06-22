@@ -7,7 +7,10 @@ export default class Train {
         this._id = id;
         this._currentStop = currentStop;
         this._parent = parent;
-        this.position = currentStop.position;
+        this.position = {
+            x: currentStop.position.x,
+            y: currentStop.position.y
+        };
         this._moving = false;
         this.speed = 100;
         this._cargo = 1;

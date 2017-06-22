@@ -33,7 +33,7 @@ export default class Route {
         this._ctx.clearRect(0, 0, 500, 500);
         this._stops.forEach((s) => {
             // console.log(s);
-            this._ctx.drawImage(s.render(), 500, 500);
+            this._ctx.drawImage(s.render(), 0, 0, 500, 500);
         });
 
         return this._canvas;
