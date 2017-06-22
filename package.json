@@ -5,6 +5,7 @@
   "license": "MIT",
   "devDependencies": {
     "animejs": "^2.0.2",
+    "pixi.js": "^4.5.3",
     "webpack": "^3.0.0",
     "webpack-dev-server": "^2.5.0"
   },
