@@ -1,10 +1,9 @@
-import "pixi.js";
 import Utils from "./utils";
 
 export default class WayPoint extends PIXI.Graphics {
     constructor({id, position}) {
         super();
-        console.log(`WayPoint ${id} created.`);
+        // console.log(`WayPoint ${id} created.`);
         this._id = id;
         this._currentTrain = null;
 
