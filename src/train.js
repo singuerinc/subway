@@ -1,5 +1,7 @@
 import "pixi.js";
 import anime from "animejs";
+import Station from "./station";
+import WayPoint from "./waypoint";
 import Utils from "./utils";
 
 export default class Train extends PIXI.Graphics {
@@ -19,8 +21,13 @@ export default class Train extends PIXI.Graphics {
         this.speed = 100;
         this._cargo = 1;
 
-        this.lineStyle(5, '0x'+Math.floor(Math.random()*16777215).toString(16));
-        this.drawCircle(0, 0, 10);
+        this.cargoText = new PIXI.Text("",{fontFamily : 'HelveticaNeue', fontSize: 12, fill : 0x00ffff, align : 'left'});
+        this.cargoText.x = 5;
+        this.cargoText.y = -5;
+        this.addChild(this.cargoText);
+
+        this.lineStyle(5, "0xFFFFFF");
+        this.drawCircle(0, 0, 3);
     }
 
     set cargo(value) {
@@ -38,41 +45,49 @@ export default class Train extends PIXI.Graphics {
     run() {
         setInterval(() => {
             if(!this.isMoving){
-                console.log("this._stopIndex", this._stopIndex)
                 const nextIndex = (this._stopIndex + 1) % this._stops.length;
                 const nextStop = this._stops[nextIndex][1];
                 
                 this.moveTo(nextStop)
                     .then(() => {
                         this._stopIndex = nextIndex;
-                        // console.log("train", this._id, "this._stopIndex:", this._stopIndex, this._stops.length);
                     })
                     .catch((error) => {
-                        console.log(error);
+                        
                     });
             }
-        }, 5000 + (Math.random() * 3));
+        }, 100);
     }
 
     moveTo(stop){
         return new Promise((resolve, reject) => {
+            //console.log("this._moving?", this._moving);
             if(this._moving) {
                 return reject();
             }
 
-            console.log(this._id, "wants to move to:", stop._id);
-            console.log(this._id, stop._id, "hasTrain?", stop.hasTrain());
+            //console.log(this._id, "wants to move to:", stop._id);
+            //console.log(this._id, stop._id, "hasTrain?", stop.hasTrain());
             if(stop.hasTrain()){
                 return reject();
             }
 
+            const isWayPoint = this._currentStop instanceof WayPoint;
+            const isStation = this._currentStop instanceof Station;
+            const nextIsWayPoint = stop instanceof WayPoint;
+            const nextIsStation = stop instanceof Station;
+
             // get current stop cargo
-            if(this._currentStop){
+            if(this._currentStop && isStation){
+                // unload
+                this.cargo -= Math.floor(Math.random() * this.cargo);
+                // load
                 this.cargo += this._currentStop.getTheCargo();
+
+                //this.cargoText.text = `#${this._id}: from: ${this._currentStop._id} / to: ${stop._id} / cargo: ${this.cargo}`;
+                this.cargoText.text = `#${this._id}: ${this.cargo}`;
             }
 
-            // this._currentStop = stop;
-            // this.position = this._currentStop.position;
             const dx = stop.x - this.x;
             const dy = stop.y - this.y;
             const distance = Math.sqrt(dx * dx + dy * dy);
@@ -83,11 +98,16 @@ export default class Train extends PIXI.Graphics {
                 return reject();
             }
 
+            const delay = isStation ? 1000 + this._cargo : 0;
+            console.log(stop._id, "isStation?", isStation, "delay", delay);
+
             anime({
                 targets: this,
-                easing: "easeInOutQuart",
+                easing: "linear",
+                //easing: "easeInOutCubic",
                 // duration: distance * 5 * this._cargo,
-                duration: distance * 5,
+                duration: distance * 50,
+                delay: delay,
                 x: stop.x,
                 y: stop.y,
                 begin: () => {
