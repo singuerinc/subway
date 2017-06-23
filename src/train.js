@@ -1,4 +1,3 @@
-import "pixi.js";
 import anime from "animejs";
 import Station from "./station";
 import WayPoint from "./waypoint";
@@ -21,13 +20,14 @@ export default class Train extends PIXI.Graphics {
         this.speed = 100;
         this._cargo = 1;
 
-        this.cargoText = new PIXI.Text("",{fontFamily : 'HelveticaNeue', fontSize: 12, fill : 0x00ffff, align : 'left'});
+        this.cargoText = new PIXI.Text("",{fontFamily : 'HelveticaNeue', fontSize: 12, fill : 0xadb5bd, align : 'left'});
         this.cargoText.x = 5;
         this.cargoText.y = -5;
         this.addChild(this.cargoText);
 
-        this.lineStyle(5, "0xFFFFFF");
+        this.beginFill("0x000000");
         this.drawCircle(0, 0, 3);
+        this.endFill();
     }
 
     set cargo(value) {
@@ -99,7 +99,7 @@ export default class Train extends PIXI.Graphics {
             }
 
             const delay = isStation ? 1000 + this._cargo : 0;
-            console.log(stop._id, "isStation?", isStation, "delay", delay);
+            // console.log(stop._id, "isStation?", isStation, "delay", delay);
 
             anime({
                 targets: this,
