@@ -9,8 +9,7 @@ export default class Train extends PIXI.Graphics {
         console.log(`Train ${id} created.`);
         this._id = id;
         this._route = route;
-        
-        this._stops = Array.from(this._route.stops);
+        this._stops = this._route.stops;
         this._stopIndex = -1;
         //this._currentStop = this._stops[this._stopIndex];
         this.x = 0;//this._currentStop.x;
@@ -46,8 +45,8 @@ export default class Train extends PIXI.Graphics {
         setInterval(() => {
             if(!this.isMoving){
                 const nextIndex = (this._stopIndex + 1) % this._stops.length;
-                const nextStop = this._stops[nextIndex][1];
-                
+                const nextStop = this._stops[nextIndex];
+                console.log("move to", nextStop);
                 this.moveTo(nextStop)
                     .then(() => {
                         this._stopIndex = nextIndex;
