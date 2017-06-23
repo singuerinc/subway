@@ -1,7 +1,6 @@
 import anime from "animejs";
 import Station from "./station";
 import WayPoint from "./waypoint";
-import Utils from "./utils";
 
 export default class Train extends PIXI.Graphics {
     constructor(id, route) {
@@ -10,7 +9,7 @@ export default class Train extends PIXI.Graphics {
         this._id = id;
         this._route = route;
         this._stops = this._route.stops;
-        this._stopIndex = -1;
+        this._stopIndex = 0;
         //this._currentStop = this._stops[this._stopIndex];
         this.x = 0;//this._currentStop.x;
         this.y = 0; //this._currentStop.y;
@@ -19,10 +18,10 @@ export default class Train extends PIXI.Graphics {
         this.speed = 100;
         this._cargo = 1;
 
-        this.cargoText = new PIXI.Text("",{fontFamily : 'HelveticaNeue', fontSize: 12, fill : 0xadb5bd, align : 'left'});
-        this.cargoText.x = 5;
-        this.cargoText.y = -5;
-        this.addChild(this.cargoText);
+        this.info = new PIXI.Text("",{fontFamily : 'HelveticaNeue', fontSize: 12, fill : 0xadb5bd, align : 'left'});
+        this.info.x = 5;
+        this.info.y = -5;
+        this.addChild(this.info);
 
         this.beginFill("0x000000");
         this.drawCircle(0, 0, 3);
@@ -46,7 +45,7 @@ export default class Train extends PIXI.Graphics {
             if(!this.isMoving){
                 const nextIndex = (this._stopIndex + 1) % this._stops.length;
                 const nextStop = this._stops[nextIndex];
-                console.log("move to", nextStop);
+                //console.log("move to", nextStop);
                 this.moveTo(nextStop)
                     .then(() => {
                         this._stopIndex = nextIndex;
@@ -56,6 +55,20 @@ export default class Train extends PIXI.Graphics {
                     });
             }
         }, 100);
+    }
+
+    parkIn(stop){
+        return new Promise((resolve, reject) => {
+            if(this._moving) {
+                return reject();
+            }
+
+            this.x = stop.x;
+            this.y = stop.y;
+            this._moving = false;
+            this._currentStop = stop;
+            return resolve();
+        });
     }
 
     moveTo(stop){
@@ -83,8 +96,8 @@ export default class Train extends PIXI.Graphics {
                 // load
                 this.cargo += this._currentStop.getTheCargo();
 
-                //this.cargoText.text = `#${this._id}: from: ${this._currentStop._id} / to: ${stop._id} / cargo: ${this.cargo}`;
-                this.cargoText.text = `#${this._id}: ${this.cargo}`;
+                //this.info.text = `#${this._id}: from: ${this._currentStop._id} / to: ${stop._id} / cargo: ${this.cargo}`;
+                this.info.text = `#${this._id} / ${this._currentStop._id} (${this.cargo}) → ${stop._id}`;
             }
 
             const dx = stop.x - this.x;
@@ -100,30 +113,39 @@ export default class Train extends PIXI.Graphics {
             const delay = isStation ? 1000 + this._cargo : 0;
             // console.log(stop._id, "isStation?", isStation, "delay", delay);
 
-            anime({
-                targets: this,
-                easing: "linear",
-                //easing: "easeInOutCubic",
-                // duration: distance * 5 * this._cargo,
-                duration: distance * 50,
-                delay: delay,
-                x: stop.x,
-                y: stop.y,
-                begin: () => {
-                    if(this._currentStop){
-                        this._currentStop.leave(this);
-                    }
-                    this._moving = true;
-                },
-                update: () => {
-                    
-                },
-                complete: () => {
-                    this._moving = false;
-                    this._currentStop = stop;
-                    return resolve();
+            const onBegin = () => {
+                if(this._currentStop){
+                    this._currentStop.leave(this);
                 }
-            });
+                this._moving = true;
+            };
+
+            const onComplete = () => {
+                this._moving = false;
+                this._currentStop = stop;
+                return resolve();
+            };
+
+            if(this.x === stop.x && this.y === stop.y && this._currentStop !== stop){
+                // same station, but changing sides
+                onBegin();
+                this.x = stop.x;
+                this.y = stop.y;
+                onComplete();
+            } else {
+                anime({
+                    targets: this,
+                    easing: "linear",
+                    //easing: "easeInOutCubic",
+                    // duration: distance * 5 * this._cargo,
+                    duration: distance * 50,
+                    delay: delay,
+                    x: stop.x,
+                    y: stop.y,
+                    begin: onBegin,
+                    complete: onComplete
+                });
+            }
         });
     }
 }

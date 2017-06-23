@@ -1,1457 +1,1457 @@
 {
-    "code": 200,
-    "data": {
-        "metro": [
-            {
-                "id": "433",
-                "line": "L5",
-                "name": "Cornell\u00e0 Centre",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "T1-T2-T3-R.1-R4",
-                "lat": "41.357315951168",
-                "lon": "2.07044325855937"
-            },
-            {
-                "id": "432",
-                "line": "L5",
-                "name": "Gavarra",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "",
-                "lat": "41.3580221811863",
-                "lon": "2.07929676467967"
-            },
-            {
-                "id": "431",
-                "line": "L5",
-                "name": "Sant Ildefons",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "",
-                "lat": "41.3634004007812",
-                "lon": "2.08440567589003"
-            },
-            {
-                "id": "430",
-                "line": "L5",
-                "name": "Can Boixeres",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "",
-                "lat": "41.3665946412198",
-                "lon": "2.09152995763886"
-            },
-            {
-                "id": "318",
-                "line": "L1",
-                "name": "Hospital de Bellvitge",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "",
-                "lat": "41.3447089189291",
-                "lon": "2.10726442487254"
-            },
-            {
-                "id": "319",
-                "line": "L1",
-                "name": "Bellvitge",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "",
-                "lat": "41.351002103227",
-                "lon": "2.11093265881712"
-            },
-            {
-                "id": "320",
-                "line": "L1",
-                "name": "Av.Carrilet",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "L8-S33-S4-S8-R5-R6",
-                "lat": "41.3585530196421",
-                "lon": "2.10266580260399"
-            },
-            {
-                "id": "321",
-                "line": "L1",
-                "name": "Rbla. Just Oliveres",
-                "accessibility": "Projecte",
-                "zone": "Zona 1",
-                "connections": "R.1-R3-R4-R7-R12",
-                "lat": "41.3641197960023",
-                "lon": "2.09977453332527"
-            },
-            {
-                "id": "322",
-                "line": "L1",
-                "name": "Can Serra",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "",
-                "lat": "41.3677230761094",
-                "lon": "2.10277664046037"
-            },
-            {
-                "id": "429",
-                "line": "L5",
-                "name": "Can Vidalet",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "",
-                "lat": "41.3711699811588",
-                "lon": "2.09936987151888"
-            },
-            {
-                "id": "323",
-                "line": "L1",
-                "name": "Florida",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "",
-                "lat": "41.3683454383485",
-                "lon": "2.11001897049028"
-            },
-            {
-                "id": "428",
-                "line": "L5",
-                "name": "Pubilla Cases",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "",
-                "lat": "41.3738678305867",
-                "lon": "2.10722761135461"
-            },
-            {
-                "id": "383",
-                "line": "L3",
-                "name": "Zona Universit\u00e0ria",
-                "accessibility": "Construcci\u00f3",
-                "zone": "Zona 1",
-                "connections": "T1-T2-T3",
-                "lat": "41.3841404077719",
-                "lon": "2.11116587365903"
-            },
-            {
-                "id": "324",
-                "line": "L1",
-                "name": "Torrassa",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "",
-                "lat": "41.3684250526322",
-                "lon": "2.11662439227314"
-            },
-            {
-                "id": "325",
-                "line": "L1",
-                "name": "Santa Eul\u00e0lia",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "",
-                "lat": "41.3688492313307",
-                "lon": "2.12864100990867"
-            },
-            {
-                "id": "427",
-                "line": "L5",
-                "name": "Collblanc",
-                "accessibility": "Construcci\u00f3",
-                "zone": "Zona 1",
-                "connections": "",
-                "lat": "41.3757732657525",
-                "lon": "2.11924135425625"
-            },
-            {
-                "id": "382",
-                "line": "L3",
-                "name": "Palau Reial",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "T1-T2-T3",
-                "lat": "41.3860211631295",
-                "lon": "2.11859030534594"
-            },
-            {
-                "id": "426",
-                "line": "L5",
-                "name": "Badal",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "",
-                "lat": "41.3756059321753",
-                "lon": "2.12744302393462"
-            },
-            {
-                "id": "326",
-                "line": "L1",
-                "name": "Mercat Nou",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "",
-                "lat": "41.3733346013228",
-                "lon": "2.13381942920113"
-            },
-            {
-                "id": "425",
-                "line": "L5",
-                "name": "Pla\u00e7a de Sants",
-                "accessibility": "Projecte",
-                "zone": "Zona 1",
-                "connections": "L1",
-                "lat": "41.3757560588641",
-                "lon": "2.13518270144983"
-            },
-            {
-                "id": "381",
-                "line": "L3",
-                "name": "Les Corts",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "",
-                "lat": "41.3841243011195",
-                "lon": "2.13089948651418"
-            },
-            {
-                "id": "384",
-                "line": "L3",
-                "name": "Maria Cristina",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "T1-T2-T3",
-                "lat": "41.3878658876322",
-                "lon": "2.12588078854278"
-            },
-            {
-                "id": "327",
-                "line": "L1",
-                "name": "Pla\u00e7a de Sants",
-                "accessibility": "Projecte",
-                "zone": "Zona 1",
-                "connections": "L5",
-                "lat": "41.3753819450694",
-                "lon": "2.13817096385347"
-            },
-            {
-                "id": "424",
-                "line": "L5",
-                "name": "Sants Estaci\u00f3",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "L3-R.1-R2-R.2N-R.2S-R3-R4-R7-R11-R12-R13-R14-R15-R16-ESTACIO_BUS",
-                "lat": "41.3799913070601",
-                "lon": "2.14043733691486"
-            },
-            {
-                "id": "328",
-                "line": "L1",
-                "name": "Hostafrancs",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "",
-                "lat": "41.3752823216963",
-                "lon": "2.14331481108942"
-            },
-            {
-                "id": "378",
-                "line": "L3",
-                "name": "Tarragona",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "",
-                "lat": "41.3785431899842",
-                "lon": "2.14532511165999"
-            },
-            {
-                "id": "380",
-                "line": "L3",
-                "name": "Pla\u00e7a del Centre",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "",
-                "lat": "41.3819459953545",
-                "lon": "2.1358749331136"
-            },
-            {
-                "id": "379",
-                "line": "L3",
-                "name": "Sants Estaci\u00f3",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "L5-R.1-R2-R.2N-R.2S-R3-R4-R7-R11-R12-R13-R14-R15-R16-ESTACIO_BUS",
-                "lat": "41.381613567591",
-                "lon": "2.14102524477169"
-            },
-            {
-                "id": "423",
-                "line": "L5",
-                "name": "Enten\u00e7a",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "",
-                "lat": "41.3844941751042",
-                "lon": "2.14563915079201"
-            },
-            {
-                "id": "329",
-                "line": "L1",
-                "name": "Espanya",
-                "accessibility": "Projecte",
-                "zone": "Zona 1",
-                "connections": "L3-L8-S33-S4-S8-R5-R6",
-                "lat": "41.375541990375",
-                "lon": "2.14940637505904"
-            },
-            {
-                "id": "377",
-                "line": "L3",
-                "name": "Espanya",
-                "accessibility": "Projecte",
-                "zone": "Zona 1",
-                "connections": "L1-L8-S33-S4-S8-R5-R6",
-                "lat": "41.3750503515188",
-                "lon": "2.15160812165603"
-            },
-            {
-                "id": "330",
-                "line": "L1",
-                "name": "Rocafort",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "",
-                "lat": "41.379268210643",
-                "lon": "2.15458880966092"
-            },
-            {
-                "id": "422",
-                "line": "L5",
-                "name": "Hospital Cl\u00ednic",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "",
-                "lat": "41.3886531870785",
-                "lon": "2.15112142588565"
-            },
-            {
-                "id": "370",
-                "line": "L3",
-                "name": "Fontana",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "",
-                "lat": "41.4020175545979",
-                "lon": "2.15305426943399"
-            },
-            {
-                "id": "444",
-                "line": "TRAMVIA BLAU",
-                "name": "Pl. del Funicular",
-                "accessibility": "",
-                "zone": "Zona 1",
-                "connections": "FUNICULAR DEL TIBIDABO",
-                "lat": "41.4161153058916",
-                "lon": "2.13136330452675"
-            },
-            {
-                "id": "443",
-                "line": "TRAMVIA BLAU",
-                "name": "Av.Tibidabo",
-                "accessibility": "",
-                "zone": "Zona 1",
-                "connections": "L7",
-                "lat": "41.4105436445046",
-                "lon": "2.13683208546366"
-            },
-            {
-                "id": "368",
-                "line": "L3",
-                "name": "Vallcarca",
-                "accessibility": "Projecte",
-                "zone": "Zona 1",
-                "connections": "",
-                "lat": "41.4120164709601",
-                "lon": "2.14432244155947"
-            },
-            {
-                "id": "369",
-                "line": "L3",
-                "name": "Lesseps",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "",
-                "lat": "41.4057005854403",
-                "lon": "2.15048581458015"
-            },
-            {
-                "id": "367",
-                "line": "L3",
-                "name": "Penitents",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "",
-                "lat": "41.4183305594342",
-                "lon": "2.14098280337625"
-            },
-            {
-                "id": "470",
-                "line": "L5",
-                "name": "Vall d'Hebr\u00f3n",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "L3",
-                "lat": "41.4250234333411",
-                "lon": "2.14243461427776"
-            },
-            {
-                "id": "366",
-                "line": "L3",
-                "name": "Vall d'Hebr\u00f3n",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "L5",
-                "lat": "41.4252970069324",
-                "lon": "2.14256930175703"
-            },
-            {
-                "id": "365",
-                "line": "L3",
-                "name": "Montbau",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "",
-                "lat": "41.4306544208465",
-                "lon": "2.14505193131497"
-            },
-            {
-                "id": "469",
-                "line": "L5",
-                "name": "El Coll | La Teixonera",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "",
-                "lat": "41.4220245616754",
-                "lon": "2.14837108073817"
-            },
-            {
-                "id": "468",
-                "line": "L5",
-                "name": "El Carmel",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "",
-                "lat": "41.4244436630274",
-                "lon": "2.15511937953302"
-            },
-            {
-                "id": "385",
-                "line": "L3",
-                "name": "Mundet",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "",
-                "lat": "41.4357688982928",
-                "lon": "2.14859090896243"
-            },
-            {
-                "id": "386",
-                "line": "L3",
-                "name": "Valldaura",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "",
-                "lat": "41.4380515005838",
-                "lon": "2.15693039004997"
-            },
-            {
-                "id": "445",
-                "line": "TELEF\u00c8RIC DE MONTJU\u00cfC",
-                "name": "Castell",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "",
-                "lat": "41.3642112354164",
-                "lon": "2.16595920980662"
-            },
-            {
-                "id": "440",
-                "line": "FUNICULAR DE MONTJU\u00cfC",
-                "name": "Parc Montjuic",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "TELEF\u00c8RIC DE MONTJU\u00cfC",
-                "lat": "41.3689996924178",
-                "lon": "2.16331401219507"
-            },
-            {
-                "id": "441",
-                "line": "TELEF\u00c8RIC DE MONTJU\u00cfC",
-                "name": "Parc Montjuic",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "FUNICULAR DE MONTJU\u00cfC",
-                "lat": "41.3687670977236",
-                "lon": "2.16354697425813"
-            },
-            {
-                "id": "442",
-                "line": "TELEF\u00c8RIC DE MONTJU\u00cfC",
-                "name": "Mirador",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "",
-                "lat": "41.3674656595589",
-                "lon": "2.16803130297931"
-            },
-            {
-                "id": "376",
-                "line": "L3",
-                "name": "Poble Sec",
-                "accessibility": "Projecte",
-                "zone": "Zona 1",
-                "connections": "",
-                "lat": "41.3750274796757",
-                "lon": "2.16027150654591"
-            },
-            {
-                "id": "349",
-                "line": "L2",
-                "name": "Sant Antoni",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "",
-                "lat": "41.3798587329518",
-                "lon": "2.1632887586535"
-            },
-            {
-                "id": "439",
-                "line": "FUNICULAR DE MONTJU\u00cfC",
-                "name": "Paral.lel",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "L2-L3",
-                "lat": "41.3738732059181",
-                "lon": "2.16884010115338"
-            },
-            {
-                "id": "331",
-                "line": "L1",
-                "name": "Urgell",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "",
-                "lat": "41.3825190435109",
-                "lon": "2.15891098529247"
-            },
-            {
-                "id": "350",
-                "line": "L2",
-                "name": "Universitat",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "L1",
-                "lat": "41.3847201846007",
-                "lon": "2.16392260234239"
-            },
-            {
-                "id": "332",
-                "line": "L1",
-                "name": "Universitat",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "L2",
-                "lat": "41.3858268159287",
-                "lon": "2.16429773978502"
-            },
-            {
-                "id": "375",
-                "line": "L3",
-                "name": "Paral.lel",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "L2-FUNI_MONTJUIC",
-                "lat": "41.3749237466418",
-                "lon": "2.16913130219717"
-            },
-            {
-                "id": "348",
-                "line": "L2",
-                "name": "Paral.lel",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "L3-FUNI_MONTJUIC",
-                "lat": "41.375039139559",
-                "lon": "2.16913024692333"
-            },
-            {
-                "id": "374",
-                "line": "L3",
-                "name": "Drassanes",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "PORT",
-                "lat": "41.3765658912591",
-                "lon": "2.17567091764783"
-            },
-            {
-                "id": "373",
-                "line": "L3",
-                "name": "Liceu",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "",
-                "lat": "41.3814661024195",
-                "lon": "2.1730492173041"
-            },
-            {
-                "id": "372",
-                "line": "L3",
-                "name": "Catalunya",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "L1-L6-L7-S1-S2-S5-S55-R.1-R3-R4-R7-R12",
-                "lat": "41.3863398586716",
-                "lon": "2.17010507438732"
-            },
-            {
-                "id": "333",
-                "line": "L1",
-                "name": "Catalunya",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "L3-L6-L7-S1-S2-S5-S55-R.1-R3-R4-R7-R12",
-                "lat": "41.3875748996741",
-                "lon": "2.16917178913172"
-            },
-            {
-                "id": "399",
-                "line": "L4",
-                "name": "Jaume I",
-                "accessibility": "Projecte",
-                "zone": "Zona 1",
-                "connections": "",
-                "lat": "41.3841228723178",
-                "lon": "2.17858081953018"
-            },
-            {
-                "id": "421",
-                "line": "L5",
-                "name": "Diagonal",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "L3-L6-L7-S1-S2-S5-S55",
-                "lat": "41.3944632613854",
-                "lon": "2.15884813430305"
-            },
-            {
-                "id": "351",
-                "line": "L2",
-                "name": "Passeig de Gr\u00e0cia",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "L3-L4-R2-R.2N-R.2S-R11-R13-R14-R15-R16",
-                "lat": "41.3894163760186",
-                "lon": "2.16823683974007"
-            },
-            {
-                "id": "401",
-                "line": "L4",
-                "name": "Passeig de Gr\u00e0cia",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "L2-L3-R2-R.2N-R.2S-R11-R13-R14-R15-R16",
-                "lat": "41.3900737321142",
-                "lon": "2.16786323763842"
-            },
-            {
-                "id": "371",
-                "line": "L3",
-                "name": "Passeig de Gr\u00e0cia",
-                "accessibility": "Construcci\u00f3",
-                "zone": "Zona 1",
-                "connections": "L2-L4-R2-R.2N-R.2S-R11-R13-R14-R15-R16",
-                "lat": "41.3916130953018",
-                "lon": "2.16538461758049"
-            },
-            {
-                "id": "388",
-                "line": "L3",
-                "name": "Diagonal",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "L5-L6-L7-S1-S2-S5-S55",
-                "lat": "41.3959157261745",
-                "lon": "2.16007069012956"
-            },
-            {
-                "id": "420",
-                "line": "L5",
-                "name": "Verdaguer",
-                "accessibility": "Projecte",
-                "zone": "Zona 1",
-                "connections": "L4",
-                "lat": "41.3989796695232",
-                "lon": "2.16710780784334"
-            },
-            {
-                "id": "403",
-                "line": "L4",
-                "name": "Verdaguer",
-                "accessibility": "Projecte",
-                "zone": "Zona 1",
-                "connections": "L5",
-                "lat": "41.4003552658023",
-                "lon": "2.16811691027426"
-            },
-            {
-                "id": "400",
-                "line": "L4",
-                "name": "Urquinaona",
-                "accessibility": "Projecte",
-                "zone": "Zona 1",
-                "connections": "L1",
-                "lat": "41.3879871698261",
-                "lon": "2.17345868287655"
-            },
-            {
-                "id": "402",
-                "line": "L4",
-                "name": "Girona",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "",
-                "lat": "41.3949667171971",
-                "lon": "2.1708457952076"
-            },
-            {
-                "id": "334",
-                "line": "L1",
-                "name": "Urquinaona",
-                "accessibility": "Projecte",
-                "zone": "Zona 1",
-                "connections": "L4",
-                "lat": "41.3896771578975",
-                "lon": "2.17458027903158"
-            },
-            {
-                "id": "352",
-                "line": "L2",
-                "name": "Tetuan",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "",
-                "lat": "41.3948996769105",
-                "lon": "2.17553562920688"
-            },
-            {
-                "id": "353",
-                "line": "L2",
-                "name": "Monumental",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "",
-                "lat": "41.4004929554527",
-                "lon": "2.17952263230581"
-            },
-            {
-                "id": "398",
-                "line": "L4",
-                "name": "Barceloneta",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "",
-                "lat": "41.3818891152973",
-                "lon": "2.18489341522917"
-            },
-            {
-                "id": "397",
-                "line": "L4",
-                "name": "Ciutadella Vila Ol\u00edmpica",
-                "accessibility": "Projecte",
-                "zone": "Zona 1",
-                "connections": "T4-T5-T6",
-                "lat": "41.3867239899615",
-                "lon": "2.19300720217757"
-            },
-            {
-                "id": "335",
-                "line": "L1",
-                "name": "Arc de Triomf",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "ESTACIO_BUS-R.1-R3-R4-R7-R12",
-                "lat": "41.3923576815825",
-                "lon": "2.18114567601345"
-            },
-            {
-                "id": "336",
-                "line": "L1",
-                "name": "Marina",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "T4-T5-T6",
-                "lat": "41.3947589060179",
-                "lon": "2.18581564614182"
-            },
-            {
-                "id": "337",
-                "line": "L1",
-                "name": "Gl\u00f2ries",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "T4-T5-T6",
-                "lat": "41.4023637999479",
-                "lon": "2.18756003700547"
-            },
-            {
-                "id": "396",
-                "line": "L4",
-                "name": "Bogatell",
-                "accessibility": "Construcci\u00f3",
-                "zone": "Zona 1",
-                "connections": "",
-                "lat": "41.3951337619307",
-                "lon": "2.19201295462194"
-            },
-            {
-                "id": "395",
-                "line": "L4",
-                "name": "Llacuna",
-                "accessibility": "Construcci\u00f3",
-                "zone": "Zona 1",
-                "connections": "",
-                "lat": "41.3994321319653",
-                "lon": "2.19769012625739"
-            },
-            {
-                "id": "404",
-                "line": "L4",
-                "name": "Joanic",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "",
-                "lat": "41.4064269836309",
-                "lon": "2.16322187660929"
-            },
-            {
-                "id": "405",
-                "line": "L4",
-                "name": "Alfons X",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "",
-                "lat": "41.4124274518153",
-                "lon": "2.16643944352259"
-            },
-            {
-                "id": "419",
-                "line": "L5",
-                "name": "Sagrada Fam\u00edlia",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "L2",
-                "lat": "41.4038636505993",
-                "lon": "2.17363608763723"
-            },
-            {
-                "id": "354",
-                "line": "L2",
-                "name": "Sagrada Fam\u00edlia",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "L5",
-                "lat": "41.4039969134632",
-                "lon": "2.17514745470531"
-            },
-            {
-                "id": "418",
-                "line": "L5",
-                "name": "Sant Pau | Dos de Maig",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "",
-                "lat": "41.4107778970515",
-                "lon": "2.17602987207361"
-            },
-            {
-                "id": "406",
-                "line": "L4",
-                "name": "Guinard\u00f3 | Hospital de Sant Pau",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "",
-                "lat": "41.4160129419915",
-                "lon": "2.17400701425785"
-            },
-            {
-                "id": "411",
-                "line": "L5",
-                "name": "Horta",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "",
-                "lat": "41.4297175290961",
-                "lon": "2.15997712882721"
-            },
-            {
-                "id": "412",
-                "line": "L5",
-                "name": "Vilapicina",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "",
-                "lat": "41.4304903004493",
-                "lon": "2.16768016845503"
-            },
-            {
-                "id": "414",
-                "line": "L5",
-                "name": "Maragall",
-                "accessibility": "Projecte",
-                "zone": "Zona 1",
-                "connections": "L4",
-                "lat": "41.4250735421976",
-                "lon": "2.17650199594126"
-            },
-            {
-                "id": "407",
-                "line": "L4",
-                "name": "Maragall",
-                "accessibility": "Projecte",
-                "zone": "Zona 1",
-                "connections": "L5",
-                "lat": "41.4231194304848",
-                "lon": "2.17740854790596"
-            },
-            {
-                "id": "413",
-                "line": "L5",
-                "name": "Virrei Amat",
-                "accessibility": "Projecte",
-                "zone": "Zona 1",
-                "connections": "",
-                "lat": "41.4297305579876",
-                "lon": "2.1749281570428"
-            },
-            {
-                "id": "355",
-                "line": "L2",
-                "name": "Encants",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "",
-                "lat": "41.4072864680062",
-                "lon": "2.1827519784438"
-            },
-            {
-                "id": "338",
-                "line": "L1",
-                "name": "Clot",
-                "accessibility": "Projecte",
-                "zone": "Zona 1",
-                "connections": "L2-R.1-R2-R.2N-R11",
-                "lat": "41.4101947574477",
-                "lon": "2.18701789252361"
-            },
-            {
-                "id": "356",
-                "line": "L2",
-                "name": "Clot",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "L1-R.1-R2-R.2N-R11",
-                "lat": "41.4104525785804",
-                "lon": "2.18693417757973"
-            },
-            {
-                "id": "417",
-                "line": "L5",
-                "name": "Camp de L'Arpa",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "",
-                "lat": "41.4150761407851",
-                "lon": "2.18149899491483"
-            },
-            {
-                "id": "339",
-                "line": "L1",
-                "name": "Navas",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "",
-                "lat": "41.4162576633657",
-                "lon": "2.18705891004563"
-            },
-            {
-                "id": "357",
-                "line": "L2",
-                "name": "Bac de Roda",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "",
-                "lat": "41.4151753337543",
-                "lon": "2.19550432669064"
-            },
-            {
-                "id": "415",
-                "line": "L5",
-                "name": "Congr\u00e9s",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "",
-                "lat": "41.4234671018064",
-                "lon": "2.1811927496259"
-            },
-            {
-                "id": "467",
-                "line": "L9|L10",
-                "name": "La Sagrera_V.FelipII",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "L1-L5",
-                "lat": "41.4204781342086",
-                "lon": "2.1867684336872"
-            },
-            {
-                "id": "416",
-                "line": "L5",
-                "name": "La Sagrera",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "L1-L9-L10",
-                "lat": "41.4212864581677",
-                "lon": "2.18658395857032"
-            },
-            {
-                "id": "340",
-                "line": "L1",
-                "name": "La Sagrera",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "L5-L9-L10",
-                "lat": "41.4224489394887",
-                "lon": "2.18698698748017"
-            },
-            {
-                "id": "347",
-                "line": "L1",
-                "name": "Fabra i Puig",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "ESTACIO_BUS-R3-R4-R7-R12",
-                "lat": "41.4296919347651",
-                "lon": "2.18366333165997"
-            },
-            {
-                "id": "358",
-                "line": "L2",
-                "name": "Sant Mart\u00ed",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "",
-                "lat": "41.4191123676228",
-                "lon": "2.20077638100069"
-            },
-            {
-                "id": "465",
-                "line": "L9|L10",
-                "name": "Onze de Setembre",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "",
-                "lat": "41.4296818388319",
-                "lon": "2.19362332503268"
-            },
-            {
-                "id": "387",
-                "line": "L3",
-                "name": "Canyelles",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "",
-                "lat": "41.4417702469479",
-                "lon": "2.16633743592508"
-            },
-            {
-                "id": "408",
-                "line": "L4",
-                "name": "Llucmajor",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "",
-                "lat": "41.4370677708048",
-                "lon": "2.17341123988904"
-            },
-            {
-                "id": "409",
-                "line": "L4",
-                "name": "Via J\u00falia",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "",
-                "lat": "41.443872126503",
-                "lon": "2.1786024624582"
-            },
-            {
-                "id": "446",
-                "line": "L3",
-                "name": "Roquetes",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "",
-                "lat": "41.4476983787111",
-                "lon": "2.17610978451663"
-            },
-            {
-                "id": "434",
-                "line": "L11",
-                "name": "Can Cui\u00e0s",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "",
-                "lat": "41.4624102882077",
-                "lon": "2.17305678567444"
-            },
-            {
-                "id": "435",
-                "line": "L11",
-                "name": "Ciutat Meridiana",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "",
-                "lat": "41.4608382477217",
-                "lon": "2.17466301080431"
-            },
-            {
-                "id": "346",
-                "line": "L1",
-                "name": "Sant Andreu",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "",
-                "lat": "41.4366600602109",
-                "lon": "2.19120189357876"
-            },
-            {
-                "id": "341",
-                "line": "L1",
-                "name": "Torres i Bages",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "",
-                "lat": "41.4432435844691",
-                "lon": "2.19071074785519"
-            },
-            {
-                "id": "438",
-                "line": "L11",
-                "name": "Trinitat Nova",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "L3-L4",
-                "lat": "41.4492023892058",
-                "lon": "2.18242313470227"
-            },
-            {
-                "id": "410",
-                "line": "L4",
-                "name": "Trinitat Nova",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "L3-L11",
-                "lat": "41.4492032471838",
-                "lon": "2.18241629083912"
-            },
-            {
-                "id": "447",
-                "line": "L3",
-                "name": "Trinitat Nova",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "L4-L11",
-                "lat": "41.4495315866864",
-                "lon": "2.18411257661403"
-            },
-            {
-                "id": "437",
-                "line": "L11",
-                "name": "Casa de L'Aigua",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "",
-                "lat": "41.4513374981639",
-                "lon": "2.18495526862417"
-            },
-            {
-                "id": "436",
-                "line": "L11",
-                "name": "Torre Bar\u00f3 | Vallbona",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "R3-R4-R7-R12",
-                "lat": "41.4592282423821",
-                "lon": "2.17994975426971"
-            },
-            {
-                "id": "342",
-                "line": "L1",
-                "name": "Trinitat Vella",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "",
-                "lat": "41.4490032874062",
-                "lon": "2.19388362741804"
-            },
-            {
-                "id": "343",
-                "line": "L1",
-                "name": "Bar\u00f3 de Viver",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "",
-                "lat": "41.4499647103183",
-                "lon": "2.19957936831323"
-            },
-            {
-                "id": "450",
-                "line": "L9",
-                "name": "Can Zam",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "",
-                "lat": "41.4566998784377",
-                "lon": "2.1985863050585"
-            },
-            {
-                "id": "394",
-                "line": "L4",
-                "name": "Poblenou",
-                "accessibility": "Projecte",
-                "zone": "Zona 1",
-                "connections": "",
-                "lat": "41.4037236975489",
-                "lon": "2.20335092282408"
-            },
-            {
-                "id": "393",
-                "line": "L4",
-                "name": "Selva de Mar",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "T4-T5-T6",
-                "lat": "41.4080885355949",
-                "lon": "2.20920449021996"
-            },
-            {
-                "id": "392",
-                "line": "L4",
-                "name": "El Maresme | F\u00f3rum",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "T4-T5-T6",
-                "lat": "41.4118270413406",
-                "lon": "2.21672409917827"
-            },
-            {
-                "id": "391",
-                "line": "L4",
-                "name": "Bes\u00f2s Mar",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "",
-                "lat": "41.415132745723",
-                "lon": "2.21609189178864"
-            },
-            {
-                "id": "389",
-                "line": "L4",
-                "name": "La Pau",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "L2",
-                "lat": "41.423680905925",
-                "lon": "2.20524346203814"
-            },
-            {
-                "id": "359",
-                "line": "L2",
-                "name": "La Pau",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "L4",
-                "lat": "41.4241469840362",
-                "lon": "2.20558808922946"
-            },
-            {
-                "id": "390",
-                "line": "L4",
-                "name": "Bes\u00f2s",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "T4-T5-T6",
-                "lat": "41.4199054057797",
-                "lon": "2.21027029188204"
-            },
-            {
-                "id": "360",
-                "line": "L2",
-                "name": "Verneda",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "",
-                "lat": "41.4300427497672",
-                "lon": "2.20990191350488"
-            },
-            {
-                "id": "459",
-                "line": "L9|L10",
-                "name": "Bon Pastor",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "",
-                "lat": "41.4361952316926",
-                "lon": "2.20533248704323"
-            },
-            {
-                "id": "455",
-                "line": "L9",
-                "name": "Can Peixauet",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "",
-                "lat": "41.443955768203",
-                "lon": "2.21001496404333"
-            },
-            {
-                "id": "361",
-                "line": "L2",
-                "name": "Artigues Sant Adri\u00e0",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "",
-                "lat": "41.4338278181095",
-                "lon": "2.21768382981863"
-            },
-            {
-                "id": "458",
-                "line": "L10",
-                "name": "Llefi\u00e0",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "",
-                "lat": "41.4414636713731",
-                "lon": "2.21717679322061"
-            },
-            {
-                "id": "344",
-                "line": "L1",
-                "name": "Santa Coloma",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "",
-                "lat": "41.4510968572408",
-                "lon": "2.20799089718003"
-            },
-            {
-                "id": "451",
-                "line": "L9",
-                "name": "Singuerl\u00edn",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "",
-                "lat": "41.4592880031669",
-                "lon": "2.20563372670358"
-            },
-            {
-                "id": "452",
-                "line": "L9",
-                "name": "Esgl\u00e9sia Major",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "",
-                "lat": "41.454710956933",
-                "lon": "2.212488623794"
-            },
-            {
-                "id": "345",
-                "line": "L1",
-                "name": "Fondo",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "L9",
-                "lat": "41.4516133714008",
-                "lon": "2.21847567034432"
-            },
-            {
-                "id": "453",
-                "line": "L9",
-                "name": "Fondo",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "L1",
-                "lat": "41.4519973445181",
-                "lon": "2.21834338122146"
-            },
-            {
-                "id": "362",
-                "line": "L2",
-                "name": "Sant Roc",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "T4-T5-T6",
-                "lat": "41.4358194300033",
-                "lon": "2.2285794819181"
-            },
-            {
-                "id": "363",
-                "line": "L2",
-                "name": "Gorg",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "L10-T4-T5-T6",
-                "lat": "41.4402793240193",
-                "lon": "2.23346831479129"
-            },
-            {
-                "id": "456",
-                "line": "L10",
-                "name": "Gorg",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "L2-T4-T5-T6",
-                "lat": "41.4405503099384",
-                "lon": "2.23378679063874"
-            },
-            {
-                "id": "457",
-                "line": "L10",
-                "name": "La Salut",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "",
-                "lat": "41.4428407809102",
-                "lon": "2.22449035582457"
-            },
-            {
-                "id": "364",
-                "line": "L2",
-                "name": "Pep Ventura",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "",
-                "lat": "41.4439616490883",
-                "lon": "2.23799996153456"
-            },
-            {
-                "id": "466",
-                "line": "L2",
-                "name": "Badalona Pompeu Fabra",
-                "accessibility": "Adaptada",
-                "zone": "Zona 1",
-                "connections": "",
-                "lat": "41.4491346834602",
-                "lon": "2.24417083038483"
-            }
-        ]
-    }
+  "code": 200,
+  "data": {
+    "metro": [
+      {
+        "id": "433",
+        "line": "L5",
+        "name": "Cornell\u00e0 Centre",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "T1-T2-T3-R.1-R4",
+        "lat": "41.357315951168",
+        "lon": "2.07044325855937"
+      },
+      {
+        "id": "432",
+        "line": "L5",
+        "name": "Gavarra",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "",
+        "lat": "41.3580221811863",
+        "lon": "2.07929676467967"
+      },
+      {
+        "id": "431",
+        "line": "L5",
+        "name": "Sant Ildefons",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "",
+        "lat": "41.3634004007812",
+        "lon": "2.08440567589003"
+      },
+      {
+        "id": "430",
+        "line": "L5",
+        "name": "Can Boixeres",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "",
+        "lat": "41.3665946412198",
+        "lon": "2.09152995763886"
+      },
+      {
+        "id": "318",
+        "line": "L1",
+        "name": "Hospital de Bellvitge",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "",
+        "lat": "41.3447089189291",
+        "lon": "2.10726442487254"
+      },
+      {
+        "id": "319",
+        "line": "L1",
+        "name": "Bellvitge",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "",
+        "lat": "41.351002103227",
+        "lon": "2.11093265881712"
+      },
+      {
+        "id": "320",
+        "line": "L1",
+        "name": "Av.Carrilet",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "L8-S33-S4-S8-R5-R6",
+        "lat": "41.3585530196421",
+        "lon": "2.10266580260399"
+      },
+      {
+        "id": "321",
+        "line": "L1",
+        "name": "Rbla. Just Oliveres",
+        "accessibility": "Projecte",
+        "zone": "Zona 1",
+        "connections": "R.1-R3-R4-R7-R12",
+        "lat": "41.3641197960023",
+        "lon": "2.09977453332527"
+      },
+      {
+        "id": "322",
+        "line": "L1",
+        "name": "Can Serra",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "",
+        "lat": "41.3677230761094",
+        "lon": "2.10277664046037"
+      },
+      {
+        "id": "429",
+        "line": "L5",
+        "name": "Can Vidalet",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "",
+        "lat": "41.3711699811588",
+        "lon": "2.09936987151888"
+      },
+      {
+        "id": "323",
+        "line": "L1",
+        "name": "Florida",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "",
+        "lat": "41.3683454383485",
+        "lon": "2.11001897049028"
+      },
+      {
+        "id": "428",
+        "line": "L5",
+        "name": "Pubilla Cases",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "",
+        "lat": "41.3738678305867",
+        "lon": "2.10722761135461"
+      },
+      {
+        "id": "383",
+        "line": "L3",
+        "name": "Zona Universit\u00e0ria",
+        "accessibility": "Construcci\u00f3",
+        "zone": "Zona 1",
+        "connections": "T1-T2-T3",
+        "lat": "41.3841404077719",
+        "lon": "2.11116587365903"
+      },
+      {
+        "id": "324",
+        "line": "L1",
+        "name": "Torrassa",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "",
+        "lat": "41.3684250526322",
+        "lon": "2.11662439227314"
+      },
+      {
+        "id": "325",
+        "line": "L1",
+        "name": "Santa Eul\u00e0lia",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "",
+        "lat": "41.3688492313307",
+        "lon": "2.12864100990867"
+      },
+      {
+        "id": "427",
+        "line": "L5",
+        "name": "Collblanc",
+        "accessibility": "Construcci\u00f3",
+        "zone": "Zona 1",
+        "connections": "",
+        "lat": "41.3757732657525",
+        "lon": "2.11924135425625"
+      },
+      {
+        "id": "382",
+        "line": "L3",
+        "name": "Palau Reial",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "T1-T2-T3",
+        "lat": "41.3860211631295",
+        "lon": "2.11859030534594"
+      },
+      {
+        "id": "426",
+        "line": "L5",
+        "name": "Badal",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "",
+        "lat": "41.3756059321753",
+        "lon": "2.12744302393462"
+      },
+      {
+        "id": "326",
+        "line": "L1",
+        "name": "Mercat Nou",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "",
+        "lat": "41.3733346013228",
+        "lon": "2.13381942920113"
+      },
+      {
+        "id": "425",
+        "line": "L5",
+        "name": "Pla\u00e7a de Sants",
+        "accessibility": "Projecte",
+        "zone": "Zona 1",
+        "connections": "L1",
+        "lat": "41.3757560588641",
+        "lon": "2.13518270144983"
+      },
+      {
+        "id": "381",
+        "line": "L3",
+        "name": "Les Corts",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "",
+        "lat": "41.3841243011195",
+        "lon": "2.13089948651418"
+      },
+      {
+        "id": "384",
+        "line": "L3",
+        "name": "Maria Cristina",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "T1-T2-T3",
+        "lat": "41.3878658876322",
+        "lon": "2.12588078854278"
+      },
+      {
+        "id": "327",
+        "line": "L1",
+        "name": "Pla\u00e7a de Sants",
+        "accessibility": "Projecte",
+        "zone": "Zona 1",
+        "connections": "L5",
+        "lat": "41.3753819450694",
+        "lon": "2.13817096385347"
+      },
+      {
+        "id": "424",
+        "line": "L5",
+        "name": "Sants Estaci\u00f3",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "L3-R.1-R2-R.2N-R.2S-R3-R4-R7-R11-R12-R13-R14-R15-R16-ESTACIO_BUS",
+        "lat": "41.3799913070601",
+        "lon": "2.14043733691486"
+      },
+      {
+        "id": "328",
+        "line": "L1",
+        "name": "Hostafrancs",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "",
+        "lat": "41.3752823216963",
+        "lon": "2.14331481108942"
+      },
+      {
+        "id": "378",
+        "line": "L3",
+        "name": "Tarragona",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "",
+        "lat": "41.3785431899842",
+        "lon": "2.14532511165999"
+      },
+      {
+        "id": "380",
+        "line": "L3",
+        "name": "Pla\u00e7a del Centre",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "",
+        "lat": "41.3819459953545",
+        "lon": "2.1358749331136"
+      },
+      {
+        "id": "379",
+        "line": "L3",
+        "name": "Sants Estaci\u00f3",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "L5-R.1-R2-R.2N-R.2S-R3-R4-R7-R11-R12-R13-R14-R15-R16-ESTACIO_BUS",
+        "lat": "41.381613567591",
+        "lon": "2.14102524477169"
+      },
+      {
+        "id": "423",
+        "line": "L5",
+        "name": "Enten\u00e7a",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "",
+        "lat": "41.3844941751042",
+        "lon": "2.14563915079201"
+      },
+      {
+        "id": "329",
+        "line": "L1",
+        "name": "Espanya",
+        "accessibility": "Projecte",
+        "zone": "Zona 1",
+        "connections": "L3-L8-S33-S4-S8-R5-R6",
+        "lat": "41.375541990375",
+        "lon": "2.14940637505904"
+      },
+      {
+        "id": "377",
+        "line": "L3",
+        "name": "Espanya",
+        "accessibility": "Projecte",
+        "zone": "Zona 1",
+        "connections": "L1-L8-S33-S4-S8-R5-R6",
+        "lat": "41.3750503515188",
+        "lon": "2.15160812165603"
+      },
+      {
+        "id": "330",
+        "line": "L1",
+        "name": "Rocafort",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "",
+        "lat": "41.379268210643",
+        "lon": "2.15458880966092"
+      },
+      {
+        "id": "422",
+        "line": "L5",
+        "name": "Hospital Cl\u00ednic",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "",
+        "lat": "41.3886531870785",
+        "lon": "2.15112142588565"
+      },
+      {
+        "id": "370",
+        "line": "L3",
+        "name": "Fontana",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "",
+        "lat": "41.4020175545979",
+        "lon": "2.15305426943399"
+      },
+      {
+        "id": "444",
+        "line": "TRAMVIA BLAU",
+        "name": "Pl. del Funicular",
+        "accessibility": "",
+        "zone": "Zona 1",
+        "connections": "FUNICULAR DEL TIBIDABO",
+        "lat": "41.4161153058916",
+        "lon": "2.13136330452675"
+      },
+      {
+        "id": "443",
+        "line": "TRAMVIA BLAU",
+        "name": "Av.Tibidabo",
+        "accessibility": "",
+        "zone": "Zona 1",
+        "connections": "L7",
+        "lat": "41.4105436445046",
+        "lon": "2.13683208546366"
+      },
+      {
+        "id": "368",
+        "line": "L3",
+        "name": "Vallcarca",
+        "accessibility": "Projecte",
+        "zone": "Zona 1",
+        "connections": "",
+        "lat": "41.4120164709601",
+        "lon": "2.14432244155947"
+      },
+      {
+        "id": "369",
+        "line": "L3",
+        "name": "Lesseps",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "",
+        "lat": "41.4057005854403",
+        "lon": "2.15048581458015"
+      },
+      {
+        "id": "367",
+        "line": "L3",
+        "name": "Penitents",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "",
+        "lat": "41.4183305594342",
+        "lon": "2.14098280337625"
+      },
+      {
+        "id": "470",
+        "line": "L5",
+        "name": "Vall d'Hebr\u00f3n",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "L3",
+        "lat": "41.4250234333411",
+        "lon": "2.14243461427776"
+      },
+      {
+        "id": "366",
+        "line": "L3",
+        "name": "Vall d'Hebr\u00f3n",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "L5",
+        "lat": "41.4252970069324",
+        "lon": "2.14256930175703"
+      },
+      {
+        "id": "365",
+        "line": "L3",
+        "name": "Montbau",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "",
+        "lat": "41.4306544208465",
+        "lon": "2.14505193131497"
+      },
+      {
+        "id": "469",
+        "line": "L5",
+        "name": "El Coll | La Teixonera",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "",
+        "lat": "41.4220245616754",
+        "lon": "2.14837108073817"
+      },
+      {
+        "id": "468",
+        "line": "L5",
+        "name": "El Carmel",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "",
+        "lat": "41.4244436630274",
+        "lon": "2.15511937953302"
+      },
+      {
+        "id": "385",
+        "line": "L3",
+        "name": "Mundet",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "",
+        "lat": "41.4357688982928",
+        "lon": "2.14859090896243"
+      },
+      {
+        "id": "386",
+        "line": "L3",
+        "name": "Valldaura",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "",
+        "lat": "41.4380515005838",
+        "lon": "2.15693039004997"
+      },
+      {
+        "id": "445",
+        "line": "TELEF\u00c8RIC DE MONTJU\u00cfC",
+        "name": "Castell",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "",
+        "lat": "41.3642112354164",
+        "lon": "2.16595920980662"
+      },
+      {
+        "id": "440",
+        "line": "FUNICULAR DE MONTJU\u00cfC",
+        "name": "Parc Montjuic",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "TELEF\u00c8RIC DE MONTJU\u00cfC",
+        "lat": "41.3689996924178",
+        "lon": "2.16331401219507"
+      },
+      {
+        "id": "441",
+        "line": "TELEF\u00c8RIC DE MONTJU\u00cfC",
+        "name": "Parc Montjuic",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "FUNICULAR DE MONTJU\u00cfC",
+        "lat": "41.3687670977236",
+        "lon": "2.16354697425813"
+      },
+      {
+        "id": "442",
+        "line": "TELEF\u00c8RIC DE MONTJU\u00cfC",
+        "name": "Mirador",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "",
+        "lat": "41.3674656595589",
+        "lon": "2.16803130297931"
+      },
+      {
+        "id": "376",
+        "line": "L3",
+        "name": "Poble Sec",
+        "accessibility": "Projecte",
+        "zone": "Zona 1",
+        "connections": "",
+        "lat": "41.3750274796757",
+        "lon": "2.16027150654591"
+      },
+      {
+        "id": "349",
+        "line": "L2",
+        "name": "Sant Antoni",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "",
+        "lat": "41.3798587329518",
+        "lon": "2.1632887586535"
+      },
+      {
+        "id": "439",
+        "line": "FUNICULAR DE MONTJU\u00cfC",
+        "name": "Paral.lel",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "L2-L3",
+        "lat": "41.3738732059181",
+        "lon": "2.16884010115338"
+      },
+      {
+        "id": "331",
+        "line": "L1",
+        "name": "Urgell",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "",
+        "lat": "41.3825190435109",
+        "lon": "2.15891098529247"
+      },
+      {
+        "id": "350",
+        "line": "L2",
+        "name": "Universitat",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "L1",
+        "lat": "41.3847201846007",
+        "lon": "2.16392260234239"
+      },
+      {
+        "id": "332",
+        "line": "L1",
+        "name": "Universitat",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "L2",
+        "lat": "41.3858268159287",
+        "lon": "2.16429773978502"
+      },
+      {
+        "id": "375",
+        "line": "L3",
+        "name": "Paral.lel",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "L2-FUNI_MONTJUIC",
+        "lat": "41.3749237466418",
+        "lon": "2.16913130219717"
+      },
+      {
+        "id": "348",
+        "line": "L2",
+        "name": "Paral.lel",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "L3-FUNI_MONTJUIC",
+        "lat": "41.375039139559",
+        "lon": "2.16913024692333"
+      },
+      {
+        "id": "374",
+        "line": "L3",
+        "name": "Drassanes",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "PORT",
+        "lat": "41.3765658912591",
+        "lon": "2.17567091764783"
+      },
+      {
+        "id": "373",
+        "line": "L3",
+        "name": "Liceu",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "",
+        "lat": "41.3814661024195",
+        "lon": "2.1730492173041"
+      },
+      {
+        "id": "372",
+        "line": "L3",
+        "name": "Catalunya",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "L1-L6-L7-S1-S2-S5-S55-R.1-R3-R4-R7-R12",
+        "lat": "41.3863398586716",
+        "lon": "2.17010507438732"
+      },
+      {
+        "id": "333",
+        "line": "L1",
+        "name": "Catalunya",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "L3-L6-L7-S1-S2-S5-S55-R.1-R3-R4-R7-R12",
+        "lat": "41.3875748996741",
+        "lon": "2.16917178913172"
+      },
+      {
+        "id": "399",
+        "line": "L4",
+        "name": "Jaume I",
+        "accessibility": "Projecte",
+        "zone": "Zona 1",
+        "connections": "",
+        "lat": "41.3841228723178",
+        "lon": "2.17858081953018"
+      },
+      {
+        "id": "421",
+        "line": "L5",
+        "name": "Diagonal",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "L3-L6-L7-S1-S2-S5-S55",
+        "lat": "41.3944632613854",
+        "lon": "2.15884813430305"
+      },
+      {
+        "id": "351",
+        "line": "L2",
+        "name": "Passeig de Gr\u00e0cia",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "L3-L4-R2-R.2N-R.2S-R11-R13-R14-R15-R16",
+        "lat": "41.3894163760186",
+        "lon": "2.16823683974007"
+      },
+      {
+        "id": "401",
+        "line": "L4",
+        "name": "Passeig de Gr\u00e0cia",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "L2-L3-R2-R.2N-R.2S-R11-R13-R14-R15-R16",
+        "lat": "41.3900737321142",
+        "lon": "2.16786323763842"
+      },
+      {
+        "id": "371",
+        "line": "L3",
+        "name": "Passeig de Gr\u00e0cia",
+        "accessibility": "Construcci\u00f3",
+        "zone": "Zona 1",
+        "connections": "L2-L4-R2-R.2N-R.2S-R11-R13-R14-R15-R16",
+        "lat": "41.3916130953018",
+        "lon": "2.16538461758049"
+      },
+      {
+        "id": "388",
+        "line": "L3",
+        "name": "Diagonal",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "L5-L6-L7-S1-S2-S5-S55",
+        "lat": "41.3959157261745",
+        "lon": "2.16007069012956"
+      },
+      {
+        "id": "420",
+        "line": "L5",
+        "name": "Verdaguer",
+        "accessibility": "Projecte",
+        "zone": "Zona 1",
+        "connections": "L4",
+        "lat": "41.3989796695232",
+        "lon": "2.16710780784334"
+      },
+      {
+        "id": "403",
+        "line": "L4",
+        "name": "Verdaguer",
+        "accessibility": "Projecte",
+        "zone": "Zona 1",
+        "connections": "L5",
+        "lat": "41.4003552658023",
+        "lon": "2.16811691027426"
+      },
+      {
+        "id": "400",
+        "line": "L4",
+        "name": "Urquinaona",
+        "accessibility": "Projecte",
+        "zone": "Zona 1",
+        "connections": "L1",
+        "lat": "41.3879871698261",
+        "lon": "2.17345868287655"
+      },
+      {
+        "id": "402",
+        "line": "L4",
+        "name": "Girona",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "",
+        "lat": "41.3949667171971",
+        "lon": "2.1708457952076"
+      },
+      {
+        "id": "334",
+        "line": "L1",
+        "name": "Urquinaona",
+        "accessibility": "Projecte",
+        "zone": "Zona 1",
+        "connections": "L4",
+        "lat": "41.3896771578975",
+        "lon": "2.17458027903158"
+      },
+      {
+        "id": "352",
+        "line": "L2",
+        "name": "Tetuan",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "",
+        "lat": "41.3948996769105",
+        "lon": "2.17553562920688"
+      },
+      {
+        "id": "353",
+        "line": "L2",
+        "name": "Monumental",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "",
+        "lat": "41.4004929554527",
+        "lon": "2.17952263230581"
+      },
+      {
+        "id": "398",
+        "line": "L4",
+        "name": "Barceloneta",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "",
+        "lat": "41.3818891152973",
+        "lon": "2.18489341522917"
+      },
+      {
+        "id": "397",
+        "line": "L4",
+        "name": "Ciutadella Vila Ol\u00edmpica",
+        "accessibility": "Projecte",
+        "zone": "Zona 1",
+        "connections": "T4-T5-T6",
+        "lat": "41.3867239899615",
+        "lon": "2.19300720217757"
+      },
+      {
+        "id": "335",
+        "line": "L1",
+        "name": "Arc de Triomf",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "ESTACIO_BUS-R.1-R3-R4-R7-R12",
+        "lat": "41.3923576815825",
+        "lon": "2.18114567601345"
+      },
+      {
+        "id": "336",
+        "line": "L1",
+        "name": "Marina",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "T4-T5-T6",
+        "lat": "41.3947589060179",
+        "lon": "2.18581564614182"
+      },
+      {
+        "id": "337",
+        "line": "L1",
+        "name": "Gl\u00f2ries",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "T4-T5-T6",
+        "lat": "41.4023637999479",
+        "lon": "2.18756003700547"
+      },
+      {
+        "id": "396",
+        "line": "L4",
+        "name": "Bogatell",
+        "accessibility": "Construcci\u00f3",
+        "zone": "Zona 1",
+        "connections": "",
+        "lat": "41.3951337619307",
+        "lon": "2.19201295462194"
+      },
+      {
+        "id": "395",
+        "line": "L4",
+        "name": "Llacuna",
+        "accessibility": "Construcci\u00f3",
+        "zone": "Zona 1",
+        "connections": "",
+        "lat": "41.3994321319653",
+        "lon": "2.19769012625739"
+      },
+      {
+        "id": "404",
+        "line": "L4",
+        "name": "Joanic",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "",
+        "lat": "41.4064269836309",
+        "lon": "2.16322187660929"
+      },
+      {
+        "id": "405",
+        "line": "L4",
+        "name": "Alfons X",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "",
+        "lat": "41.4124274518153",
+        "lon": "2.16643944352259"
+      },
+      {
+        "id": "419",
+        "line": "L5",
+        "name": "Sagrada Fam\u00edlia",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "L2",
+        "lat": "41.4038636505993",
+        "lon": "2.17363608763723"
+      },
+      {
+        "id": "354",
+        "line": "L2",
+        "name": "Sagrada Fam\u00edlia",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "L5",
+        "lat": "41.4039969134632",
+        "lon": "2.17514745470531"
+      },
+      {
+        "id": "418",
+        "line": "L5",
+        "name": "Sant Pau | Dos de Maig",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "",
+        "lat": "41.4107778970515",
+        "lon": "2.17602987207361"
+      },
+      {
+        "id": "406",
+        "line": "L4",
+        "name": "Guinard\u00f3 | Hospital de Sant Pau",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "",
+        "lat": "41.4160129419915",
+        "lon": "2.17400701425785"
+      },
+      {
+        "id": "411",
+        "line": "L5",
+        "name": "Horta",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "",
+        "lat": "41.4297175290961",
+        "lon": "2.15997712882721"
+      },
+      {
+        "id": "412",
+        "line": "L5",
+        "name": "Vilapicina",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "",
+        "lat": "41.4304903004493",
+        "lon": "2.16768016845503"
+      },
+      {
+        "id": "414",
+        "line": "L5",
+        "name": "Maragall",
+        "accessibility": "Projecte",
+        "zone": "Zona 1",
+        "connections": "L4",
+        "lat": "41.4250735421976",
+        "lon": "2.17650199594126"
+      },
+      {
+        "id": "407",
+        "line": "L4",
+        "name": "Maragall",
+        "accessibility": "Projecte",
+        "zone": "Zona 1",
+        "connections": "L5",
+        "lat": "41.4231194304848",
+        "lon": "2.17740854790596"
+      },
+      {
+        "id": "413",
+        "line": "L5",
+        "name": "Virrei Amat",
+        "accessibility": "Projecte",
+        "zone": "Zona 1",
+        "connections": "",
+        "lat": "41.4297305579876",
+        "lon": "2.1749281570428"
+      },
+      {
+        "id": "355",
+        "line": "L2",
+        "name": "Encants",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "",
+        "lat": "41.4072864680062",
+        "lon": "2.1827519784438"
+      },
+      {
+        "id": "338",
+        "line": "L1",
+        "name": "Clot",
+        "accessibility": "Projecte",
+        "zone": "Zona 1",
+        "connections": "L2-R.1-R2-R.2N-R11",
+        "lat": "41.4101947574477",
+        "lon": "2.18701789252361"
+      },
+      {
+        "id": "356",
+        "line": "L2",
+        "name": "Clot",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "L1-R.1-R2-R.2N-R11",
+        "lat": "41.4104525785804",
+        "lon": "2.18693417757973"
+      },
+      {
+        "id": "417",
+        "line": "L5",
+        "name": "Camp de L'Arpa",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "",
+        "lat": "41.4150761407851",
+        "lon": "2.18149899491483"
+      },
+      {
+        "id": "339",
+        "line": "L1",
+        "name": "Navas",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "",
+        "lat": "41.4162576633657",
+        "lon": "2.18705891004563"
+      },
+      {
+        "id": "357",
+        "line": "L2",
+        "name": "Bac de Roda",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "",
+        "lat": "41.4151753337543",
+        "lon": "2.19550432669064"
+      },
+      {
+        "id": "415",
+        "line": "L5",
+        "name": "Congr\u00e9s",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "",
+        "lat": "41.4234671018064",
+        "lon": "2.1811927496259"
+      },
+      {
+        "id": "467",
+        "line": "L10",
+        "name": "La Sagrera_V.FelipII",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "L1-L5",
+        "lat": "41.4204781342086",
+        "lon": "2.1867684336872"
+      },
+      {
+        "id": "416",
+        "line": "L5",
+        "name": "La Sagrera",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "L1-L9-L10",
+        "lat": "41.4212864581677",
+        "lon": "2.18658395857032"
+      },
+      {
+        "id": "340",
+        "line": "L1",
+        "name": "La Sagrera",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "L5-L9-L10",
+        "lat": "41.4224489394887",
+        "lon": "2.18698698748017"
+      },
+      {
+        "id": "347",
+        "line": "L1",
+        "name": "Fabra i Puig",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "ESTACIO_BUS-R3-R4-R7-R12",
+        "lat": "41.4296919347651",
+        "lon": "2.18366333165997"
+      },
+      {
+        "id": "358",
+        "line": "L2",
+        "name": "Sant Mart\u00ed",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "",
+        "lat": "41.4191123676228",
+        "lon": "2.20077638100069"
+      },
+      {
+        "id": "465",
+        "line": "L10",
+        "name": "Onze de Setembre",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "",
+        "lat": "41.4296818388319",
+        "lon": "2.19362332503268"
+      },
+      {
+        "id": "387",
+        "line": "L3",
+        "name": "Canyelles",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "",
+        "lat": "41.4417702469479",
+        "lon": "2.16633743592508"
+      },
+      {
+        "id": "408",
+        "line": "L4",
+        "name": "Llucmajor",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "",
+        "lat": "41.4370677708048",
+        "lon": "2.17341123988904"
+      },
+      {
+        "id": "409",
+        "line": "L4",
+        "name": "Via J\u00falia",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "",
+        "lat": "41.443872126503",
+        "lon": "2.1786024624582"
+      },
+      {
+        "id": "446",
+        "line": "L3",
+        "name": "Roquetes",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "",
+        "lat": "41.4476983787111",
+        "lon": "2.17610978451663"
+      },
+      {
+        "id": "434",
+        "line": "L11",
+        "name": "Can Cui\u00e0s",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "",
+        "lat": "41.4624102882077",
+        "lon": "2.17305678567444"
+      },
+      {
+        "id": "435",
+        "line": "L11",
+        "name": "Ciutat Meridiana",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "",
+        "lat": "41.4608382477217",
+        "lon": "2.17466301080431"
+      },
+      {
+        "id": "346",
+        "line": "L1",
+        "name": "Sant Andreu",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "",
+        "lat": "41.4366600602109",
+        "lon": "2.19120189357876"
+      },
+      {
+        "id": "341",
+        "line": "L1",
+        "name": "Torres i Bages",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "",
+        "lat": "41.4432435844691",
+        "lon": "2.19071074785519"
+      },
+      {
+        "id": "438",
+        "line": "L11",
+        "name": "Trinitat Nova",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "L3-L4",
+        "lat": "41.4492023892058",
+        "lon": "2.18242313470227"
+      },
+      {
+        "id": "410",
+        "line": "L4",
+        "name": "Trinitat Nova",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "L3-L11",
+        "lat": "41.4492032471838",
+        "lon": "2.18241629083912"
+      },
+      {
+        "id": "447",
+        "line": "L3",
+        "name": "Trinitat Nova",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "L4-L11",
+        "lat": "41.4495315866864",
+        "lon": "2.18411257661403"
+      },
+      {
+        "id": "437",
+        "line": "L11",
+        "name": "Casa de L'Aigua",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "",
+        "lat": "41.4513374981639",
+        "lon": "2.18495526862417"
+      },
+      {
+        "id": "436",
+        "line": "L11",
+        "name": "Torre Bar\u00f3 | Vallbona",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "R3-R4-R7-R12",
+        "lat": "41.4592282423821",
+        "lon": "2.17994975426971"
+      },
+      {
+        "id": "342",
+        "line": "L1",
+        "name": "Trinitat Vella",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "",
+        "lat": "41.4490032874062",
+        "lon": "2.19388362741804"
+      },
+      {
+        "id": "343",
+        "line": "L1",
+        "name": "Bar\u00f3 de Viver",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "",
+        "lat": "41.4499647103183",
+        "lon": "2.19957936831323"
+      },
+      {
+        "id": "450",
+        "line": "L9",
+        "name": "Can Zam",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "",
+        "lat": "41.4566998784377",
+        "lon": "2.1985863050585"
+      },
+      {
+        "id": "394",
+        "line": "L4",
+        "name": "Poblenou",
+        "accessibility": "Projecte",
+        "zone": "Zona 1",
+        "connections": "",
+        "lat": "41.4037236975489",
+        "lon": "2.20335092282408"
+      },
+      {
+        "id": "393",
+        "line": "L4",
+        "name": "Selva de Mar",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "T4-T5-T6",
+        "lat": "41.4080885355949",
+        "lon": "2.20920449021996"
+      },
+      {
+        "id": "392",
+        "line": "L4",
+        "name": "El Maresme | F\u00f3rum",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "T4-T5-T6",
+        "lat": "41.4118270413406",
+        "lon": "2.21672409917827"
+      },
+      {
+        "id": "391",
+        "line": "L4",
+        "name": "Bes\u00f2s Mar",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "",
+        "lat": "41.415132745723",
+        "lon": "2.21609189178864"
+      },
+      {
+        "id": "389",
+        "line": "L4",
+        "name": "La Pau",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "L2",
+        "lat": "41.423680905925",
+        "lon": "2.20524346203814"
+      },
+      {
+        "id": "359",
+        "line": "L2",
+        "name": "La Pau",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "L4",
+        "lat": "41.4241469840362",
+        "lon": "2.20558808922946"
+      },
+      {
+        "id": "390",
+        "line": "L4",
+        "name": "Bes\u00f2s",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "T4-T5-T6",
+        "lat": "41.4199054057797",
+        "lon": "2.21027029188204"
+      },
+      {
+        "id": "360",
+        "line": "L2",
+        "name": "Verneda",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "",
+        "lat": "41.4300427497672",
+        "lon": "2.20990191350488"
+      },
+      {
+        "id": "459",
+        "line": "L10",
+        "name": "Bon Pastor",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "",
+        "lat": "41.4361952316926",
+        "lon": "2.20533248704323"
+      },
+      {
+        "id": "455",
+        "line": "L9",
+        "name": "Can Peixauet",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "",
+        "lat": "41.443955768203",
+        "lon": "2.21001496404333"
+      },
+      {
+        "id": "361",
+        "line": "L2",
+        "name": "Artigues Sant Adri\u00e0",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "",
+        "lat": "41.4338278181095",
+        "lon": "2.21768382981863"
+      },
+      {
+        "id": "458",
+        "line": "L10",
+        "name": "Llefi\u00e0",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "",
+        "lat": "41.4414636713731",
+        "lon": "2.21717679322061"
+      },
+      {
+        "id": "344",
+        "line": "L1",
+        "name": "Santa Coloma",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "",
+        "lat": "41.4510968572408",
+        "lon": "2.20799089718003"
+      },
+      {
+        "id": "451",
+        "line": "L9",
+        "name": "Singuerl\u00edn",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "",
+        "lat": "41.4592880031669",
+        "lon": "2.20563372670358"
+      },
+      {
+        "id": "452",
+        "line": "L9",
+        "name": "Esgl\u00e9sia Major",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "",
+        "lat": "41.454710956933",
+        "lon": "2.212488623794"
+      },
+      {
+        "id": "345",
+        "line": "L1",
+        "name": "Fondo",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "L9",
+        "lat": "41.4516133714008",
+        "lon": "2.21847567034432"
+      },
+      {
+        "id": "453",
+        "line": "L9",
+        "name": "Fondo",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "L1",
+        "lat": "41.4519973445181",
+        "lon": "2.21834338122146"
+      },
+      {
+        "id": "362",
+        "line": "L2",
+        "name": "Sant Roc",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "T4-T5-T6",
+        "lat": "41.4358194300033",
+        "lon": "2.2285794819181"
+      },
+      {
+        "id": "363",
+        "line": "L2",
+        "name": "Gorg",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "L10-T4-T5-T6",
+        "lat": "41.4402793240193",
+        "lon": "2.23346831479129"
+      },
+      {
+        "id": "456",
+        "line": "L10",
+        "name": "Gorg",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "L2-T4-T5-T6",
+        "lat": "41.4405503099384",
+        "lon": "2.23378679063874"
+      },
+      {
+        "id": "457",
+        "line": "L10",
+        "name": "La Salut",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "",
+        "lat": "41.4428407809102",
+        "lon": "2.22449035582457"
+      },
+      {
+        "id": "364",
+        "line": "L2",
+        "name": "Pep Ventura",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "",
+        "lat": "41.4439616490883",
+        "lon": "2.23799996153456"
+      },
+      {
+        "id": "466",
+        "line": "L2",
+        "name": "Badalona Pompeu Fabra",
+        "accessibility": "Adaptada",
+        "zone": "Zona 1",
+        "connections": "",
+        "lat": "41.4491346834602",
+        "lon": "2.24417083038483"
+      }
+    ]
+  }
 }
