@@ -14,6 +14,9 @@ export default class Station extends PIXI.Graphics {
         this.x = Utils.convert(position.x);
         this.y = Utils.convert(position.y);
 
+        this.cargoText = new PIXI.Text("",{fontFamily : 'HelveticaNeue', fontSize: 12, fill : 0xffffff, align : 'left'});
+        this.addChild(this.cargoText);
+
         setInterval(() =>  {
             this.addCargo(Math.floor(Math.random() * 10));
         }, 2000);
@@ -21,7 +24,7 @@ export default class Station extends PIXI.Graphics {
 
     enter(train){
         if(this._currentTrain === null){
-            console.log(`Train ${train._id} in entering in Station ${this._id}.`);
+            // console.log(`Train ${train._id} in entering in Station ${this._id}.`);
             this._currentTrain = train;
         } else {
             throw new Error("A train is in this station!");
@@ -30,7 +33,7 @@ export default class Station extends PIXI.Graphics {
 
     leave(train){
         if(train === this._currentTrain){
-            console.log(`Train ${train._id} in leaving Station ${this._id}.`);
+            // console.log(`Train ${train._id} in leaving Station ${this._id}.`);
             this._currentTrain = null;
         }
     }
@@ -57,7 +60,13 @@ export default class Station extends PIXI.Graphics {
 
     _render(){
         this.clear();
-        this.lineStyle(1, this._color);
+        this.lineStyle(1, "0xFFFFFF", 0.5);
         this.drawCircle(0, 0, 10 + this._cargo);
+        this.beginFill("0xFF0000", 0.5);
+        this.drawCircle(0, 0, 10);
+        this.endFill();
+        this.cargoText.x = this._cargo;
+        this.cargoText.y = this._cargo;
+        this.cargoText.text = this._cargo;
     }
 }
