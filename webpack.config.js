@@ -8,13 +8,13 @@ module.exports = {
     ],
     output: {
         filename: 'bundle.js',
-        path: path.resolve(__dirname, 'dist'),
+        path: path.resolve(__dirname, 'public'),
         publicPath: '/'
     },
     devtool: "cheap-eval-source-map",
     devServer: {
         hot: true, // Tell the dev-server we're using HMR
-        contentBase: path.resolve(__dirname, 'dist'),
+        contentBase: path.resolve(__dirname, 'public'),
         publicPath: '/'
     }
 };
