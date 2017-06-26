@@ -1,0 +1,14 @@
+image: node:7-slim
+
+pages:
+  stage: deploy
+  script:
+  - curl -o- -L https://yarnpkg.com/install.sh | bash
+  - yarn
+  - yarn run build
+  - cp ./index.html ./public
+  artifacts:
+    paths:
+    - $CI_PROJECT_DIR/public
+  only:
+  - master
