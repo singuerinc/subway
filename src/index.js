@@ -1,15 +1,17 @@
 import RailWay from "./railway";
 import Station from "./station";
 import Train from "./train";
+import Line from "./lines/Line";
 import l1 from "./lines/l1.json";
 import l2 from "./lines/l2.json";
 import l3 from "./lines/l3.json";
-import L3 from "./lines/L3";
 import l4 from "./lines/l4.json";
 import l5 from "./lines/l5.json";
 import l9 from "./lines/l9.json";
 import l10 from "./lines/l10.json";
 import l11 from "./lines/l11.json";
+
+PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
 
 var renderer = new PIXI.CanvasRenderer(512, 512, null, false, true, true, 2);
 document.body.appendChild(renderer.view);
@@ -29,7 +31,16 @@ const loop = () => {
 };
 
 // const metroStations = l3;// [].concat(l1, l2, l3, l4, l5, l9, l10, l11);
-const metroStations = new L3().list;
+const metroStations = [].concat(
+    new Line("L1", l1).list,
+    new Line("L2", l2).list,
+    new Line("L3", l3).list,
+    new Line("L4", l4).list,
+    new Line("L5", l5).list,
+    new Line("L9", l9).list,
+    new Line("L10", l10).list,
+    new Line("L11", l11).list,
+);
 
 const allStations = new Map();
 
@@ -42,6 +53,7 @@ metroStations.forEach((station) => {
     allStations.set(station.id, {
         line: station.line,
         id: station.name,
+        dir: station.dir,
         position: { x: convert(station.lat, 2700), y: convert(station.lon, 750) },
         type: 1
     });
