@@ -6,9 +6,9 @@ pages:
   - curl -o- -L https://yarnpkg.com/install.sh | bash
   - yarn
   - yarn run build
-  - cp ./index.html ./dist
+  - cp ./index.html ./public
   artifacts:
     paths:
-    - $CI_PROJECT_DIR/dist
+    - $CI_PROJECT_DIR/public
   only:
   - master
