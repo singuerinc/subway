@@ -61,7 +61,7 @@ metroStations.forEach((station) => {
 
 let stations = new Map();
 
-allStations.forEach((value, key) => {
+allStations.forEach((value, key, a) => {
     // if (value.type === 1) {
     let arr;
     if (!stations.has(value.line)) {
@@ -96,8 +96,8 @@ stations.forEach((stationsInLine, key) => {
     const rw = new RailWay("1", stationsInLine, colors.get(key));
     stage.addChildAt(rw, 0);
 
-    for (let i = 0; i < stationsInLine.length/2; i++) {
-        const train = new Train(`${key}-T${i}`, {
+    for (let i = 0; i < stationsInLine.length / 2; i++) {
+        const train = new Train(`${i}`, {
             stops: stationsInLine
         });
         let stopIndex = Math.floor(Math.random() * stationsInLine.length);

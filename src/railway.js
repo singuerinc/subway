@@ -11,6 +11,7 @@ export default class RailWay extends PIXI.Graphics {
                 this.lineStyle(10, this._color, 1);
                 this.moveTo(parentStation.x, parentStation.y);
                 this.lineTo(station.x, station.y);
+                this.cacheAsBitmap = true;
             }
             parentStation = station;
         }, this);
