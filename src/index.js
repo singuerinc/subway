@@ -32,14 +32,14 @@ const loop = () => {
 
 // const metroStations = l3;// [].concat(l1, l2, l3, l4, l5, l9, l10, l11);
 const metroStations = [].concat(
-    new Line("L1", l1).list,
-    new Line("L2", l2).list,
+    // new Line("L1", l1).list,
+    // new Line("L2", l2).list,
     new Line("L3", l3).list,
-    new Line("L4", l4).list,
-    new Line("L5", l5).list,
-    new Line("L9", l9).list,
-    new Line("L10", l10).list,
-    new Line("L11", l11).list,
+    // new Line("L4", l4).list,
+    // new Line("L5", l5).list,
+    // new Line("L9", l9).list,
+    // new Line("L10", l10).list,
+    // new Line("L11", l11).list,
 );
 
 const allStations = new Map();
@@ -96,11 +96,12 @@ stations.forEach((stationsInLine, key) => {
     const rw = new RailWay("1", stationsInLine, colors.get(key));
     stage.addChildAt(rw, 0);
 
-    for (let i = 0; i < stationsInLine.length; i++) {
+    for (let i = 0; i < stationsInLine.length/2; i++) {
         const train = new Train(`${key}-T${i}`, {
             stops: stationsInLine
         });
-        train.parkIn(stationsInLine[0]);
+        let stopIndex = Math.floor(Math.random() * stationsInLine.length);
+        train.parkIn(stationsInLine[stopIndex], stopIndex);
         train.run();
         stage.addChild(train);
     }

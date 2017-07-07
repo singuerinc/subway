@@ -18,17 +18,22 @@ export default class Train extends PIXI.Graphics {
         this.speed = 100;
         this._cargo = 1;
 
-        // this.infoBg = new PIXI.Graphics();
-        // this.infoBg.beginFill();
-        // this.infoBg.drawRect(0, 0, 50, 20);
-        // this.addChild(this.infoBg);
+        this.buttonMode = true;
+        this.interactive = true;
+        this.on('click', () => {
+            this.info.visible = !this.info.visible;
+        });
+
 
         this.info = new PIXI.Text("", { fontFamily: 'HelveticaNeue', fontSize: 12, fill: 0xadb5bd, align: 'left' });
+        this.info.visible = false;
         this.info.x = 20;
         this.info.y = -5;
         this.addChild(this.info);
 
-        this.beginFill(0);
+        this.beginFill(0, 0.3);
+        this.drawCircle(0, 0, 10);
+        this.beginFill(0xFFFFFF);
         this.drawCircle(0, 0, 3);
         this.endFill();
     }
@@ -62,7 +67,7 @@ export default class Train extends PIXI.Graphics {
         }, 100 + Math.random() * 50);
     }
 
-    parkIn(stop) {
+    parkIn(stop, stopIndex) {
         return new Promise((resolve, reject) => {
             if (this._moving) {
                 return reject();
@@ -72,6 +77,7 @@ export default class Train extends PIXI.Graphics {
             this.y = stop.y;
             this._moving = false;
             this._currentStop = stop;
+            this._stopIndex = stopIndex;
             return resolve();
         });
     }
@@ -102,7 +108,8 @@ export default class Train extends PIXI.Graphics {
                 this.cargo += this._currentStop.getTheCargo();
 
                 //this.info.text = `#${this._id}: from: ${this._currentStop._id} / to: ${stop._id} / cargo: ${this.cargo}`;
-                this.info.text = `${this._id}\n${this._currentStop._id} (${this.cargo}) → ${stop._id}`;
+                // this.info.text = `${this._id}\n${this._currentStop._id} (${this.cargo}) → ${stop._id}`;
+                this.info.text = `${this._id}`;
             }
 
             const dx = stop.x - this.x;

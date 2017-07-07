@@ -4,7 +4,6 @@ export default class Station extends PIXI.Graphics {
     constructor({ id, position, dir }) {
         super();
         this.interactive = true;
-        this.buttonMode = true;
         // console.log(`Station ${id} created.`);
         this._id = id;
         this._color = "0xFF0000";
@@ -24,7 +23,7 @@ export default class Station extends PIXI.Graphics {
             fill: 0xffffff,
             align: 'left'
         });
-        this.nameText.alpha = 0.1;
+        // this.nameText.alpha = 0.1;
         this.nameText.x = 20;
         this.nameText.y = -10;
         this.nameText.visible = false;
@@ -83,10 +82,10 @@ export default class Station extends PIXI.Graphics {
 
     _render() {
         this.clear();
-        //this.lineStyle(1, "0xFFFFFF", 0.5);
-        // this.beginFill("0x000000", 0.1);
-        // this.drawCircle(0, 0, 10 + this._cargo);
-        this.lineStyle(4, "0x000000", 1);
+        // this.lineStyle(1, "0xFFFFFF", 0.5);
+        this.beginFill(0xFF0000, 0.1);
+        this.drawCircle(0, 0, 10 + (this._cargo * 0.1));
+        this.lineStyle(4, 0x000000, 1);
         this.beginFill("0xFFFFFF", 1);
         this.drawCircle(0, 0, 10);
         this.endFill();
