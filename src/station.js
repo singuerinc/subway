@@ -17,17 +17,32 @@ export default class Station extends PIXI.Graphics {
         this.x = position.x;
         this.y = position.y;
 
-        this._render();
+        this.interactive = true;
+        this.buttonMode = true;
 
-        // this.cargoText = new PIXI.Text("",{fontFamily : 'HelveticaNeue', fontSize: 12, fill : 0xffffff, align : 'left'});
-        // this.addChild(this.cargoText);
+        this.infoNameText = new PIXI.Text(this._id, {
+            fontFamily: 'Nunito-ExtraLight',
+            fontSize: 18,
+            fill: 0xffffff,
+            align: 'left'
+        });
+        this.infoNameText.visible = false;
+        this.infoNameText.x = 20;
+        this.infoNameText.y = -10;
+        this.addChild(this.infoNameText);
+
+        this.on('click', () => {
+            this.infoNameText.visible = !this.infoNameText.visible;
+        });
 
         setInterval(() => {
             this.addCargo(Math.floor(Math.random() * 10));
         }, 2000);
+
+        this._render();
     }
 
-    reserve(train){
+    reserve(train) {
         if (this._currentTrain === null) {
             // console.log(`Train ${train._id} in entering in Station ${this._id}.`);
             this._currentTrain = train;
@@ -92,6 +107,7 @@ export default class Station extends PIXI.Graphics {
         this.beginFill(this._color, 1);
         this.drawCircle(0, 0, 10);
         this.endFill();
+        this.infoNameText.text = `${this._id} → ${this._cargo}`;
         // this.cargoText.x = this._cargo;
         // this.cargoText.y = this._cargo;
     }
