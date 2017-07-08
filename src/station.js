@@ -1,4 +1,5 @@
 import Utils from "./utils";
+import anime from "animejs";
 
 export default class Station extends PIXI.Graphics {
     constructor({ id, position, dir, line, type }) {
@@ -89,7 +90,23 @@ export default class Station extends PIXI.Graphics {
     getTheCargo() {
         const cargo = this._cargo;
         this._cargo = 0;
-        this._render();
+
+        const duration = (25 * cargo);
+        const anim = {
+            __cargo: cargo
+        };
+
+        anime({
+            targets: anim,
+            easing: "linear",
+            duration,
+            __cargo: 0,
+            round: 1,
+            update: () => {
+                this._render(anim.__cargo);
+            }
+        });
+
         return cargo;
     }
 
@@ -98,15 +115,17 @@ export default class Station extends PIXI.Graphics {
         this._render();
     }
 
-    _render() {
+    _render(cargo) {
+        const c = cargo ? cargo : this._cargo;
         this.clear();
-        this.lineStyle(1, 0x00FFFF, 0.5);
-        this.beginFill(0x00FFFF, 0.1);
-        this.drawCircle(0, 0, 10 + (this._cargo * 0.1));
+        this.lineStyle(1, 0x00FF00, 0.5);
+        this.beginFill(0x00FF00, 0.1);
+        this.drawCircle(0, 0, 10 + (c * 0.1));
         this.lineStyle(4, 0x222222, 1);
         this.beginFill(this._color, 1);
         this.drawCircle(0, 0, 10);
         this.endFill();
-        this.infoNameText.text = `${this._id} → ${this._cargo}`;
+        this.closePath();
+        this.infoNameText.text = `${this._id} → ${c}`;
     }
 }

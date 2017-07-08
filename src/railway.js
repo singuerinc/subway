@@ -12,22 +12,26 @@ export default class RailWay extends PIXI.Graphics {
         this._stops = [];
 
         let parentStation;
-        stations.forEach((station) => {
+        stations.forEach((station, a, b) => {
+            if(!parentStation){
+                parentStation = b[b.length-1];
+            }
             if (typeof parentStation !== "undefined") {
                 this.lineStyle(10, this._color, 1);
                 this.moveTo(parentStation.x, parentStation.y);
                 this.lineTo(station.x, station.y);
-                // this.cacheAsBitmap = true;
 
-                const [x1, y1] = Utils.midpoint(parentStation.x, parentStation.y, station.x, station.y, 0.33);
-                const wp1 = new WayPoint({ id: 'wp1', position: { x: x1, y: y1 } });
-                this.addChild(wp1);
-                this._stops.push(wp1);
+                const distanceBtwStations = Utils.distance(station.x, station.y, parentStation.x, parentStation.y);
+                const numWayPoints = Math.floor(distanceBtwStations / 20);
 
-                const [x2, y2] = Utils.midpoint(parentStation.x, parentStation.y, station.x, station.y, 0.66);
-                const wp2 = new WayPoint({ id: 'wp2', position: { x: x2, y: y2 } });
-                this.addChild(wp2);
-                this._stops.push(wp2);
+                for (var i = 1; i < numWayPoints; i++) {
+                    const percentage = (1 / numWayPoints) * i;
+                    console.log(numWayPoints, percentage);
+                    const [x, y] = Utils.midpoint(parentStation.x, parentStation.y, station.x, station.y, percentage);
+                    const wp = new WayPoint({ id: `wp-${i}`, position: { x: x, y: y } });
+                    this.addChild(wp);
+                    this._stops.push(wp);
+                }
             }
             this._stops.push(station);
             parentStation = station;
