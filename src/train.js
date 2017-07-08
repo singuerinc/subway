@@ -1,6 +1,7 @@
 import anime from "animejs";
 import Station from "./station";
 import WayPoint from "./waypoint";
+import Utils from "./utils";
 
 export default class Train extends PIXI.Graphics {
     constructor(id, route) {
@@ -52,6 +53,10 @@ export default class Train extends PIXI.Graphics {
         this.drawCircle(0, 0, 6);
         this.beginFill(this._color, 1);
         this.drawCircle(0, 0, 3);
+        this.endFill();
+        this.lineStyle(1, 0x00FFFF, 0.5);
+        this.beginFill(0x00FFFF, 0.1);
+        this.drawCircle(0, 0, 10 + (this.cargo * 0.1));
         this.endFill();
         this.lineStyle(1, 0xFFFFFF, 0.1);
         this.moveTo(0, 0);
@@ -145,10 +150,6 @@ export default class Train extends PIXI.Graphics {
 
                 delay = (25 * tmpCargo) + MIN_DELAY;
 
-                // this.cargo -= Math.floor(Math.random() * this.cargo);
-                // load
-                // this.cargo += this._currentStop.getTheCargo();
-
                 anime({
                     targets: this,
                     easing: "linear",
@@ -157,6 +158,7 @@ export default class Train extends PIXI.Graphics {
                     cargo: tmpCargo,
                     round: 1,
                     update: () => {
+                        this.draw();
                         this.cargoInfo.text = `${this.cargo}`;
                     }
                 });
@@ -164,16 +166,16 @@ export default class Train extends PIXI.Graphics {
                 //this.info.text = `#${this._id}: from: ${this._currentStop._id} / to: ${stop._id} / cargo: ${this.cargo}`;
                 // this.info.text = `${this._id}\n${this._currentStop._id} (${this.cargo}) → ${stop._id}`;
                 this.info.text = `${this._id}`;
+                console.log("STATION");
             } else if(isWayPoint){
+                console.log("WAYPOINT");
                 delay = 0;
             }
 
             this.routeInfo.text = `${this._currentStop._id} → ${stop._id}`;
 
-            const dx = stop.x - this.x;
-            const dy = stop.y - this.y;
-            const distance = Math.sqrt(dx * dx + dy * dy);
-            const angle = Math.atan2(stop.y - this.y, stop.x - this.x);
+            const distance = Utils.distance(this.x, this.y, stop.x, stop.y);
+            const angle = Utils.angle(this.x, this.y, stop.x, stop.y);
 
             this.rotation = angle + (Math.PI / 2);
 
