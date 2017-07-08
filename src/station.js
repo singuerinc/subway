@@ -100,15 +100,13 @@ export default class Station extends PIXI.Graphics {
 
     _render() {
         this.clear();
-        // this.lineStyle(1, "0xFFFFFF", 0.5);
-        this.beginFill(0xFF0000, 0.1);
+        this.lineStyle(1, 0x00FFFF, 0.5);
+        this.beginFill(0x00FFFF, 0.1);
         this.drawCircle(0, 0, 10 + (this._cargo * 0.1));
         this.lineStyle(4, 0x222222, 1);
         this.beginFill(this._color, 1);
         this.drawCircle(0, 0, 10);
         this.endFill();
         this.infoNameText.text = `${this._id} → ${this._cargo}`;
-        // this.cargoText.x = this._cargo;
-        // this.cargoText.y = this._cargo;
     }
 }

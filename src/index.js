@@ -97,8 +97,7 @@ stations.forEach((stationsInLine, key) => {
         const train = new Train(`${i}`, {
             stops: rw.stops
         });
-        // let stopIndex = Math.floor(Math.random() * rw.stops.length);
-        let stopIndex = 0;
+        let stopIndex = i * 4;
         train.parkIn(rw.stops[stopIndex], stopIndex);
         train.run();
         stage.addChild(train);

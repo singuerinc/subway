@@ -5,7 +5,7 @@ import WayPoint from "./waypoint";
 export default class Train extends PIXI.Graphics {
     constructor(id, route) {
         super();
-        console.log(`Train ${id} created.`);
+        // console.log(`Train ${id} created.`);
         this._id = id;
         this._route = route;
         this._stops = this._route.stops;
@@ -24,19 +24,21 @@ export default class Train extends PIXI.Graphics {
         });
 
 
+        this.rX = (Math.random() * 100) + 52;
+
         this.info = new PIXI.Text("", { fontFamily: 'Nunito-ExtraLight', fontSize: 12, fill: 0xFFFFFF, align: 'left' });
-        this.info.x = 52;
+        this.info.x = this.rX;
         this.info.y = -8;
         this.addChild(this.info);
 
-        this.cargoInfo = new PIXI.Text("", { fontFamily: 'Nunito-ExtraLight', fontSize: 14, fill: 0x767676, align: 'left' });
-        this.cargoInfo.x = 52;
-        this.cargoInfo.y = 8;
+        this.cargoInfo = new PIXI.Text("", { fontFamily: 'Nunito-ExtraLight', fontSize: 12, fill: 0x767676, align: 'left' });
+        this.cargoInfo.x = this.rX + 20;
+        this.cargoInfo.y = -8;
         this.addChild(this.cargoInfo);
 
         this.routeInfo = new PIXI.Text("", { fontFamily: 'Nunito-ExtraLight', fontSize: 12, fill: 0x767676, align: 'left' });
         this.routeInfo.visible = false;
-        this.routeInfo.x = 70;
+        this.routeInfo.x = this.rX + 50;
         this.routeInfo.y = -8;
         this.addChild(this.routeInfo);
 
@@ -53,7 +55,8 @@ export default class Train extends PIXI.Graphics {
         this.endFill();
         this.lineStyle(1, 0xFFFFFF, 0.1);
         this.moveTo(0, 0);
-        this.lineTo(50, 0);
+        this.lineTo(this.rX, 0);
+        this.closePath();
     }
 
     set cargo(value) {
@@ -69,7 +72,7 @@ export default class Train extends PIXI.Graphics {
         if(this._moving){
             this._color = 0x767676;
         } else {
-            this._color = 0xFF2200;
+            this._color = 0x00FF00;
         }
         this.draw();
     }
@@ -161,10 +164,11 @@ export default class Train extends PIXI.Graphics {
                 //this.info.text = `#${this._id}: from: ${this._currentStop._id} / to: ${stop._id} / cargo: ${this.cargo}`;
                 // this.info.text = `${this._id}\n${this._currentStop._id} (${this.cargo}) → ${stop._id}`;
                 this.info.text = `${this._id}`;
-                this.routeInfo.text = `${this._currentStop._id} → ${stop._id}`;
             } else if(isWayPoint){
                 delay = 0;
             }
+
+            this.routeInfo.text = `${this._currentStop._id} → ${stop._id}`;
 
             const dx = stop.x - this.x;
             const dy = stop.y - this.y;
