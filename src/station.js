@@ -87,9 +87,9 @@ export default class Station extends PIXI.Graphics {
         return this._cargo;
     }
 
-    getTheCargo() {
-        const cargo = this._cargo;
-        this._cargo = 0;
+    getTheCargo(maxCargo) {
+        const cargo = Math.min(this._cargo, maxCargo);
+        this._cargo = this._cargo - cargo;
 
         const duration = (25 * cargo);
         const anim = {
@@ -118,10 +118,10 @@ export default class Station extends PIXI.Graphics {
     _render(cargo) {
         const c = cargo ? cargo : this._cargo;
         this.clear();
-        this.lineStyle(1, 0x00FF00, 0.5);
-        this.beginFill(0x00FF00, 0.1);
-        this.drawCircle(0, 0, 10 + (c * 0.1));
-        this.lineStyle(4, 0x222222, 1);
+        // this.lineStyle(1, 0x00FF00, 0.5);
+        // this.beginFill(0x00FF00, 0.1);
+        // this.drawCircle(0, 0, 10 + (c * 0.1));
+        this.lineStyle(4, 0x000000, 1);
         this.beginFill(this._color, 1);
         this.drawCircle(0, 0, 10);
         this.endFill();

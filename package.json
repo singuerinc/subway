@@ -6,6 +6,7 @@
   "devDependencies": {
     "animejs": "^2.0.2",
     "copy-webpack-plugin": "^4.0.1",
+    "keymaster": "^1.6.2",
     "pixi.js": "^4.5.3",
     "webpack": "^3.0.0",
     "webpack-dev-server": "^2.5.0"

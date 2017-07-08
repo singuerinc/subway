@@ -94,8 +94,9 @@ colors.set("L9", 0xFF8615);
 colors.set("L10", 0x00B0F2);
 colors.set("L11", 0x89D748);
 
+let railWayIndex = 1;
 stations.forEach((stationsInLine, key) => {
-    const rw = new RailWay(key, stationsInLine, colors.get(key));
+    const rw = new RailWay({id: key, stations: stationsInLine, color: colors.get(key), idx: railWayIndex++});
     stage.addChildAt(rw, 0);
 });
 

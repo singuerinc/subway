@@ -1,17 +1,22 @@
+import * as k from "keymaster";
 import Train from "./train";
 import WayPoint from "./waypoint";
 import Utils from "./utils";
 
 export default class RailWay extends PIXI.Graphics {
-    constructor(id, stations, color) {
+    constructor({id, stations, color, idx}) {
         super();
+        console.log(idx);
         // console.log(`RailWay ${id} created ${stations.size}.`);
         this._id = id;
         this._color = color;
-        // this._color = 0x444444;
 
         const f = global.gui.addFolder(this._id);
-        f.add(this, 'visible');
+        f.add(this, 'visible').listen();
+
+        k("" + idx, () => {
+            this.visible = !this.visible;
+        });
 
         this.layerStations = new PIXI.Graphics();
         this.addChild(this.layerStations);
@@ -44,7 +49,7 @@ export default class RailWay extends PIXI.Graphics {
                 for (var i = 1; i < numWayPoints; i++) {
                     const percentage = (1 / numWayPoints) * i;
                     const [x, y] = Utils.midpoint(parentStation.x, parentStation.y, station.x, station.y, percentage);
-                    const wp = new WayPoint({ id: `wp-${i}`, position: { x: x, y: y } });
+                    const wp = new WayPoint({ id: `${parentStation._id}-wp-${i}`, position: { x: x, y: y } });
                     this.layerWayPoints.addChild(wp);
                     this._stops.push(wp);
                 }
@@ -53,7 +58,8 @@ export default class RailWay extends PIXI.Graphics {
             parentStation = station;
         }, this);
 
-        for (let i = 0; i < this.stops.length / 4; i++) {
+        for (let i = 0; i < this.stops.length / 6; i++) {
+        // for (let i = 0; i < 1; i++) {
             const train = new Train(`${i}`, {
                 stops: this.stops
             });
