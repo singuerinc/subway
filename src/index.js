@@ -93,12 +93,11 @@ stations.forEach((stationsInLine, key) => {
     const rw = new RailWay("1", stationsInLine, colors.get(key));
     stage.addChildAt(rw, 0);
 
-    for (let i = 0; i < 1; i++) {
+    for (let i = 0; i < rw.stops.length / 4; i++) {
         const train = new Train(`${i}`, {
             stops: rw.stops
         });
-        // let stopIndex = i * 4;
-        let stopIndex = 20;
+        let stopIndex = i * 4;
         train.parkIn(rw.stops[stopIndex], stopIndex);
         train.run();
         stage.addChild(train);
