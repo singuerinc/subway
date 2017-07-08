@@ -31,6 +31,7 @@ export default class Train extends PIXI.Graphics {
         this.rX = (Math.random() * 100) + 52;
 
         this.info = new PIXI.Text("", { fontFamily: 'Nunito-ExtraLight', fontSize: 12, fill: 0xFFFFFF, align: 'left' });
+        this.info.visible = false;
         this.info.x = this.rX;
         this.info.y = -8;
         this.addChild(this.info);
@@ -41,6 +42,7 @@ export default class Train extends PIXI.Graphics {
             fill: 0x767676,
             align: 'left'
         });
+        this.cargoInfo.visible = false;
         this.cargoInfo.x = this.rX + 20;
         this.cargoInfo.y = 8;
         this.addChild(this.cargoInfo);
@@ -89,9 +91,9 @@ export default class Train extends PIXI.Graphics {
         // this.beginFill(0x00FFFF, 0.5);
         this.drawCircle(0, 0, 6 + (this.cargo * 0.1));
         // this.endFill();
-        this.lineStyle(1, 0xFFFFFF, 0.1);
-        this.moveTo(0, 0);
-        this.lineTo(this.rX, 0);
+        // this.lineStyle(1, 0xFFFFFF, 0.1);
+        // this.moveTo(0, 0);
+        // this.lineTo(this.rX, 0);
         this.closePath();
     }
 
