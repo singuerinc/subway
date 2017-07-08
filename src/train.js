@@ -24,17 +24,17 @@ export default class Train extends PIXI.Graphics {
         });
 
 
-        this.info = new PIXI.Text("", { fontFamily: 'HelveticaNeue', fontSize: 12, fill: 0xFFFFFF, align: 'left' });
+        this.info = new PIXI.Text("", { fontFamily: 'Nunito-ExtraLight', fontSize: 12, fill: 0xFFFFFF, align: 'left' });
         this.info.x = 52;
         this.info.y = -8;
         this.addChild(this.info);
 
-        this.cargoInfo = new PIXI.Text("", { fontFamily: 'HelveticaNeue', fontSize: 14, fill: 0x767676, align: 'left' });
+        this.cargoInfo = new PIXI.Text("", { fontFamily: 'Nunito-ExtraLight', fontSize: 14, fill: 0x767676, align: 'left' });
         this.cargoInfo.x = 52;
         this.cargoInfo.y = 8;
         this.addChild(this.cargoInfo);
 
-        this.routeInfo = new PIXI.Text("", { fontFamily: 'HelveticaNeue', fontSize: 12, fill: 0x767676, align: 'left' });
+        this.routeInfo = new PIXI.Text("", { fontFamily: 'Nunito-ExtraLight', fontSize: 12, fill: 0x767676, align: 'left' });
         this.routeInfo.visible = false;
         this.routeInfo.x = 70;
         this.routeInfo.y = -8;
@@ -79,7 +79,7 @@ export default class Train extends PIXI.Graphics {
     }
 
     run() {
-        setInterval(() => {
+        // setInterval(() => {
             if (!this.moving) {
                 const nextIndex = (this._stopIndex + 1) % this._stops.length;
                 const nextStop = this._stops[nextIndex];
@@ -87,12 +87,13 @@ export default class Train extends PIXI.Graphics {
                 this.moveToStop(nextStop)
                     .then(() => {
                         this._stopIndex = nextIndex;
+                        this.run();
                     })
                     .catch((error) => {
-
+                        setTimeout(() => this.run(), 500);
                     });
             }
-        }, 500 + Math.random() * 50);
+        // }, 500 + Math.random() * 50);
     }
 
     parkIn(stop, stopIndex) {
@@ -161,6 +162,8 @@ export default class Train extends PIXI.Graphics {
                 // this.info.text = `${this._id}\n${this._currentStop._id} (${this.cargo}) → ${stop._id}`;
                 this.info.text = `${this._id}`;
                 this.routeInfo.text = `${this._currentStop._id} → ${stop._id}`;
+            } else if(isWayPoint){
+                delay = 0;
             }
 
             const dx = stop.x - this.x;

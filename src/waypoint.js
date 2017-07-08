@@ -6,29 +6,43 @@ export default class WayPoint extends PIXI.Graphics {
         // console.log(`WayPoint ${id} created.`);
         this._id = id;
         this._currentTrain = null;
+        this._color = 0x666666;
 
-        this.x = Utils.convert(position.x);
-        this.y = Utils.convert(position.y);
+        this.x = position.x;
+        this.y = position.y;
 
         this._render();
     }
 
-    enter(train){
+    reserve(train){
         if(this._currentTrain === null){
-            // console.log(`Train ${train._id} in entering in Waypoint ${this._id}.`);
+            console.log(`Train ${train._id} in reserving Waypoint ${this._id}.`);
             this._currentTrain = train;
+            this._color = 0xFF8800;
+            this._render();
         } else {
             throw new Error("A train is in this waypoint!");
         }
-        this._render();
+    }
+
+    enter(train){
+        if(this._currentTrain === train){
+            console.log(`Train ${train._id} in entering in Waypoint ${this._id}.`);
+            this._currentTrain = train;
+            this._color = 0xFF0000;
+            this._render();
+        } else {
+            throw new Error("A train is in this waypoint!");
+        }
     }
 
     leave(train){
         if(train === this._currentTrain){
             // console.log(`Train ${train._id} in leaving the Waypoint ${this._id}.`);
             this._currentTrain = null;
+            this._color = 0x666666;
+            this._render();
         }
-        this._render();
     }
 
     getCurrentTrain(){
@@ -40,7 +54,7 @@ export default class WayPoint extends PIXI.Graphics {
     }
 
     _render() {
-        this.beginFill(this.hasTrain() ? "0xFF0000": "0x00FF00");
+        this.beginFill(this._color);
         this.drawCircle(0, 0, 3);
         this.endFill();
     }

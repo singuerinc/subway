@@ -62,8 +62,8 @@ metroStations.forEach((station) => {
 let stations = new Map();
 
 allStations.forEach((value, key, a) => {
-    // if (value.type === 1) {
     let arr;
+
     if (!stations.has(value.line)) {
         arr = [];
     }
@@ -71,14 +71,11 @@ allStations.forEach((value, key, a) => {
         arr = stations.get(value.line);
     }
 
-    const station = new Station(value);
-    stage.addChild(station);
-    arr.push(station);
-    // } else if (value.type === 2) {
-    // const waypoint = new WayPoint(value);
-    // stage.addChild(waypoint);
-    //stations.set(key, waypoint);
-    // }
+    if (value.type === 1) {
+        const station = new Station(value);
+        stage.addChild(station);
+        arr.push(station);
+    }
     stations.set(value.line, arr);
 });
 
@@ -96,12 +93,13 @@ stations.forEach((stationsInLine, key) => {
     const rw = new RailWay("1", stationsInLine, colors.get(key));
     stage.addChildAt(rw, 0);
 
-    for (let i = 0; i < stationsInLine.length / 2; i++) {
+    for (let i = 0; i < rw.stops.length / 4; i++) {
         const train = new Train(`${i}`, {
-            stops: stationsInLine
+            stops: rw.stops
         });
-        let stopIndex = Math.floor(Math.random() * stationsInLine.length);
-        train.parkIn(stationsInLine[stopIndex], stopIndex);
+        // let stopIndex = Math.floor(Math.random() * rw.stops.length);
+        let stopIndex = 0;
+        train.parkIn(rw.stops[stopIndex], stopIndex);
         train.run();
         stage.addChild(train);
     }
