@@ -1,10 +1,14 @@
 const path = require('path');
 const webpack = require('webpack');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     entry: './src/index.js',
     plugins: [
-        new webpack.HotModuleReplacementPlugin() // Enable HMR
+        new webpack.HotModuleReplacementPlugin(), // Enable HMR
+        new CopyWebpackPlugin([
+            { from: './index.html' },
+        ])
     ],
     output: {
         filename: 'bundle.js',
