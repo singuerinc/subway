@@ -16,7 +16,7 @@ export default class WayPoint extends PIXI.Graphics {
 
     reserve(train){
         if(this._currentTrain === null){
-            console.log(`Train ${train._id} in reserving Waypoint ${this._id}.`);
+            // console.log(`Train ${train._id} in reserving Waypoint ${this._id}.`);
             this._currentTrain = train;
             this._color = 0xFF8800;
             this._render();
@@ -27,7 +27,7 @@ export default class WayPoint extends PIXI.Graphics {
 
     enter(train){
         if(this._currentTrain === train){
-            console.log(`Train ${train._id} in entering in Waypoint ${this._id}.`);
+            // console.log(`Train ${train._id} in entering in Waypoint ${this._id}.`);
             this._currentTrain = train;
             this._color = 0xFF0000;
             this._render();
@@ -54,8 +54,9 @@ export default class WayPoint extends PIXI.Graphics {
     }
 
     _render() {
+        this.clear();
         this.beginFill(this._color);
-        this.drawCircle(0, 0, 3);
+        this.drawCircle(0, 0, 2);
         this.endFill();
     }
 }
