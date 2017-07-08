@@ -10,6 +10,9 @@ export default class RailWay extends PIXI.Graphics {
         this._color = color;
         // this._color = 0x444444;
 
+        const f = global.gui.addFolder(this._id);
+        f.add(this, 'visible');
+
         this.layerStations = new PIXI.Graphics();
         this.addChild(this.layerStations);
 
@@ -60,8 +63,7 @@ export default class RailWay extends PIXI.Graphics {
             this.layerTrains.addChild(train);
         }
 
-        const f = global.gui.addFolder(this._id);
-        f.add(this, 'visible');
+
         f.add(this.layerStations, 'visible');
         f.add(this.layerWayPoints, 'visible');
         f.add(this.layerTrains, 'visible');
