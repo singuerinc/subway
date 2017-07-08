@@ -11,6 +11,11 @@ import l9 from "./lines/l9.json";
 import l10 from "./lines/l10.json";
 import l11 from "./lines/l11.json";
 
+const guiEl = document.getElementById('gui');
+console.log(guiEl);
+global.gui = new dat.GUI({ autoPlace: false });
+guiEl.appendChild(gui.domElement);
+
 PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
 
 var renderer = new PIXI.CanvasRenderer(512, 512, null, false, true, true, 2);
@@ -73,7 +78,7 @@ allStations.forEach((value, key, a) => {
 
     if (value.type === 1) {
         const station = new Station(value);
-        stage.addChild(station);
+        // stage.addChild(station);
         arr.push(station);
     }
     stations.set(value.line, arr);
@@ -90,18 +95,8 @@ colors.set("L10", 0x00B0F2);
 colors.set("L11", 0x89D748);
 
 stations.forEach((stationsInLine, key) => {
-    const rw = new RailWay("1", stationsInLine, colors.get(key));
+    const rw = new RailWay(key, stationsInLine, colors.get(key));
     stage.addChildAt(rw, 0);
-
-    for (let i = 0; i < rw.stops.length / 4; i++) {
-        const train = new Train(`${i}`, {
-            stops: rw.stops
-        });
-        let stopIndex = i * 4;
-        train.parkIn(rw.stops[stopIndex], stopIndex);
-        train.run();
-        stage.addChild(train);
-    }
 });
 
 loop();

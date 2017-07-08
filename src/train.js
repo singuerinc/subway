@@ -166,9 +166,7 @@ export default class Train extends PIXI.Graphics {
                 //this.info.text = `#${this._id}: from: ${this._currentStop._id} / to: ${stop._id} / cargo: ${this.cargo}`;
                 // this.info.text = `${this._id}\n${this._currentStop._id} (${this.cargo}) → ${stop._id}`;
                 this.info.text = `${this._id}`;
-                console.log("STATION");
             } else if(isWayPoint){
-                console.log("WAYPOINT");
                 delay = 0;
             }
 
