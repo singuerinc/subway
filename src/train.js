@@ -3,6 +3,10 @@ import Station from "./station";
 import WayPoint from "./waypoint";
 import Utils from "./utils";
 
+const COLOR_GO = 0xFF9900;
+const COLOR_MOVING = 0x767676;
+const COLOR_WAITING = 0x00FF00;
+
 export default class Train extends PIXI.Graphics {
     constructor(id, route) {
         super();
@@ -18,6 +22,7 @@ export default class Train extends PIXI.Graphics {
         this.maxCargo = [80, 160, 240, 320][this.numWagon];
         this.maxSpeed = [0.8, 0.75, 0.7, 0.6][this.numWagon];
 
+        this._state = "";
         this.cargo = 1;
         this.speed = this.maxSpeed;
 
@@ -58,7 +63,7 @@ export default class Train extends PIXI.Graphics {
         });
 
         this.on('mouseout', () => {
-            if(this.selected === true) return;
+            if (this.selected === true) return;
             this.infoContainer.visible = false;
         });
 
@@ -110,6 +115,19 @@ export default class Train extends PIXI.Graphics {
         this.wagon.endFill();
 
         this.wagon.closePath();
+        this.updateInfo();
+
+    }
+
+    updateInfo() {
+        if (this.info.visible) {
+            this.info.text =
+                `#${this._id} - ${this._state}
+Cargo: ${this.cargo}/${this.maxCargo}
+${Math.floor(this.speed * 100)}km/h
+`;
+        }
+        // ${this._currentStop._id} ⇢ ${nextStop._id}
     }
 
     set cargo(value) {
@@ -123,9 +141,11 @@ export default class Train extends PIXI.Graphics {
     set moving(value) {
         this._moving = value;
         if (this._moving) {
-            this._color = 0x767676;
+            this._color = COLOR_MOVING;
+            this._state = 'in transit';
         } else {
-            this._color = 0x00FF00;
+            this._color = COLOR_WAITING;
+            this._state = 'waiting';
         }
         this.draw();
     }
@@ -171,7 +191,8 @@ export default class Train extends PIXI.Graphics {
             const toUnload = anime.random(0, this.cargo);
             const tmpCargo = this.cargo - toUnload;
 
-            this.info.text = `#${this._id}\n⬇ Cargo: ${this.cargo}/${this.maxCargo}\n${Math.floor(this.speed * 100)}km/h\n${this._currentStop._id} ⇢ ${nextStop._id}`;
+            this._state = 'unloading';
+            this.updateInfo();
 
             if (tmpCargo === 0 || tmpCargo === this.cargo) {
                 this.cargo = tmpCargo;
@@ -187,7 +208,7 @@ export default class Train extends PIXI.Graphics {
                 round: 1,
                 update: () => {
                     this.draw();
-                    this.info.text = `#${this._id}\n⬇ Cargo: ${this.cargo}/${this.maxCargo}\n${Math.floor(this.speed * 100)}km/h\n${this._currentStop._id} ⇢ ${nextStop._id}`;
+                    this.updateInfo();
                 },
                 complete: resolve
             });
@@ -199,7 +220,8 @@ export default class Train extends PIXI.Graphics {
             const toLoad = this._currentStop.getTheCargo(this.maxCargo - this.cargo);
             const tmpCargo = this.cargo + toLoad;
 
-            this.info.text = `#${this._id}\n⬆ Cargo: ${this.cargo}/${this.maxCargo}\n${Math.floor(this.speed * 100)}km/h\n${this._currentStop._id} ⇢ ${nextStop._id}`;
+            this._state = 'loading';
+            this.updateInfo();
 
             if (tmpCargo === 0 || tmpCargo === this.cargo) {
                 this.cargo = tmpCargo;
@@ -215,7 +237,7 @@ export default class Train extends PIXI.Graphics {
                 round: 1,
                 update: () => {
                     this.draw();
-                    this.info.text = `#${this._id}\n⬆ Cargo: ${this.cargo}/${this.maxCargo}\n${Math.floor(this.speed * 100)}km/h\n${this._currentStop._id} ⇢ ${nextStop._id}`;
+                    this.updateInfo();
                 },
                 complete: resolve
             });
@@ -227,21 +249,23 @@ export default class Train extends PIXI.Graphics {
             try {
                 nextStop.reserve(this);
             } catch (error) {
-                reject();
+                return reject();
             }
-
 
             const wayPointToWayPoint = (this._currentStop instanceof WayPoint) && (nextStop instanceof WayPoint);
             const wayPointToStation = (this._currentStop instanceof WayPoint) && (nextStop instanceof Station);
             const stationToWayPoint = (this._currentStop instanceof Station) && (nextStop instanceof WayPoint);
+            const stationToStation = (this._currentStop instanceof Station) && (nextStop instanceof Station);
             const isWayPoint = this._currentStop instanceof WayPoint;
             const distance = Utils.distance(this.x, this.y, nextStop.x, nextStop.y);
             const delay = isWayPoint ? 0 : 500;
 
-            this.info.text = `#${this._id}\nCargo: ${this.cargo}/${this.maxCargo}\n${Math.floor(this.speed * 100)}km/h\n${this._currentStop._id} ⇢ ${nextStop._id}`;
+            this._color = COLOR_GO;
+            this._state = 'go';
+            this.updateInfo();
 
-            this._color = 0xFF9900;
             this.draw();
+
             const onBegin = () => {
                 if (this._currentStop) {
                     this._currentStop.leave(this);
@@ -253,30 +277,31 @@ export default class Train extends PIXI.Graphics {
                 this.moving = false;
                 this._currentStop = nextStop;
                 this._currentStop.enter(this);
-                resolve();
+                return resolve();
             };
 
             let easing;
-            let duration;
+            let duration = (distance * 5000 / 100) / this.maxSpeed * 1.5;
             let nSpeed;
 
             if (stationToWayPoint) {
-                easing = "easeInSine";
-                duration = (distance * 5000 / 100) / this.maxSpeed * 1.5;
                 this.speed = 0;
+                easing = "easeInSine";
                 nSpeed = this.maxSpeed;
             } else if (wayPointToWayPoint) {
-                easing = "linear";
-                duration = (distance * 5000 / 100) / this.maxSpeed;
                 this.speed = this.maxSpeed;
+                duration = (distance * 5000 / 100) / this.maxSpeed;
+                easing = "linear";
                 nSpeed = this.maxSpeed;
             } else if (wayPointToStation) {
-                easing = "easeOutSine";
-                duration = (distance * 5000 / 100) / this.maxSpeed * 1.5;
                 this.speed = this.maxSpeed;
+                easing = "easeOutSine";
                 nSpeed = 0;
+            } else if (stationToStation) {
+                this.speed = 0;
+                easing = "easeInOutSine";
+                nSpeed = this.maxSpeed;
             }
-
 
             if (distance === 0) {
                 // same station, but changing sides
@@ -296,7 +321,7 @@ export default class Train extends PIXI.Graphics {
                     y: nextStop.y,
                     begin: onBegin,
                     update: () => {
-                        this.info.text = `#${this._id}\n⦿ Cargo: ${this.cargo}/${this.maxCargo}\n${Math.floor(this.speed * 100)}km/h\n${this._currentStop._id} ⇢ ${nextStop._id}`;
+                        this.updateInfo();
                     },
                     complete: onComplete
                 });
@@ -306,7 +331,7 @@ export default class Train extends PIXI.Graphics {
 
     moveToStop(nextStop) {
         return new Promise((resolve, reject) => {
-            if (this.moving || nextStop.hasTrain()) {
+            if (this.moving) {
                 return reject();
             }
 
