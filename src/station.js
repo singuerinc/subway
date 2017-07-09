@@ -17,25 +17,30 @@ export default class Station extends PIXI.Graphics {
         this.interactive = true;
         this.buttonMode = true;
 
+        this.graph = new PIXI.Graphics();
+        this.addChild(this.graph);
+
+        this.info = new PIXI.Graphics();
+        this.addChild(this.info);
+
         this.infoNameText = new PIXI.Text(this._id, {
-            fontFamily: 'Nunito-ExtraLight',
-            fontSize: 18,
-            fill: 0xffffff,
-            align: 'left'
+            fontSize: 22,
+            fill: 0x111111
         });
-        this.infoNameText.visible = false;
-        this.infoNameText.x = 20;
-        this.infoNameText.y = -10;
-        this.addChild(this.infoNameText);
+
+        // this.infoNameText.visible = false;
+        this.infoNameText.x = 50;
+        this.infoNameText.y = -40;
+        this.info.addChild(this.infoNameText);
 
         this.on('click', () => {
-            this.infoNameText.visible = !this.infoNameText.visible;
+            this.info.visible = !this.info.visible;
         });
 
-        // setInterval(() => {
-        //     const value = anime.random(1, 10);
-        //     this.cargo += value;
-        // }, 2000);
+        setInterval(() => {
+            const value = anime.random(1, 10);
+            this.cargo += value;
+        }, 2000);
 
         this.draw();
     }
@@ -111,17 +116,39 @@ export default class Station extends PIXI.Graphics {
         return cargo;
     }
 
+    set parentStation(value){
+        this._parentStation = value;
+        const angle = Utils.angle(this.x, this.y, this._parentStation.x, this._parentStation.y);
+        this.rotation = angle + (Math.PI / 2);
+    }
+
+    get parentStation() {
+        return this._parentStation;
+    }
+
     draw(cargo) {
         const c = cargo ? cargo : this.cargo;
-        this.clear();
-        this.lineStyle(1, 0x00FF00, 0.5);
-        this.beginFill(0x00FF00, 0.1);
-        this.drawCircle(0, 0, 26 + (c * 0.1));
-        this.lineStyle(8, 0x000000, 1);
-        this.beginFill(this._color, 1);
-        this.drawCircle(0, 0, 25);
-        this.endFill();
-        this.closePath();
-        this.infoNameText.text = `${this._id} → ${c}`;
+
+        this.graph.clear();
+
+        // cargo
+        // this.info.lineStyle(0);
+        // this.info.beginFill(0x00FF00, 0.4);
+        // this.info.drawCircle(0, 0, 26 + (c * 0.1));
+        for(var i=0; i<Math.floor(c/10); i++){
+            this.info.lineStyle(0);
+            this.info.beginFill(0x111111, 1);
+            this.info.drawRect(50 + (i % 5 * 14), (-5) + (Math.floor(i / 5) * 14), 10, 10);
+        }
+        this.info.closePath();
+
+        // station
+        this.graph.lineStyle(8, 0x000000, 1);
+        this.graph.beginFill(this._color, 1);
+        this.graph.drawCircle(0, 0, 25);
+        this.graph.endFill();
+
+
+        this.graph.closePath();
     }
 }
