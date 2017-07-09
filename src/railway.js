@@ -21,7 +21,10 @@ export default class RailWay extends PIXI.Graphics {
         this.addChild(this.layerStations);
 
         for(var i=0; i<stations.length; i++){
-            this.layerStations.addChild(stations[i]);
+            const station = stations[i];
+            if (station.dir === 1) {
+                this.layerStations.addChild(station);
+            }
         }
 
         this.layerWayPoints = new PIXI.Graphics();
@@ -34,37 +37,41 @@ export default class RailWay extends PIXI.Graphics {
 
         let parentStation;
         stations.forEach((station, a, b) => {
-            console.log("dir:", station.dir);
             if(!parentStation){
                 parentStation = b[b.length-1];
             }
             if (typeof parentStation !== "undefined") {
-                this.lineStyle(15, this._color, 1);
-
                 let px = parentStation.x;
                 let py = parentStation.y;
                 let sx = station.x;
                 let sy = station.y;
 
-                this.moveTo(px, py);
-                this.lineTo(sx, sy);
+                if(station.dir === 1){
+                    this.lineStyle(25, this._color, 1);
+                    this.moveTo(px, py);
+                    this.lineTo(sx, sy);
+                }
 
                 const distanceBtwStations = Utils.distance(sx, sy, px, py);
-                const numWayPoints = Math.floor(distanceBtwStations / 20);
+                const numWayPoints = Math.floor(distanceBtwStations / 50);
 
+                let prevStop = station;
                 for (var i = 1; i < numWayPoints; i++) {
                     const percentage = (1 / numWayPoints) * i;
                     const [x, y] = Utils.midpoint(px, py, sx, sy, percentage);
-                    const wp = new WayPoint({ id: `${parentStation._id}-wp-${i}`, position: { x: x, y: y } });
-                    this.layerWayPoints.addChild(wp);
+                    const wp = new WayPoint({ id: `${parentStation._id}-wp-${i}`, prevStop, position: { x: x, y: y } });
+                    if (station.dir === 1) {
+                        this.layerWayPoints.addChild(wp);
+                    }
                     this._stops.push(wp);
+                    prevStop = wp;
                 }
             }
             this._stops.push(station);
             parentStation = station;
         }, this);
 
-        for (let i = 0; i < this.stops.length / 6; i++) {
+        for (let i = 0; i < stations.length / 2; i++) {
         // for (let i = 0; i < 1; i++) {
             const train = new Train(`${i}`, {
                 stops: this.stops

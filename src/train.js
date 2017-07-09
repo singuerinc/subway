@@ -8,55 +8,44 @@ export default class Train extends PIXI.Graphics {
         super();
         // console.log(`Train ${id} created.`);
         this._id = id;
+        this.x = 0;
+        this.y = 0;
         this._route = route;
         this._stops = this._route.stops;
         this._stopIndex = 0;
-        const r = Math.floor(Math.random() * 4);
-        this.maxCargo = [80, 120, 160, 240][r];
-        this.maxSpeed = [1.5, 1.4, 1.3, 1][r];
-        //this._currentStop = this._stops[this._stopIndex];
-        this.x = 0;//this._currentStop.x;
-        this.y = 0; //this._currentStop.y;
 
-        this.speed = 100;
-        this._cargo = 1;
+        this.numWagon = Math.floor(Math.random() * 4);
+        this.maxCargo = [80, 160, 240, 320][this.numWagon];
+        this.maxSpeed = [0.8, 0.75, 0.7, 0.6][this.numWagon];
+
+        this.cargo = 1;
+        this.speed = this.maxSpeed;
 
         this.buttonMode = true;
         this.interactive = true;
-        this.on('click', () => {
-            this.routeInfo.visible = !this.routeInfo.visible;
+
+        this.wagon = new PIXI.Graphics();
+        // this.wagon.x = 50;
+        this.addChild(this.wagon);
+
+        this.infoContainer = new PIXI.Graphics();
+        this.infoContainer.visible = false;
+        this.infoContainer.lineStyle(1, 0x111111, 1);
+        this.infoContainer.moveTo(0, 0);
+        this.infoContainer.lineTo(280, 0);
+        this.addChild(this.infoContainer);
+
+        this.info = new PIXI.Text("", {
+            fontSize: 25,
+            fill: 0x676767
         });
-
-
-        this.rX = (Math.random() * 100) + 52;
-
-        this.info = new PIXI.Text("", { fontFamily: 'Nunito-ExtraLight', fontSize: 12, fill: 0xFFFFFF, align: 'left' });
-        this.info.visible = false;
-        this.info.x = this.rX;
+        this.info.x = 300;
         this.info.y = -8;
-        this.addChild(this.info);
+        this.infoContainer.addChild(this.info);
 
-        this.cargoInfo = new PIXI.Text("", {
-            fontFamily: 'Nunito-ExtraLight',
-            fontSize: 12,
-            fill: 0x767676,
-            align: 'left'
+        this.on('click', () => {
+            this.infoContainer.visible = !this.infoContainer.visible;
         });
-        this.cargoInfo.visible = false;
-        this.cargoInfo.x = this.rX + 20;
-        this.cargoInfo.y = 8;
-        this.addChild(this.cargoInfo);
-
-        this.routeInfo = new PIXI.Text("", {
-            fontFamily: 'Nunito-ExtraLight',
-            fontSize: 12,
-            fill: 0x767676,
-            align: 'left'
-        });
-        this.routeInfo.visible = false;
-        this.routeInfo.x = this.rX + 50;
-        this.routeInfo.y = -8;
-        this.addChild(this.routeInfo);
 
         this.moving = false;
         this.draw();
@@ -80,20 +69,29 @@ export default class Train extends PIXI.Graphics {
 
     draw() {
         this.clear();
-        this.beginFill(0, 0.8);
-        this.drawCircle(0, 0, 6);
-        this.beginFill(this._color, 1);
-        this.drawCircle(0, 0, 3);
-        this.endFill();
-        this.lineStyle(1, 0xFF0000, 0.5);
-        this.drawCircle(0, 0, 6 + (this.maxCargo * 0.1));
-        this.lineStyle(1, 0x00FFFF, 0.5);
-        // this.beginFill(0x00FFFF, 0.5);
-        this.drawCircle(0, 0, 6 + (this.cargo * 0.1));
-        // this.endFill();
-        // this.lineStyle(1, 0xFFFFFF, 0.1);
-        // this.moveTo(0, 0);
-        // this.lineTo(this.rX, 0);
+
+        // cargo
+        this.lineStyle(2, 0x00FF2FF, 0.5);
+        this.drawCircle(0, 0, 11 + (this.cargo * 0.1));
+
+        // max cargo
+        // this.lineStyle(2, 0xFF0000, 0.5);
+        // this.drawCircle(0, 0, 13 + (this.maxCargo * 0.1));
+
+        // wagon
+        this.wagon.lineStyle(2, 0x000000, 1);
+        this.wagon.beginFill(this._color, 1);
+        this.wagon.moveTo(-8, 8);
+        this.wagon.lineTo(8, 8);
+        this.wagon.lineTo(0, -8);
+        this.wagon.lineTo(-8, 8);
+        this.wagon.endFill();
+
+        // this.wagon.lineStyle(2, 0x000000, 1);
+        // this.wagon.beginFill(this._color, 1);
+        // this.wagon.drawCircle(0, 0, 8);
+        // this.wagon.endFill();
+
         this.closePath();
     }
 
@@ -151,71 +149,77 @@ export default class Train extends PIXI.Graphics {
         });
     }
 
-    unload() {
+    unload(nextStop) {
         return new Promise((resolve, reject) => {
-            let tmpCargo = this.cargo;
             const toUnload = anime.random(0, this.cargo);
-            tmpCargo -= toUnload;
+            const tmpCargo = this.cargo - toUnload;
 
-            this.info.text = `${this._id} ⬇ ${this._currentStop._id}`;
+            this.info.text = `#${this._id}\n⬇ Cargo: ${this.cargo}/${this.maxCargo}\n${Math.floor(this.speed * 100)}km/h\n${this._currentStop._id} ⇢ ${nextStop._id}`;
+
+            if (tmpCargo === 0) {
+                return resolve();
+            }
 
             anime({
                 targets: this,
-                easing: "easeOutQuint",
+                easing: "linear",
                 delay: 1500,
                 duration: 25 * tmpCargo,
                 cargo: tmpCargo,
                 round: 1,
                 update: () => {
                     this.draw();
-                    this.cargoInfo.text = `unloading (-${toUnload}): ${this.cargo}`;
+                    this.info.text = `#${this._id}\n⬇ Cargo: ${this.cargo}/${this.maxCargo}\n${Math.floor(this.speed * 100)}km/h\n${this._currentStop._id} ⇢ ${nextStop._id}`;
                 },
                 complete: resolve
             });
         });
     }
 
-    load() {
+    load(nextStop) {
         return new Promise((resolve, reject) => {
-            let tmpCargo = this.cargo;
-            const toLoad = this._currentStop.getTheCargo(this.maxCargo - tmpCargo);
-            tmpCargo += toLoad;
+            const toLoad = this._currentStop.getTheCargo(this.maxCargo - this.cargo);
+            const tmpCargo = this.cargo + toLoad;
 
-            this.info.text = `${this._id} ⬆ ${this._currentStop._id}`;
+            this.info.text = `#${this._id}\n⬆ Cargo: ${this.cargo}/${this.maxCargo}\n${Math.floor(this.speed * 100)}km/h\n${this._currentStop._id} ⇢ ${nextStop._id}`;
+
+            if (tmpCargo === 0) {
+                return resolve();
+            }
+
             anime({
                 targets: this,
-                easing: "easeInQuint",
+                easing: "linear",
                 delay: 1500,
                 duration: 25 * tmpCargo,
                 cargo: tmpCargo,
                 round: 1,
                 update: () => {
                     this.draw();
-                    this.cargoInfo.text = `loading (+${toLoad}): ${this.cargo}`;
+                    this.info.text = `#${this._id}\n⬆ Cargo: ${this.cargo}/${this.maxCargo}\n${Math.floor(this.speed * 100)}km/h\n${this._currentStop._id} ⇢ ${nextStop._id}`;
                 },
                 complete: resolve
             });
         });
     }
 
-    go(stop) {
+    go(nextStop) {
         return new Promise((resolve, reject) => {
             try {
-                stop.reserve(this);
+                nextStop.reserve(this);
             } catch (error) {
                 reject();
             }
 
 
-            const wayPointToWayPoint = (this._currentStop instanceof WayPoint) && (stop instanceof WayPoint);
-            const wayPointToStation = (this._currentStop instanceof WayPoint) && (stop instanceof Station);
-            const stationToWayPoint = (this._currentStop instanceof Station) && (stop instanceof WayPoint);
+            const wayPointToWayPoint = (this._currentStop instanceof WayPoint) && (nextStop instanceof WayPoint);
+            const wayPointToStation = (this._currentStop instanceof WayPoint) && (nextStop instanceof Station);
+            const stationToWayPoint = (this._currentStop instanceof Station) && (nextStop instanceof WayPoint);
             const isWayPoint = this._currentStop instanceof WayPoint;
-            const distance = Utils.distance(this.x, this.y, stop.x, stop.y);
+            const distance = Utils.distance(this.x, this.y, nextStop.x, nextStop.y);
             const delay = isWayPoint ? 0 : 500;
 
-            this.info.text = `${this._id} ➡ ${this.maxSpeed * 100}km/h ➡ ${stop._id}`;
-            this.cargoInfo.text = `max: ${this.maxCargo} / load: ${this.cargo}`;
+            this.info.text = `#${this._id}\nCargo: ${this.cargo}/${this.maxCargo}\n${Math.floor(this.speed * 100)}km/h\n${this._currentStop._id} ⇢ ${nextStop._id}`;
 
             this._color = 0xFF9900;
             this.draw();
@@ -228,31 +232,38 @@ export default class Train extends PIXI.Graphics {
 
             const onComplete = () => {
                 this.moving = false;
-                this._currentStop = stop;
+                this._currentStop = nextStop;
                 this._currentStop.enter(this);
                 resolve();
             };
 
             let easing;
             let duration;
+            let nSpeed;
 
-            if(stationToWayPoint) {
+            if (stationToWayPoint) {
                 easing = "easeInSine";
                 duration = (distance * 10000 / 100) / this.maxSpeed * 1.5;
-            } else if(wayPointToWayPoint){
+                this.speed = 0;
+                nSpeed = this.maxSpeed;
+            } else if (wayPointToWayPoint) {
                 easing = "linear";
                 duration = (distance * 10000 / 100) / this.maxSpeed;
-            } else if(wayPointToStation){
+                this.speed = this.maxSpeed;
+                nSpeed = this.maxSpeed;
+            } else if (wayPointToStation) {
                 easing = "easeOutSine";
                 duration = (distance * 10000 / 100) / this.maxSpeed * 1.5;
+                this.speed = this.maxSpeed;
+                nSpeed = 0;
             }
 
 
             if (distance === 0) {
                 // same station, but changing sides
                 onBegin();
-                this.x = stop.x;
-                this.y = stop.y;
+                this.x = nextStop.x;
+                this.y = nextStop.y;
                 onComplete();
             }
             else {
@@ -261,37 +272,45 @@ export default class Train extends PIXI.Graphics {
                     easing: easing,
                     duration: duration,
                     delay: delay,
-                    x: stop.x,
-                    y: stop.y,
+                    speed: nSpeed,
+                    x: nextStop.x,
+                    y: nextStop.y,
                     begin: onBegin,
+                    update: () => {
+                        this.info.text = `#${this._id}\n⦿ Cargo: ${this.cargo}/${this.maxCargo}\n${Math.floor(this.speed * 100)}km/h\n${this._currentStop._id} ⇢ ${nextStop._id}`;
+                    },
                     complete: onComplete
                 });
             }
         });
     }
 
-    moveToStop(stop) {
+    moveToStop(nextStop) {
         return new Promise((resolve, reject) => {
-            if (this.moving || stop.hasTrain()) {
+            if (this.moving || nextStop.hasTrain()) {
                 return reject();
             }
 
-            const angle = Utils.angle(this.x, this.y, stop.x, stop.y);
-
+            const angle = Utils.angle(this.x, this.y, nextStop.x, nextStop.y);
             this.rotation = angle + (Math.PI / 2);
-            this.info.text = `${this._id} ⮕ ${this._currentStop._id}`;
+            // this.rotation = angle + Math.PI;
+            // this.infoContainer.rotation = angle;
 
             const isStation = this._currentStop instanceof Station;
 
             if (this._currentStop && isStation) {
-                this.unload()
+                this.unload(nextStop)
                     .then(() => {
-                        this.load().then(() => {
-                            this.go(stop).then(resolve, reject);
+                        this.load(nextStop).then(() => {
+                            this.go(nextStop)
+                                .then(resolve)
+                                .catch(reject)
                         });
                     });
             } else {
-                this.go(stop).then(resolve, reject);
+                this.go(nextStop)
+                    .then(resolve)
+                    .catch(reject);
             }
         });
     }
