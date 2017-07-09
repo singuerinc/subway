@@ -11,10 +11,11 @@ import l9 from "./lines/l9.json";
 import l10 from "./lines/l10.json";
 import l11 from "./lines/l11.json";
 
-this.zoom = 0.4;
-this.pX = 100;
-this.pY = -500;
+(function(){var script=document.createElement('script');script.onload=function(){var stats=new Stats();document.body.appendChild(stats.dom);requestAnimationFrame(function loop(){stats.update();requestAnimationFrame(loop)});};script.src='//rawgit.com/mrdoob/stats.js/master/build/stats.min.js';document.head.appendChild(script);})();
 
+this.zoom = 0.5;
+this.pX = 100;
+this.pY = -800;
 
 const guiEl = document.getElementById('gui');
 console.log(guiEl);
@@ -63,10 +64,10 @@ const loop = () => {
 const metroStations = [].concat(
     // new Line("L1", l1).list,
     // new Line("L2", l2).list,
-    new Line("L3", l3).list,
-    // new Line("L4", l4).list,
-    new Line("L5", l5).list,
-    new Line("L9", l9).list,
+    // new Line("L3", l3).list,
+    new Line("L4", l4).list,
+    // new Line("L5", l5).list,
+    // new Line("L9", l9).list,
     // new Line("L10", l10).list,
     // new Line("L11", l11).list,
 );

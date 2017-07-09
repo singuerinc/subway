@@ -41,6 +41,7 @@ export default class RailWay extends PIXI.Graphics {
                 parentStation = b[b.length-1];
             }
             if (typeof parentStation !== "undefined") {
+                station.parentStation = parentStation;
                 let px = parentStation.x;
                 let py = parentStation.y;
                 let sx = station.x;
@@ -81,7 +82,6 @@ export default class RailWay extends PIXI.Graphics {
             train.run();
             this.layerTrains.addChild(train);
         }
-
 
         f.add(this.layerStations, 'visible');
         f.add(this.layerWayPoints, 'visible');

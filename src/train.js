@@ -25,7 +25,7 @@ export default class Train extends PIXI.Graphics {
         this.interactive = true;
 
         this.wagon = new PIXI.Graphics();
-        // this.wagon.x = 50;
+        this.wagon.x = 14;
         this.addChild(this.wagon);
 
         this.infoContainer = new PIXI.Graphics();
@@ -68,31 +68,32 @@ export default class Train extends PIXI.Graphics {
     }
 
     draw() {
-        this.clear();
+        this.wagon.clear();
 
         // cargo
-        this.lineStyle(2, 0x00FF2FF, 0.5);
-        this.drawCircle(0, 0, 11 + (this.cargo * 0.1));
+        this.wagon.lineStyle(0);
+        this.wagon.beginFill(0x00FF2FF, 0.5);
+        this.wagon.drawCircle(0, 0, 11 + (this.cargo * 0.1));
 
         // max cargo
         // this.lineStyle(2, 0xFF0000, 0.5);
         // this.drawCircle(0, 0, 13 + (this.maxCargo * 0.1));
 
         // wagon
-        this.wagon.lineStyle(2, 0x000000, 1);
-        this.wagon.beginFill(this._color, 1);
-        this.wagon.moveTo(-8, 8);
-        this.wagon.lineTo(8, 8);
-        this.wagon.lineTo(0, -8);
-        this.wagon.lineTo(-8, 8);
-        this.wagon.endFill();
-
         // this.wagon.lineStyle(2, 0x000000, 1);
         // this.wagon.beginFill(this._color, 1);
-        // this.wagon.drawCircle(0, 0, 8);
+        // this.wagon.moveTo(-8, 8);
+        // this.wagon.lineTo(8, 8);
+        // this.wagon.lineTo(0, -8);
+        // this.wagon.lineTo(-8, 8);
         // this.wagon.endFill();
 
-        this.closePath();
+        this.wagon.lineStyle(2, 0x000000, 1);
+        this.wagon.beginFill(this._color, 1);
+        this.wagon.drawCircle(0, 0, 8);
+        this.wagon.endFill();
+
+        this.wagon.closePath();
     }
 
     set cargo(value) {
@@ -156,7 +157,8 @@ export default class Train extends PIXI.Graphics {
 
             this.info.text = `#${this._id}\n⬇ Cargo: ${this.cargo}/${this.maxCargo}\n${Math.floor(this.speed * 100)}km/h\n${this._currentStop._id} ⇢ ${nextStop._id}`;
 
-            if (tmpCargo === 0) {
+            if (tmpCargo === 0 || tmpCargo === this.cargo) {
+                this.cargo = tmpCargo;
                 return resolve();
             }
 
@@ -183,7 +185,8 @@ export default class Train extends PIXI.Graphics {
 
             this.info.text = `#${this._id}\n⬆ Cargo: ${this.cargo}/${this.maxCargo}\n${Math.floor(this.speed * 100)}km/h\n${this._currentStop._id} ⇢ ${nextStop._id}`;
 
-            if (tmpCargo === 0) {
+            if (tmpCargo === 0 || tmpCargo === this.cargo) {
+                this.cargo = tmpCargo;
                 return resolve();
             }
 
@@ -243,17 +246,17 @@ export default class Train extends PIXI.Graphics {
 
             if (stationToWayPoint) {
                 easing = "easeInSine";
-                duration = (distance * 10000 / 100) / this.maxSpeed * 1.5;
+                duration = (distance * 5000 / 100) / this.maxSpeed * 1.5;
                 this.speed = 0;
                 nSpeed = this.maxSpeed;
             } else if (wayPointToWayPoint) {
                 easing = "linear";
-                duration = (distance * 10000 / 100) / this.maxSpeed;
+                duration = (distance * 5000 / 100) / this.maxSpeed;
                 this.speed = this.maxSpeed;
                 nSpeed = this.maxSpeed;
             } else if (wayPointToStation) {
                 easing = "easeOutSine";
-                duration = (distance * 10000 / 100) / this.maxSpeed * 1.5;
+                duration = (distance * 5000 / 100) / this.maxSpeed * 1.5;
                 this.speed = this.maxSpeed;
                 nSpeed = 0;
             }
