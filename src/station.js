@@ -155,9 +155,9 @@ export default class Station extends PIXI.Graphics {
 
         // station small
         this.graph.clear();
-        this.graph.lineStyle(0);
-        this.graph.beginFill(this._color, 0.5);
-        this.graph.drawCircle(0, 0, 8);
+        this.graph.lineStyle(4, 0x000000, 1, 1);
+        this.graph.beginFill(this._color, 0.4);
+        this.graph.drawCircle(0, 0, 20);
         this.graph.endFill();
         this.graph.closePath();
     }
