@@ -11,6 +11,11 @@ import l9 from "./lines/l9.json";
 import l10 from "./lines/l10.json";
 import l11 from "./lines/l11.json";
 
+this.zoom = 0.4;
+this.pX = 100;
+this.pY = -500;
+
+
 const guiEl = document.getElementById('gui');
 console.log(guiEl);
 global.gui = new dat.GUI({ autoPlace: false });
@@ -22,9 +27,29 @@ var renderer = new PIXI.CanvasRenderer(512, 512, null, false, true, true, 2);
 document.body.appendChild(renderer.view);
 
 var stage = new PIXI.Container();
-//renderer.backgroundColor = 0x061639;
+const layerRailways = new PIXI.Container();
+layerRailways.scale = new PIXI.Point(this.zoom, this.zoom);
+layerRailways.x = this.pX;
+layerRailways.y = this.pY;
+stage.addChild(layerRailways);
+
+const zoom = global.gui.add(this, 'zoom', 0, 2);
+const pX = global.gui.add(this, 'pX', -500, 500);
+const pY = global.gui.add(this, 'pY', -2000, 2000);
+
+zoom.onChange((value) => {
+    layerRailways.scale = new PIXI.Point(value, value);
+});
+
+pX.onChange((value) => {
+    layerRailways.x = value * this.zoom;
+});
+
+pY.onChange((value) => {
+    layerRailways.y = value * this.zoom;
+});
+
 renderer.backgroundColor = 0x212529;
-//renderer.backgroundColor = 0xFFFFFF;
 renderer.view.style.position = "absolute";
 renderer.view.style.display = "block";
 renderer.autoResize = true;
@@ -35,31 +60,36 @@ const loop = () => {
     renderer.render(stage);
 };
 
-// const metroStations = l3;// [].concat(l1, l2, l3, l4, l5, l9, l10, l11);
 const metroStations = [].concat(
     // new Line("L1", l1).list,
     // new Line("L2", l2).list,
     new Line("L3", l3).list,
     // new Line("L4", l4).list,
-    // new Line("L5", l5).list,
-    // new Line("L9", l9).list,
+    new Line("L5", l5).list,
+    new Line("L9", l9).list,
     // new Line("L10", l10).list,
     // new Line("L11", l11).list,
 );
 
 const allStations = new Map();
 
-const convert = (v, c) => {
-    const integer = Math.floor(v);
-    return Math.floor(((v - integer) * 8000) - c);
+const sX = 0.34;
+const sY = 0.06;
+const sS = 20000;
+const convert = (value) => {
+    const integer = Math.floor(value);
+    return Math.floor(((value - integer) * sS));
 };
 
 metroStations.forEach((station) => {
+    let lat = convert(station.lat);
+    let lon = convert(station.lon);
+
     allStations.set(station.id, {
         line: station.line,
         id: station.name,
         dir: station.dir,
-        position: { x: convert(station.lat, 2700), y: convert(station.lon, 750) },
+        position: { x: lat - (sS * sX), y: lon - (sS * sY) },
         type: 1
     });
 });
@@ -78,7 +108,6 @@ allStations.forEach((value, key, a) => {
 
     if (value.type === 1) {
         const station = new Station(value);
-        // stage.addChild(station);
         arr.push(station);
     }
     stations.set(value.line, arr);
@@ -97,7 +126,7 @@ colors.set("L11", 0x89D748);
 let railWayIndex = 1;
 stations.forEach((stationsInLine, key) => {
     const rw = new RailWay({id: key, stations: stationsInLine, color: colors.get(key), idx: railWayIndex++});
-    stage.addChildAt(rw, 0);
+    layerRailways.addChildAt(rw, 0);
 });
 
 loop();

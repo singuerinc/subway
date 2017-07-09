@@ -9,12 +9,8 @@ export default class Station extends PIXI.Graphics {
         this._id = id;
         this._color = 0xFFFFFF;
         this.dir = dir;
-        this._cargo = 0;
+        this.cargo = 0;
         this._currentTrain = null;
-
-        // this.x = Utils.convert(position.x);
-        // this.y = Utils.convert(position.y);
-
         this.x = position.x;
         this.y = position.y;
 
@@ -36,11 +32,12 @@ export default class Station extends PIXI.Graphics {
             this.infoNameText.visible = !this.infoNameText.visible;
         });
 
-        setInterval(() => {
-            this.addCargo(Math.floor(Math.random() * 10));
-        }, 2000);
+        // setInterval(() => {
+        //     const value = anime.random(1, 10);
+        //     this.cargo += value;
+        // }, 2000);
 
-        this._render();
+        this.draw();
     }
 
     reserve(train) {
@@ -48,7 +45,7 @@ export default class Station extends PIXI.Graphics {
             // console.log(`Train ${train._id} in entering in Station ${this._id}.`);
             this._currentTrain = train;
             this._color = 0xFFFF00;
-            this._render();
+            this.draw();
         }
         else {
             throw new Error("A train is in this station!");
@@ -59,7 +56,7 @@ export default class Station extends PIXI.Graphics {
         if (this._currentTrain === train) {
             // console.log(`Train ${train._id} in entering in Station ${this._id}.`);
             this._color = 0xFF0000;
-            this._render();
+            this.draw();
         }
         else {
             throw new Error("A train is in this station!");
@@ -71,7 +68,7 @@ export default class Station extends PIXI.Graphics {
             // console.log(`Train ${train._id} in leaving Station ${this._id}.`);
             this._currentTrain = null;
             this._color = 0xFFFFFF;
-            this._render();
+            this.draw();
         }
     }
 
@@ -83,13 +80,17 @@ export default class Station extends PIXI.Graphics {
         return this._currentTrain !== null;
     }
 
-    get waitingCargo() {
+    set cargo(value) {
+        this._cargo = value;
+    }
+
+    get cargo() {
         return this._cargo;
     }
 
     getTheCargo(maxCargo) {
-        const cargo = Math.min(this._cargo, maxCargo);
-        this._cargo = this._cargo - cargo;
+        const cargo = Math.min(this.cargo, maxCargo);
+        this.cargo = this.cargo - cargo;
 
         const duration = (25 * cargo);
         const anim = {
@@ -103,27 +104,22 @@ export default class Station extends PIXI.Graphics {
             __cargo: 0,
             round: 1,
             update: () => {
-                this._render(anim.__cargo);
+                this.draw(anim.__cargo);
             }
         });
 
         return cargo;
     }
 
-    addCargo(value) {
-        this._cargo += value;
-        this._render();
-    }
-
-    _render(cargo) {
-        const c = cargo ? cargo : this._cargo;
+    draw(cargo) {
+        const c = cargo ? cargo : this.cargo;
         this.clear();
-        // this.lineStyle(1, 0x00FF00, 0.5);
-        // this.beginFill(0x00FF00, 0.1);
-        // this.drawCircle(0, 0, 10 + (c * 0.1));
-        this.lineStyle(4, 0x000000, 1);
+        this.lineStyle(1, 0x00FF00, 0.5);
+        this.beginFill(0x00FF00, 0.1);
+        this.drawCircle(0, 0, 26 + (c * 0.1));
+        this.lineStyle(8, 0x000000, 1);
         this.beginFill(this._color, 1);
-        this.drawCircle(0, 0, 10);
+        this.drawCircle(0, 0, 25);
         this.endFill();
         this.closePath();
         this.infoNameText.text = `${this._id} → ${c}`;
