@@ -22,9 +22,9 @@ export default class RailWay extends PIXI.Graphics {
 
         for(var i=0; i<stations.length; i++){
             const station = stations[i];
-            if (station.dir === 1) {
+            // if (station.dir === 1) {
                 this.layerStations.addChild(station);
-            }
+            // }
         }
 
         this.layerWayPoints = new PIXI.Graphics();
@@ -41,7 +41,6 @@ export default class RailWay extends PIXI.Graphics {
                 parentStation = b[b.length-1];
             }
             if (typeof parentStation !== "undefined") {
-                station.parentStation = parentStation;
                 let px = parentStation.x;
                 let py = parentStation.y;
                 let sx = station.x;
@@ -67,6 +66,7 @@ export default class RailWay extends PIXI.Graphics {
                     this._stops.push(wp);
                     prevStop = wp;
                 }
+                station.parentStation = prevStop;
             }
             this._stops.push(station);
             parentStation = station;

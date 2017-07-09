@@ -15,7 +15,7 @@ import l11 from "./lines/l11.json";
 
 this.zoom = 0.5;
 this.pX = 100;
-this.pY = -800;
+this.pY = -400;
 
 const guiEl = document.getElementById('gui');
 console.log(guiEl);
@@ -62,10 +62,10 @@ const loop = () => {
 };
 
 const metroStations = [].concat(
-    // new Line("L1", l1).list,
+    new Line("L1", l1).list,
     // new Line("L2", l2).list,
-    // new Line("L3", l3).list,
-    new Line("L4", l4).list,
+    new Line("L3", l3).list,
+    // new Line("L4", l4).list,
     // new Line("L5", l5).list,
     // new Line("L9", l9).list,
     // new Line("L10", l10).list,
