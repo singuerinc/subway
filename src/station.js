@@ -9,7 +9,6 @@ export default class Station extends PIXI.Graphics {
         this._id = id;
         this._color = 0xFFFFFF;
         this.dir = dir;
-        this.cargo = 0;
         this._currentTrain = null;
         this.x = position.x;
         this.y = position.y;
@@ -18,6 +17,7 @@ export default class Station extends PIXI.Graphics {
         this.buttonMode = true;
 
         this.graph = new PIXI.Graphics();
+        this.graph.x = 14;
         this.addChild(this.graph);
 
         this.info = new PIXI.Graphics();
@@ -28,7 +28,7 @@ export default class Station extends PIXI.Graphics {
             fill: 0x111111
         });
 
-        // this.infoNameText.visible = false;
+        this.infoNameText.visible = false;
         this.infoNameText.x = 50;
         this.infoNameText.y = -40;
         this.info.addChild(this.infoNameText);
@@ -37,10 +37,12 @@ export default class Station extends PIXI.Graphics {
             this.info.visible = !this.info.visible;
         });
 
+        this.cargo = 0;
+
         setInterval(() => {
             const value = anime.random(1, 10);
             this.cargo += value;
-        }, 2000);
+        }, 10000);
 
         this.draw();
     }
@@ -87,6 +89,7 @@ export default class Station extends PIXI.Graphics {
 
     set cargo(value) {
         this._cargo = value;
+        this.draw();
     }
 
     get cargo() {
@@ -119,7 +122,7 @@ export default class Station extends PIXI.Graphics {
     set parentStation(value){
         this._parentStation = value;
         const angle = Utils.angle(this.x, this.y, this._parentStation.x, this._parentStation.y);
-        this.rotation = angle + (Math.PI / 2);
+        this.rotation = (angle + (Math.PI / 2)) + Math.PI;
     }
 
     get parentStation() {
@@ -129,9 +132,9 @@ export default class Station extends PIXI.Graphics {
     draw(cargo) {
         const c = cargo ? cargo : this.cargo;
 
-        this.graph.clear();
 
         // cargo
+        this.info.clear();
         // this.info.lineStyle(0);
         // this.info.beginFill(0x00FF00, 0.4);
         // this.info.drawCircle(0, 0, 26 + (c * 0.1));
@@ -142,13 +145,20 @@ export default class Station extends PIXI.Graphics {
         }
         this.info.closePath();
 
-        // station
-        this.graph.lineStyle(8, 0x000000, 1);
-        this.graph.beginFill(this._color, 1);
-        this.graph.drawCircle(0, 0, 25);
+        // station big
+        // this.graph.clear();
+        // this.graph.lineStyle(8, 0x000000, 1);
+        // this.graph.beginFill(this._color, 0.5);
+        // this.graph.drawCircle(0, 0, 28);
+        // this.graph.endFill();
+        // this.graph.closePath();
+
+        // station small
+        this.graph.clear();
+        this.graph.lineStyle(0);
+        this.graph.beginFill(this._color, 0.5);
+        this.graph.drawCircle(0, 0, 8);
         this.graph.endFill();
-
-
         this.graph.closePath();
     }
 }

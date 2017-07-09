@@ -31,20 +31,35 @@ export default class Train extends PIXI.Graphics {
         this.infoContainer = new PIXI.Graphics();
         this.infoContainer.visible = false;
         this.infoContainer.lineStyle(1, 0x111111, 1);
-        this.infoContainer.moveTo(0, 0);
-        this.infoContainer.lineTo(280, 0);
+        this.infoContainer.moveTo(14, 0);
+        this.infoContainer.lineTo(480, 0);
+        this.infoContainer.lineStyle(0);
+        this.infoContainer.beginFill(0, 0.8);
+        this.infoContainer.drawRect(480, 0, 500, 150);
+        this.infoContainer.closePath();
         this.addChild(this.infoContainer);
 
         this.info = new PIXI.Text("", {
             fontSize: 25,
             fill: 0x676767
         });
-        this.info.x = 300;
-        this.info.y = -8;
+        // this.info.visible = false;
+        this.info.x = 500;
+        this.info.y = 12;
         this.infoContainer.addChild(this.info);
 
         this.on('click', () => {
-            this.infoContainer.visible = !this.infoContainer.visible;
+            this.selected = !this.selected;
+            this.infoContainer.visible = this.selected;
+        });
+
+        this.on('mouseover', () => {
+            this.infoContainer.visible = true;
+        });
+
+        this.on('mouseout', () => {
+            if(this.selected === true) return;
+            this.infoContainer.visible = false;
         });
 
         this.moving = false;
@@ -74,10 +89,11 @@ export default class Train extends PIXI.Graphics {
         this.wagon.lineStyle(0);
         this.wagon.beginFill(0x00FF2FF, 0.5);
         this.wagon.drawCircle(0, 0, 11 + (this.cargo * 0.1));
+        this.wagon.endFill();
 
         // max cargo
-        // this.lineStyle(2, 0xFF0000, 0.5);
-        // this.drawCircle(0, 0, 13 + (this.maxCargo * 0.1));
+        // this.wagon.lineStyle(2, 0xFF0000, 0.5);
+        // this.wagon.drawCircle(0, 0, 13 + (this.maxCargo * 0.1));
 
         // wagon
         // this.wagon.lineStyle(2, 0x000000, 1);
@@ -296,6 +312,7 @@ export default class Train extends PIXI.Graphics {
 
             const angle = Utils.angle(this.x, this.y, nextStop.x, nextStop.y);
             this.rotation = angle + (Math.PI / 2);
+            this.infoContainer.rotation = -this.rotation;
             // this.rotation = angle + Math.PI;
             // this.infoContainer.rotation = angle;
 
