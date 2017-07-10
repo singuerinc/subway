@@ -1,12 +1,15 @@
-import Utils from "./utils";
+import * as k from "keymaster";
 
 export default class WayPoint extends PIXI.Graphics {
-    constructor({id, position, prevStop}) {
+    constructor({ id, position, prevStop }) {
         super();
-        // console.log(`WayPoint ${id} created.`);
         this._id = id;
         this._currentTrain = null;
-        this._color = 0x00FF00;
+        this._color = 0xFFFFFF;
+
+        k("w", () => {
+            this.visible = !this.visible;
+        });
 
         this.x = position.x;
         this.y = position.y;
@@ -16,48 +19,44 @@ export default class WayPoint extends PIXI.Graphics {
         this._render();
     }
 
-    reserve(train){
-        if(this._currentTrain === null){
-            // console.log(`Train ${train._id} in reserving Waypoint ${this._id}.`);
+    reserve(train) {
+        if (this.getCurrentTrain() === null) {
             this._currentTrain = train;
-            this._color = this.prevStop.hasTrain() ? 0xFF0000 : 0x00FF00;
+            this._color = 0xFFDC00;
             this._render();
         } else {
             throw new Error("A train is in this waypoint!");
         }
     }
 
-    enter(train){
-        if(this._currentTrain === train){
-            // console.log(`Train ${train._id} in entering in Waypoint ${this._id}.`);
-            this._currentTrain = train;
-            this._color = 0xFF0000;
+    enter(train) {
+        if (this.getCurrentTrain() === train) {
+            this._color = 0xFF4136;
             this._render();
         } else {
             throw new Error("A train is in this waypoint!");
         }
     }
 
-    leave(train){
-        if(train === this._currentTrain){
-            // console.log(`Train ${train._id} in leaving the Waypoint ${this._id}.`);
+    leave(train) {
+        if (train === this.getCurrentTrain()) {
             this._currentTrain = null;
-            this._color = 0x00FF00;
+            this._color = 0xFFFFFF;
             this._render();
         }
     }
 
-    getCurrentTrain(){
+    getCurrentTrain() {
         return this._currentTrain;
     }
 
-    hasTrain(){
+    hasTrain() {
         return this._currentTrain !== null;
     }
 
     _render() {
         this.clear();
-        this.beginFill(this._color);
+        this.beginFill(this._color, 0.5);
         this.drawCircle(0, 0, 4);
         this.endFill();
     }

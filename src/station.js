@@ -1,17 +1,21 @@
+import * as k from "keymaster";
 import Utils from "./utils";
 import anime from "animejs";
 
 export default class Station extends PIXI.Graphics {
     constructor({ id, position, dir, line, type }) {
         super();
-        this.interactive = true;
         // console.log(`Station ${id} created.`);
         this._id = id;
-        this._color = 0xFFFFFF;
-        this.dir = dir;
         this._currentTrain = null;
+        this._color = 0x00FF00;
+        this.dir = dir;
         this.x = position.x;
         this.y = position.y;
+
+        k("s", () => {
+            this.visible = !this.visible;
+        });
 
         this.interactive = true;
         this.buttonMode = true;
@@ -25,7 +29,7 @@ export default class Station extends PIXI.Graphics {
 
         this.infoNameText = new PIXI.Text(this._id, {
             fontSize: 22,
-            fill: 0xFFFFFF
+            fill: 0x111111
         });
 
         // this.infoNameText.visible = false;
@@ -39,74 +43,114 @@ export default class Station extends PIXI.Graphics {
 
         this.cargo = 0;
 
+        // simulate cargo arriving
         setInterval(() => {
             const value = anime.random(1, 10);
             this.cargo += value;
         }, 10000);
 
-        this.draw();
+        this._draw();
     }
 
+    /**
+     * Indicates that a train wants to reserve this station.
+     * This action should be performed before the entering to the station
+     * to be sure that no train is in the station.
+     * @param {Train} train
+     * @throws Error If a train is currently in this station and can not be reserved.
+     */
     reserve(train) {
         if (this._currentTrain === null) {
-            // console.log(`Train ${train._id} in entering in Station ${this._id}.`);
             this._currentTrain = train;
             this._color = 0xFFFF00;
-            this.draw();
+            this._draw();
         }
         else {
             throw new Error("A train is in this station!");
         }
     }
 
+    /**
+     * Indicates that a train wants to enter in this station.
+     * @param {Train} train
+     * @throws Error If a train is currently in this station and can not be reserved.
+     */
     enter(train) {
         if (this._currentTrain === train) {
-            // console.log(`Train ${train._id} in entering in Station ${this._id}.`);
             this._color = 0xFF0000;
-            this.draw();
+            this._draw();
         }
         else {
             throw new Error("A train is in this station!");
         }
     }
 
+    /**
+     * Indicates that a train is leaving this station.
+     * @param {Train} train
+     */
     leave(train) {
         if (train === this._currentTrain) {
-            // console.log(`Train ${train._id} in leaving Station ${this._id}.`);
-            this._currentTrain = null;
-            this._color = 0xFFFFFF;
-            this.draw();
+            setTimeout(() => {
+                this._currentTrain = null;
+            }, 2000);
+            this._color = 0x00FF00;
+            this._draw();
         }
     }
 
+    /**
+     * The train that is currently in the station
+     * @returns {null|Train}
+     */
     getCurrentTrain() {
         return this._currentTrain;
     }
 
+    /**
+     * Returns if a train is or not in the station
+     * @returns {boolean}
+     */
     hasTrain() {
-        return this._currentTrain !== null;
+        return this.getCurrentTrain() !== null;
     }
 
+    /**
+     * Set the cargo for this station.
+     * @param {Number} value
+     */
     set cargo(value) {
         this._cargo = value;
-        this.draw();
+        this._draw();
     }
 
+    /**
+     * The cargo waiting in this station.
+     * @returns {Number}
+     */
     get cargo() {
         return this._cargo;
     }
 
-    set parentStation(value){
+    /**
+     * Set the nearest station connected to this station
+     * @param {Station} value
+     */
+    set parentStation(value) {
         this._parentStation = value;
         const angle = Utils.angle(this.x, this.y, this._parentStation.x, this._parentStation.y);
         this.rotation = (angle + (Math.PI / 2)) + Math.PI;
     }
 
+    /**
+     * The nearest station connected to this station
+     * @returns {Station}
+     */
     get parentStation() {
         return this._parentStation;
     }
 
-    draw(cargo) {
+    _draw(cargo) {
         const c = cargo ? cargo : this.cargo;
         this.infoNameText.text = c;
 
@@ -115,7 +159,7 @@ export default class Station extends PIXI.Graphics {
         // this.info.lineStyle(0);
         // this.info.beginFill(0x00FF00, 0.4);
         // this.info.drawCircle(0, 0, 26 + (c * 0.1));
-        for(var i=0; i<Math.floor(c/10); i++){
+        for (let i = 0; i < Math.floor(c / 10); i++) {
             this.info.lineStyle(0);
             this.info.beginFill(0x111111, 1);
             this.info.drawRect(50 + (i % 5 * 14), (-5) + (Math.floor(i / 5) * 14), 10, 10);
@@ -132,8 +176,10 @@ export default class Station extends PIXI.Graphics {
 
         // station small
         this.graph.clear();
-        this.graph.lineStyle(4, 0x000000, 1, 1);
+        this.graph.lineStyle(0);
+        this.graph.lineStyle(6, 0x000000, 1, 1);
         this.graph.beginFill(this._color, 0.4);
+        // this.graph.beginFill(this._color, 1);
         this.graph.drawCircle(0, 0, 20);
         this.graph.endFill();
         this.graph.closePath();
