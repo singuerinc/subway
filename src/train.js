@@ -2,6 +2,7 @@ import anime from "animejs";
 import Station from "./station";
 import WayPoint from "./waypoint";
 import Utils from "./utils";
+import Wagon from "./wagon";
 
 const COLOR_GO = 0xFF9900;
 const COLOR_MOVING = 0x767676;
@@ -11,23 +12,26 @@ export default class Train extends PIXI.Graphics {
     constructor(id, route) {
         super();
         // console.log(`Train ${id} created.`);
+        this.buttonMode = true;
+        this.interactive = true;
+
         this._id = id;
         this.x = 0;
         this.y = 0;
         this._route = route;
-        this._stops = this._route.stops;
+        this.stops = this._route.stops;
         this._stopIndex = 0;
+        // this.maxCargo = 0;
+        this.cargo = 1;
+        this.wagons = [];
 
-        this.numWagon = Math.floor(Math.random() * 4);
-        this.maxCargo = [80, 160, 240, 320][this.numWagon];
-        this.maxSpeed = [0.8, 0.75, 0.7, 0.6][this.numWagon];
+        const n = Math.max(1, Math.floor(Math.random() * 5));
+        for(var i=0; i<n; i++){
+            this.addWagon();
+        }
 
         this._state = "";
-        this.cargo = 1;
         this.speed = this.maxSpeed;
-
-        this.buttonMode = true;
-        this.interactive = true;
 
         this.wagon = new PIXI.Graphics();
         this.wagon.x = 14;
@@ -71,20 +75,37 @@ export default class Train extends PIXI.Graphics {
         this.draw();
     }
 
-    set maxCargo(value) {
-        this._maxCargo = value;
+    addWagon(){
+        const wagon = new Wagon(this);
+        this.wagons.push(wagon);
+    }
+
+    set wagons(value) {
+        this._wagons = value;
+    }
+
+    get wagons() {
+        return this._wagons;
     }
 
     get maxCargo() {
-        return this._maxCargo;
-    }
-
-    set maxSpeed(value) {
-        this._maxSpeed = value;
+        return this.wagons.reduce((cargo, wagon) => {
+            return cargo + wagon.maxCargo;
+        }, 0);
     }
 
     get maxSpeed() {
-        return this._maxSpeed;
+        return this.wagons.reduce((speed, wagon) => {
+            return wagon.calcSpeed(speed);
+        }, 1.2);
+    }
+
+    set stops(value){
+        this._stops = value;
+    }
+
+    get stops() {
+        return this._stops;
     }
 
     draw() {
@@ -111,6 +132,9 @@ export default class Train extends PIXI.Graphics {
 
         this.wagon.lineStyle(2, 0x000000, 1);
         this.wagon.beginFill(this._color, 1);
+        // for(var i=0; i<this.wagons.length; i++) {
+        //     this.wagon.drawCircle(0, i * 18, 8);
+        // }
         this.wagon.drawCircle(0, 0, 8);
         this.wagon.endFill();
 
@@ -121,10 +145,12 @@ export default class Train extends PIXI.Graphics {
 
     updateInfo() {
         if (this.info.visible) {
+            const speed = Math.floor(this.speed * 100);
+            const maxSpeed = Math.floor(this.maxSpeed * 100);
             this.info.text =
                 `#${this._id} - ${this._state}
-Cargo: ${this.cargo}/${this.maxCargo}
-${Math.floor(this.speed * 100)}km/h
+Cargo: ${this.cargo} / ${this.maxCargo}
+Speed: ${speed}km/h / ${maxSpeed}km/h
 `;
         }
         // ${this._currentStop._id} ⇢ ${nextStop._id}
@@ -156,8 +182,8 @@ ${Math.floor(this.speed * 100)}km/h
 
     run() {
         if (!this.moving) {
-            const nextIndex = (this._stopIndex + 1) % this._stops.length;
-            const nextStop = this._stops[nextIndex];
+            const nextIndex = (this._stopIndex + 1) % this.stops.length;
+            const nextStop = this.stops[nextIndex];
 
             this.moveToStop(nextStop)
                 .then(() => {
