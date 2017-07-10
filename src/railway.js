@@ -52,8 +52,10 @@ export default class RailWay extends PIXI.Graphics {
                     this.lineTo(sx, sy);
                 }
 
+                // create at least 1 waypoint between stations
+                // FIXME: numWayPoints min should be 1, not 2
                 const distanceBtwStations = Utils.distance(sx, sy, px, py);
-                const numWayPoints = Math.floor(distanceBtwStations / 50);
+                const numWayPoints = Math.max(2, Math.floor(distanceBtwStations / 50));
 
                 let prevStop = station;
                 for (var i = 1; i < numWayPoints; i++) {
