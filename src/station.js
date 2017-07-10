@@ -25,10 +25,10 @@ export default class Station extends PIXI.Graphics {
 
         this.infoNameText = new PIXI.Text(this._id, {
             fontSize: 22,
-            fill: 0x111111
+            fill: 0xFFFFFF
         });
 
-        this.infoNameText.visible = false;
+        // this.infoNameText.visible = false;
         this.infoNameText.x = 50;
         this.infoNameText.y = -40;
         this.info.addChild(this.infoNameText);
@@ -96,29 +96,6 @@ export default class Station extends PIXI.Graphics {
         return this._cargo;
     }
 
-    getTheCargo(maxCargo) {
-        const cargo = Math.min(this.cargo, maxCargo);
-        this.cargo = this.cargo - cargo;
-
-        const duration = (25 * cargo);
-        const anim = {
-            __cargo: cargo
-        };
-
-        anime({
-            targets: anim,
-            easing: "linear",
-            duration,
-            __cargo: 0,
-            round: 1,
-            update: () => {
-                this.draw(anim.__cargo);
-            }
-        });
-
-        return cargo;
-    }
-
     set parentStation(value){
         this._parentStation = value;
         const angle = Utils.angle(this.x, this.y, this._parentStation.x, this._parentStation.y);
@@ -131,7 +108,7 @@ export default class Station extends PIXI.Graphics {
 
     draw(cargo) {
         const c = cargo ? cargo : this.cargo;
-
+        this.infoNameText.text = c;
 
         // cargo
         this.info.clear();
