@@ -4,7 +4,7 @@ import WayPoint from "./waypoint";
 import Utils from "./utils";
 
 export default class RailWay extends PIXI.Graphics {
-    constructor({id, stations, color, idx}) {
+    constructor({ id, stations, color, idx }) {
         super();
         // console.log(`RailWay ${id} created ${stations.size}.`);
         this._id = id;
@@ -20,11 +20,9 @@ export default class RailWay extends PIXI.Graphics {
         this.layerStations = new PIXI.Graphics();
         this.addChild(this.layerStations);
 
-        for(var i=0; i<stations.length; i++){
+        for (let i = 0; i < stations.length; i++) {
             const station = stations[i];
-            // if (station.dir === 1) {
-                this.layerStations.addChild(station);
-            // }
+            this.layerStations.addChild(station);
         }
 
         this.layerWayPoints = new PIXI.Graphics();
@@ -37,45 +35,47 @@ export default class RailWay extends PIXI.Graphics {
 
         let parentStation;
         stations.forEach((station, a, b) => {
-            if(!parentStation){
-                parentStation = b[b.length-1];
+            if (!parentStation) {
+                // if no parent station means that is the first one,
+                // so the parent station is the last one.
+                parentStation = b[b.length - 1];
             }
-            if (typeof parentStation !== "undefined") {
-                let px = parentStation.x;
-                let py = parentStation.y;
-                let sx = station.x;
-                let sy = station.y;
 
-                if(station.dir === 1){
-                    this.lineStyle(25, this._color, 1);
-                    this.moveTo(px, py);
-                    this.lineTo(sx, sy);
-                }
+            let px = parentStation.x;
+            let py = parentStation.y;
+            let sx = station.x;
+            let sy = station.y;
 
-                // create at least 1 waypoint between stations
-                // FIXME: numWayPoints min should be 1, not 2
-                const distanceBtwStations = Utils.distance(sx, sy, px, py);
-                const numWayPoints = Math.max(2, Math.floor(distanceBtwStations / 50));
-
-                let prevStop = station;
-                for (var i = 1; i < numWayPoints; i++) {
-                    const percentage = (1 / numWayPoints) * i;
-                    const [x, y] = Utils.midpoint(px, py, sx, sy, percentage);
-                    const wp = new WayPoint({ id: `${parentStation._id}-wp-${i}`, prevStop, position: { x: x, y: y } });
-                    if (station.dir === 1) {
-                        this.layerWayPoints.addChild(wp);
-                    }
-                    this._stops.push(wp);
-                    prevStop = wp;
-                }
-                station.parentStation = prevStop;
+            if (station.dir === 1) {
+                this.lineStyle(25, this._color, 1);
+                this.moveTo(px, py);
+                this.lineTo(sx, sy);
             }
+
+            // create at least 1 waypoint between stations
+            // FIXME: numWayPoints min should be 1, not 2
+            const distanceBtwStations = Utils.distance(sx, sy, px, py);
+            const numWayPoints =  Math.floor(distanceBtwStations / 40);
+
+            let prevStop = station;
+            for (let i = 0; i < numWayPoints-1; i++) {
+                const percentage = (1 / numWayPoints) * (i+1);
+                const [x, y] = Utils.midpoint(px, py, sx, sy, percentage);
+                const wp = new WayPoint({ id: `${parentStation._id}-wp-${i}`, prevStop, position: { x: x, y: y } });
+                if (station.dir === 1) {
+                    this.layerWayPoints.addChild(wp);
+                }
+                this._stops.push(wp);
+                prevStop = wp;
+            }
+            station.parentStation = prevStop;
+
             this._stops.push(station);
             parentStation = station;
         }, this);
 
-        // for (let i = 0; i < stations.length / 2; i++) {
-        for (let i = 0; i < 1; i++) {
+        for (let i = 0; i < stations.length * 0.5; i++) {
+        // for (let i = 0; i < 1; i++) {
             const train = new Train(`${i}`, {
                 stops: this.stops
             });

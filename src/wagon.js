@@ -8,7 +8,9 @@ export default class Wagon {
     }
 
     calcSpeed(speed){
-        return speed * 0.8;
+        const v = this.cargo / this.maxCargo;
+        const f = 0.03 * v;
+        return (speed * 0.9) - f;
     }
 
     set cargo(value){

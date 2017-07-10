@@ -1,3 +1,4 @@
+import * as k from "keymaster";
 import anime from "animejs";
 import Station from "./station";
 import WayPoint from "./waypoint";
@@ -8,6 +9,14 @@ const COLOR_GO = 0xFF9900;
 const COLOR_MOVING = 0x767676;
 const COLOR_WAITING = 0x00FF00;
 
+const STATE_OPENING_DOORS = 'opening doors';
+const STATE_CLOSING_DOORS = 'closing doors';
+const STATE_LOADING = 'loading';
+const STATE_UNLOADING = 'unloading';
+const STATE_IN_TRANSIT = 'in transit';
+const STATE_WAITING = 'waiting';
+const STATE_GO = 'go';
+
 export default class Train extends PIXI.Graphics {
     constructor(id, route) {
         super();
@@ -15,46 +24,44 @@ export default class Train extends PIXI.Graphics {
         this.buttonMode = true;
         this.interactive = true;
 
+        k("t", () => {
+            this.visible = !this.visible;
+        });
+
         this._id = id;
         this.x = 0;
         this.y = 0;
-        this._route = route;
-        this.stops = this._route.stops;
+        this.stops = route.stops;
         this._stopIndex = 0;
-        // this.maxCargo = 0;
-        // this.cargo = 1;
+
         this.wagons = [];
 
         const n = Math.max(1, Math.floor(Math.random() * 5));
-        for(var i=0; i<n; i++){
-            this.addWagon();
+        for (let i = 0; i < n; i++) {
+            this.addWagon(new Wagon());
         }
 
-        this._state = "";
-        this.speed = this.maxSpeed;
-
-        this.wagon = new PIXI.Graphics();
-        this.wagon.x = 14;
-        this.addChild(this.wagon);
+        this.head = new PIXI.Graphics();
+        this.head.x = 14;
+        this.addChild(this.head);
 
         this.infoContainer = new PIXI.Graphics();
         this.infoContainer.visible = false;
-        this.infoContainer.lineStyle(1, 0x111111, 1);
-        this.infoContainer.moveTo(14, 0);
-        this.infoContainer.lineTo(480, 0);
-        this.infoContainer.lineStyle(0);
-        this.infoContainer.beginFill(0, 0.8);
-        this.infoContainer.drawRect(480, 0, 500, 150);
+        this.infoContainer.beginFill(0, 0.6);
+        this.infoContainer.drawRect(480, -200, 370, 120);
+        this.infoContainer.lineStyle(2, 0, 1);
+        this.infoContainer.moveTo(0, 0);
+        this.infoContainer.lineTo(480, -140);
         this.infoContainer.closePath();
         this.addChild(this.infoContainer);
 
         this.info = new PIXI.Text("", {
             fontSize: 25,
-            fill: 0x676767
+            fill: 0x01FF70
         });
         // this.info.visible = false;
         this.info.x = 500;
-        this.info.y = 12;
+        this.info.y = -188;
         this.infoContainer.addChild(this.info);
 
         this.on('click', () => {
@@ -71,12 +78,12 @@ export default class Train extends PIXI.Graphics {
             this.infoContainer.visible = false;
         });
 
+        this.speed = 0;
         this.moving = false;
-        this.draw();
+        this._draw();
     }
 
-    addWagon(){
-        const wagon = new Wagon();
+    addWagon(wagon) {
         this.wagons.push(wagon);
     }
 
@@ -106,54 +113,50 @@ export default class Train extends PIXI.Graphics {
         }, 0);
     }
 
-    updateWagonsCargo(cargo){
+    set cargo(cargo) {
         let cargoPerWagon = cargo / this.wagons.length;
         this.wagons.forEach((wagon) => {
             wagon.cargo = cargoPerWagon;
         });
     }
 
-    set stops(value){
+    set state(value) {
+        this._state = value;
+        switch (this._state) {
+            case STATE_OPENING_DOORS:
+                this._stateColor = 0x7FDBFF;
+                break;
+            case STATE_CLOSING_DOORS:
+                this._stateColor = 0xFFDC00;
+                break;
+            case STATE_GO:
+                this._stateColor = 0x2ECC40;
+                break;
+            case STATE_LOADING:
+                this._stateColor = 0x01FF70;
+                break;
+            case STATE_UNLOADING:
+                this._stateColor = 0xFF4136;
+                break;
+            case STATE_WAITING:
+                this._stateColor = 0x001F3F;
+                break;
+            case STATE_IN_TRANSIT:
+                this._stateColor = 0xAAAAAA;
+                break;
+        }
+    }
+
+    get state() {
+        return this._state;
+    }
+
+    set stops(value) {
         this._stops = value;
     }
 
     get stops() {
         return this._stops;
-    }
-
-    draw() {
-        this.wagon.clear();
-
-        // cargo
-        this.wagon.lineStyle(0);
-        this.wagon.beginFill(0x00FF2FF, 0.5);
-        this.wagon.drawCircle(0, 0, 11 + (this.cargo * 0.1));
-        this.wagon.endFill();
-
-        // max cargo
-        // this.wagon.lineStyle(2, 0xFF0000, 0.5);
-        // this.wagon.drawCircle(0, 0, 13 + (this.maxCargo * 0.1));
-
-        // wagon
-        // this.wagon.lineStyle(2, 0x000000, 1);
-        // this.wagon.beginFill(this._color, 1);
-        // this.wagon.moveTo(-8, 8);
-        // this.wagon.lineTo(8, 8);
-        // this.wagon.lineTo(0, -8);
-        // this.wagon.lineTo(-8, 8);
-        // this.wagon.endFill();
-
-        this.wagon.lineStyle(2, 0x000000, 1);
-        this.wagon.beginFill(this._color, 1);
-        // for(var i=0; i<this.wagons.length; i++) {
-        //     this.wagon.drawCircle(0, i * 18, 8);
-        // }
-        this.wagon.drawCircle(0, 0, 8);
-        this.wagon.endFill();
-
-        this.wagon.closePath();
-        this.updateInfo();
-
     }
 
     updateInfo() {
@@ -180,13 +183,11 @@ Speed: ${speed}km/h / ${maxSpeed}km/h
     set moving(value) {
         this._moving = value;
         if (this._moving) {
-            this._color = COLOR_MOVING;
-            this._state = 'in transit';
+            this.state = STATE_IN_TRANSIT;
         } else {
-            this._color = COLOR_WAITING;
-            this._state = 'waiting';
+            this.state = STATE_WAITING;
         }
-        this.draw();
+        this._draw();
     }
 
     get moving() {
@@ -225,16 +226,38 @@ Speed: ${speed}km/h / ${maxSpeed}km/h
         });
     }
 
+    openDoors() {
+        return new Promise((resolve, reject) => {
+            this.state = STATE_OPENING_DOORS;
+            this._draw();
+            this.updateInfo();
+            setTimeout(() => {
+                resolve();
+            }, 2000);
+        });
+    }
+
+    closeDoors() {
+        return new Promise((resolve, reject) => {
+            this.state = STATE_CLOSING_DOORS;
+            this._draw();
+            this.updateInfo();
+            setTimeout(() => {
+                resolve();
+            }, 2000);
+        });
+    }
+
     unload(nextStop) {
         return new Promise((resolve, reject) => {
             const toUnload = anime.random(0, this.cargo);
             const tmpCargo = this.cargo - toUnload;
 
-            this._state = 'unloading';
+            this.state = STATE_UNLOADING;
             this.updateInfo();
 
             if (tmpCargo === 0 || tmpCargo === this.cargo) {
-                this.updateWagonsCargo(tmpCargo);
+                this.cargo = tmpCargo;
                 return resolve();
             }
 
@@ -246,12 +269,12 @@ Speed: ${speed}km/h / ${maxSpeed}km/h
                 targets: tmp,
                 easing: "linear",
                 delay: 1500,
-                duration: 100 * tmpCargo,
+                duration: 75 * toUnload,
                 cargo: tmpCargo,
                 round: 1,
                 update: () => {
-                    this.updateWagonsCargo(tmp.cargo);
-                    this.draw();
+                    this.cargo = tmp.cargo;
+                    this._draw();
                     this.updateInfo();
                 },
                 complete: resolve
@@ -266,11 +289,11 @@ Speed: ${speed}km/h / ${maxSpeed}km/h
             const toLoad = Math.min(spaceInTrain, this._currentStop.cargo);
             const tmpCargo = this.cargo + toLoad;
 
-            this._state = 'loading';
+            this.state = STATE_LOADING;
             this.updateInfo();
 
             if (tmpCargo === 0 || tmpCargo === this.cargo) {
-                this.updateWagonsCargo(tmpCargo);
+                this.cargo = tmpCargo;
                 return resolve();
             }
 
@@ -283,14 +306,14 @@ Speed: ${speed}km/h / ${maxSpeed}km/h
                 targets: tmp,
                 easing: "linear",
                 delay: 1500,
-                duration: 100 * tmpCargo,
+                duration: 75 * toLoad,
                 cargo: tmpCargo,
                 stopCargo: this._currentStop.cargo - toLoad,
                 round: 1,
                 update: () => {
                     this._currentStop.cargo = parseInt(tmp.stopCargo);
-                    this.updateWagonsCargo(parseInt(tmp.cargo));
-                    this.draw();
+                    this.cargo = parseInt(tmp.cargo);
+                    this._draw();
                     this.updateInfo();
                 },
                 complete: resolve
@@ -301,6 +324,8 @@ Speed: ${speed}km/h / ${maxSpeed}km/h
     go(nextStop) {
         return new Promise((resolve, reject) => {
             try {
+                // check if the next stop is free
+                // if not, wait.
                 nextStop.reserve(this);
             } catch (error) {
                 return reject();
@@ -310,15 +335,14 @@ Speed: ${speed}km/h / ${maxSpeed}km/h
             const wayPointToStation = (this._currentStop instanceof WayPoint) && (nextStop instanceof Station);
             const stationToWayPoint = (this._currentStop instanceof Station) && (nextStop instanceof WayPoint);
             const stationToStation = (this._currentStop instanceof Station) && (nextStop instanceof Station);
+
             const isWayPoint = this._currentStop instanceof WayPoint;
+
             const distance = Utils.distance(this.x, this.y, nextStop.x, nextStop.y);
-            const delay = isWayPoint ? 0 : 500;
 
-            this._color = COLOR_GO;
-            this._state = 'go';
+            this._draw();
+            this.state = STATE_GO;
             this.updateInfo();
-
-            this.draw();
 
             const onBegin = () => {
                 if (this._currentStop) {
@@ -335,26 +359,26 @@ Speed: ${speed}km/h / ${maxSpeed}km/h
             };
 
             let easing;
-            let duration = (distance * 5000 / 100) / this.maxSpeed * 1.5;
-            let nSpeed;
+            let duration = Train.getSegmentTime(distance, this.maxSpeed);
+            let finalSpeed;
 
             if (stationToWayPoint) {
                 this.speed = 0;
                 easing = "easeInSine";
-                nSpeed = this.maxSpeed;
+                finalSpeed = this.maxSpeed;
             } else if (wayPointToWayPoint) {
                 this.speed = this.maxSpeed;
                 duration = (distance * 5000 / 100) / this.maxSpeed;
                 easing = "linear";
-                nSpeed = this.maxSpeed;
+                finalSpeed = this.maxSpeed;
             } else if (wayPointToStation) {
                 this.speed = this.maxSpeed;
                 easing = "easeOutSine";
-                nSpeed = 0;
+                finalSpeed = 0;
             } else if (stationToStation) {
                 this.speed = 0;
                 easing = "easeInOutSine";
-                nSpeed = this.maxSpeed;
+                finalSpeed = this.maxSpeed;
             }
 
             if (distance === 0) {
@@ -369,8 +393,8 @@ Speed: ${speed}km/h / ${maxSpeed}km/h
                     targets: this,
                     easing: easing,
                     duration: duration,
-                    delay: delay,
-                    speed: nSpeed,
+                    delay: isWayPoint ? 0 : 500,
+                    speed: finalSpeed,
                     x: nextStop.x,
                     y: nextStop.y,
                     begin: onBegin,
@@ -397,20 +421,71 @@ Speed: ${speed}km/h / ${maxSpeed}km/h
 
             const isStation = this._currentStop instanceof Station;
 
+            // STATIONS
             if (this._currentStop && isStation) {
-                this.unload(nextStop)
+                // open the train doors
+                this.openDoors()
                     .then(() => {
-                        this.load(nextStop).then(() => {
-                            this.go(nextStop)
-                                .then(resolve)
-                                .catch(reject)
-                        });
-                    });
+                        // unload partial cargo
+                        this.unload(nextStop)
+                            .then(() => {
+                                // load waiting cargo
+                                this.load(nextStop).then(() => {
+                                    // close the train doors
+                                    this.closeDoors().then(() => {
+                                        // go
+                                        this.go(nextStop)
+                                            .then(resolve)
+                                            .catch(reject);
+                                        // FIXME: If "go" is rejected it will repeat all actions
+                                    });
+                                });
+                            });
+                    })
             } else {
+                // WAY-POINTS
                 this.go(nextStop)
                     .then(resolve)
                     .catch(reject);
             }
         });
+    }
+
+    _draw() {
+        this.head.clear();
+
+        // cargo
+        // this.head.lineStyle(0);
+        // this.head.beginFill(0x00FF2FF, 0.5);
+        // this.head.drawCircle(0, 0, 11 + (this.cargo * 0.1));
+        // this.head.endFill();
+
+        // max cargo
+        // this.wagon.lineStyle(2, 0xFF0000, 0.5);
+        // this.wagon.drawCircle(0, 0, 13 + (this.maxCargo * 0.1));
+
+        // wagon
+        // this.wagon.lineStyle(2, 0x000000, 1);
+        // this.wagon.beginFill(this._color, 1);
+        // this.wagon.moveTo(-8, 8);
+        // this.wagon.lineTo(8, 8);
+        // this.wagon.lineTo(0, -8);
+        // this.wagon.lineTo(-8, 8);
+        // this.wagon.endFill();
+
+        this.head.lineStyle(4, 0, 1);
+        this.head.beginFill(this._stateColor, 1);
+        // for(let i=0; i<this.wagons.length; i++) {
+        //     this.wagon.drawCircle(0, i * 18, 8);
+        // }
+        this.head.drawCircle(0, 0, 8);
+        this.head.endFill();
+
+        this.head.closePath();
+        this.updateInfo();
+    }
+
+    static getSegmentTime(distance, maxSpeed){
+        return (distance * 100) / maxSpeed;
     }
 }
