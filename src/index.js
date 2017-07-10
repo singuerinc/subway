@@ -14,8 +14,8 @@ import l11 from "./lines/l11.json";
 (function(){var script=document.createElement('script');script.onload=function(){var stats=new Stats();document.body.appendChild(stats.dom);requestAnimationFrame(function loop(){stats.update();requestAnimationFrame(loop)});};script.src='//rawgit.com/mrdoob/stats.js/master/build/stats.min.js';document.head.appendChild(script);})();
 
 this.zoom = 0.5;
-this.pX = 0;
-this.pY = -650;
+this.pX = -200;
+this.pY = 300;
 
 const guiEl = document.getElementById('gui');
 console.log(guiEl);
@@ -32,6 +32,7 @@ const layerRailways = new PIXI.Container();
 layerRailways.scale = new PIXI.Point(this.zoom, this.zoom);
 layerRailways.x = this.pX;
 layerRailways.y = this.pY;
+layerRailways.rotation = 5.4;
 stage.addChild(layerRailways);
 
 const zoom = global.gui.add(this, 'zoom', 0, 2);
