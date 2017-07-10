@@ -22,7 +22,7 @@ export default class Train extends PIXI.Graphics {
         this.stops = this._route.stops;
         this._stopIndex = 0;
         // this.maxCargo = 0;
-        this.cargo = 1;
+        // this.cargo = 1;
         this.wagons = [];
 
         const n = Math.max(1, Math.floor(Math.random() * 5));
@@ -76,7 +76,7 @@ export default class Train extends PIXI.Graphics {
     }
 
     addWagon(){
-        const wagon = new Wagon(this);
+        const wagon = new Wagon();
         this.wagons.push(wagon);
     }
 
@@ -98,6 +98,19 @@ export default class Train extends PIXI.Graphics {
         return this.wagons.reduce((speed, wagon) => {
             return wagon.calcSpeed(speed);
         }, 1.2);
+    }
+
+    get cargo() {
+        return this.wagons.reduce((cargo, wagon) => {
+            return cargo + wagon.cargo;
+        }, 0);
+    }
+
+    updateWagonsCargo(cargo){
+        let cargoPerWagon = cargo / this.wagons.length;
+        this.wagons.forEach((wagon) => {
+            wagon.cargo = cargoPerWagon;
+        });
     }
 
     set stops(value){
@@ -156,13 +169,13 @@ Speed: ${speed}km/h / ${maxSpeed}km/h
         // ${this._currentStop._id} ⇢ ${nextStop._id}
     }
 
-    set cargo(value) {
-        this._cargo = parseInt(value);
-    }
-
-    get cargo() {
-        return this._cargo;
-    }
+    // set cargo(value) {
+    //     this._cargo = parseInt(value);
+    // }
+    //
+    // get cargo() {
+    //     return this._cargo;
+    // }
 
     set moving(value) {
         this._moving = value;
@@ -221,18 +234,23 @@ Speed: ${speed}km/h / ${maxSpeed}km/h
             this.updateInfo();
 
             if (tmpCargo === 0 || tmpCargo === this.cargo) {
-                this.cargo = tmpCargo;
+                this.updateWagonsCargo(tmpCargo);
                 return resolve();
             }
 
+            let tmp = {
+                cargo: this.cargo
+            };
+
             anime({
-                targets: this,
+                targets: tmp,
                 easing: "linear",
                 delay: 1500,
-                duration: 25 * tmpCargo,
+                duration: 100 * tmpCargo,
                 cargo: tmpCargo,
                 round: 1,
                 update: () => {
+                    this.updateWagonsCargo(tmp.cargo);
                     this.draw();
                     this.updateInfo();
                 },
@@ -243,25 +261,35 @@ Speed: ${speed}km/h / ${maxSpeed}km/h
 
     load(nextStop) {
         return new Promise((resolve, reject) => {
-            const toLoad = this._currentStop.getTheCargo(this.maxCargo - this.cargo);
+            // const toLoad = this._currentStop.getTheCargo(this.maxCargo - this.cargo);
+            const spaceInTrain = this.maxCargo - this.cargo;
+            const toLoad = Math.min(spaceInTrain, this._currentStop.cargo);
             const tmpCargo = this.cargo + toLoad;
 
             this._state = 'loading';
             this.updateInfo();
 
             if (tmpCargo === 0 || tmpCargo === this.cargo) {
-                this.cargo = tmpCargo;
+                this.updateWagonsCargo(tmpCargo);
                 return resolve();
             }
 
+            let tmp = {
+                cargo: this.cargo,
+                stopCargo: this._currentStop.cargo
+            };
+
             anime({
-                targets: this,
+                targets: tmp,
                 easing: "linear",
                 delay: 1500,
-                duration: 25 * tmpCargo,
+                duration: 100 * tmpCargo,
                 cargo: tmpCargo,
+                stopCargo: this._currentStop.cargo - toLoad,
                 round: 1,
                 update: () => {
+                    this._currentStop.cargo = parseInt(tmp.stopCargo);
+                    this.updateWagonsCargo(parseInt(tmp.cargo));
                     this.draw();
                     this.updateInfo();
                 },

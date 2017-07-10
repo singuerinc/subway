@@ -74,8 +74,8 @@ export default class RailWay extends PIXI.Graphics {
             parentStation = station;
         }, this);
 
-        for (let i = 0; i < stations.length / 2; i++) {
-        // for (let i = 0; i < 1; i++) {
+        // for (let i = 0; i < stations.length / 2; i++) {
+        for (let i = 0; i < 1; i++) {
             const train = new Train(`${i}`, {
                 stops: this.stops
             });
