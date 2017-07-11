@@ -10,28 +10,40 @@ import l9 from "./lines/l9.json";
 import l10 from "./lines/l10.json";
 import l11 from "./lines/l11.json";
 
-(function(){var script=document.createElement('script');script.onload=function(){var stats=new Stats();document.body.appendChild(stats.dom);requestAnimationFrame(function loop(){stats.update();requestAnimationFrame(loop)});};script.src='//rawgit.com/mrdoob/stats.js/master/build/stats.min.js';document.head.appendChild(script);})();
-
-this.zoom = 0.5;
-this.pX = -200;
-this.pY = 400;
+(function () {
+    var script = document.createElement('script');
+    script.onload = function () {
+        var stats = new Stats();
+        document.body.appendChild(stats.dom);
+        requestAnimationFrame(function loop() {
+            stats.update();
+            requestAnimationFrame(loop)
+        });
+    };
+    script.src = '//rawgit.com/mrdoob/stats.js/master/build/stats.min.js';
+    document.head.appendChild(script);
+})();
 
 PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
 
-const renderer = new PIXI.CanvasRenderer(512, 512, null, false, true, true, 2);
-renderer.backgroundColor = 0x2D2D2D;
+const renderer = new PIXI.CanvasRenderer({
+    autoResize: true,
+    antialias: true,
+    resolution: 2,
+    backgroundColor: 0x2D2D2D,
+    roundPixels: true
+});
 renderer.view.style.position = "absolute";
 renderer.view.style.display = "block";
-renderer.autoResize = true;
 renderer.resize(window.innerWidth, window.innerHeight);
 
 document.body.appendChild(renderer.view);
 
 const stage = new PIXI.Container();
 const layerRailways = new PIXI.Container();
-layerRailways.scale = new PIXI.Point(this.zoom, this.zoom);
-layerRailways.x = this.pX;
-layerRailways.y = this.pY;
+layerRailways.scale = new PIXI.Point(0.5, 0.5);
+layerRailways.x = -200;
+layerRailways.y = 400;
 layerRailways.rotation = 5.4;
 stage.addChild(layerRailways);
 
@@ -56,14 +68,14 @@ const loop = () => {
 };
 
 const metroStations = [].concat(
-    new Line("L1", l1).list,
-    new Line("L2", l2).list,
-    new Line("L3", l3).list,
-    new Line("L4", l4).list,
-    new Line("L5", l5).list,
-    new Line("L9", l9).list,
-    new Line("L10", l10).list,
-    new Line("L11", l11).list,
+    new Line("L1", 0xFF2136, l1).list,
+    new Line("L2", 0xB22AA1, l2).list,
+    new Line("L3", 0x00C03A, l3).list,
+    new Line("L4", 0xFFB901, l4).list,
+    new Line("L5", 0x007BCD, l5).list,
+    new Line("L9", 0xFF8615, l9).list,
+    new Line("L10", 0x00B0F2, l10).list,
+    new Line("L11", 0x89D748, l11).list,
 );
 
 const allStations = new Map();
@@ -108,19 +120,9 @@ allStations.forEach((value, key, a) => {
     stations.set(value.line, arr);
 });
 
-const colors = new Map();
-colors.set("L1", 0xFF2136);
-colors.set("L2", 0xB22AA1);
-colors.set("L3", 0x00C03A);
-colors.set("L4", 0xFFB901);
-colors.set("L5", 0x007BCD);
-colors.set("L9", 0xFF8615);
-colors.set("L10", 0x00B0F2);
-colors.set("L11", 0x89D748);
-
 let railWayIndex = 1;
 stations.forEach((stationsInLine, key) => {
-    const rw = new RailWay({id: key, stations: stationsInLine, color: colors.get(key), idx: railWayIndex++});
+    const rw = new RailWay({ id: key, stations: stationsInLine, color: 0xFF0000, idx: railWayIndex++ });
     layerRailways.addChildAt(rw, 0);
 });
 
