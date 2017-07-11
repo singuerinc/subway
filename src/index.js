@@ -67,62 +67,19 @@ const loop = () => {
     renderer.render(stage);
 };
 
-const metroStations = [].concat(
-    new Line("L1", 0xFF2136, l1).list,
-    new Line("L2", 0xB22AA1, l2).list,
-    new Line("L3", 0x00C03A, l3).list,
-    new Line("L4", 0xFFB901, l4).list,
-    new Line("L5", 0x007BCD, l5).list,
-    new Line("L9", 0xFF8615, l9).list,
-    new Line("L10", 0x00B0F2, l10).list,
-    new Line("L11", 0x89D748, l11).list,
-);
+const lines = [
+    new Line("L1", 0xFF2136, l1),
+    new Line("L2", 0xB22AA1, l2),
+    new Line("L3", 0x00C03A, l3),
+    new Line("L4", 0xFFB901, l4),
+    new Line("L5", 0x007BCD, l5),
+    new Line("L9", 0xFF8615, l9),
+    new Line("L10", 0x00B0F2, l10),
+    new Line("L11", 0x89D748, l11),
+];
 
-const allStations = new Map();
-
-const sX = 0.34;
-const sY = 0.06;
-const sS = 20000;
-const convert = (value) => {
-    const integer = Math.floor(value);
-    return Math.floor(((value - integer) * sS));
-};
-
-metroStations.forEach((station) => {
-    let lat = convert(station.lat);
-    let lon = convert(station.lon);
-
-    allStations.set(station.id, {
-        line: station.line,
-        id: station.name,
-        dir: station.dir,
-        position: { x: lat - (sS * sX), y: lon - (sS * sY) },
-        type: 1
-    });
-});
-
-let stations = new Map();
-
-allStations.forEach((value, key, a) => {
-    let arr;
-
-    if (!stations.has(value.line)) {
-        arr = [];
-    }
-    else {
-        arr = stations.get(value.line);
-    }
-
-    if (value.type === 1) {
-        const station = new Station(value);
-        arr.push(station);
-    }
-    stations.set(value.line, arr);
-});
-
-let railWayIndex = 1;
-stations.forEach((stationsInLine, key) => {
-    const rw = new RailWay({ id: key, stations: stationsInLine, color: 0xFF0000, idx: railWayIndex++ });
+lines.forEach((line, idx) => {
+    const rw = new RailWay({ id: line._id, line, idx });
     layerRailways.addChildAt(rw, 0);
 });
 

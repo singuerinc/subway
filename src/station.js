@@ -5,6 +5,7 @@ import anime from "animejs";
 export default class Station extends PIXI.Graphics {
     constructor({ id, position, dir, line, type }) {
         super();
+        console.log(id, position, dir, line, type);
         // console.log(`Station ${id} created.`);
         this._id = id;
         this._currentTrain = null;
