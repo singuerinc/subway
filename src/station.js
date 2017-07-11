@@ -5,7 +5,6 @@ import anime from "animejs";
 export default class Station extends PIXI.Graphics {
     constructor({ id, position, dir, line, type }) {
         super();
-        console.log(id, position, dir, line, type);
         // console.log(`Station ${id} created.`);
         this._id = id;
         this._currentTrain = null;
@@ -14,11 +13,6 @@ export default class Station extends PIXI.Graphics {
         this.x = position.x;
         this.y = position.y;
         this.visible = false;
-
-        k("s", () => {
-            this.visible = !this.visible;
-        });
-
         this.interactive = true;
         this.buttonMode = true;
 
@@ -51,6 +45,10 @@ export default class Station extends PIXI.Graphics {
             const value = anime.random(1, 10);
             this.cargo += value;
         }, 10000);
+
+        k("s", () => {
+            this.visible = !this.visible;
+        });
 
         this._draw();
     }
