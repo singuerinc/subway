@@ -1,5 +1,5 @@
 import * as k from "keymaster";
-import Utils from "./utils";
+import MathUtils from "./mathUtils";
 import anime from "animejs";
 
 export default class Station extends PIXI.Graphics {
@@ -137,7 +137,7 @@ export default class Station extends PIXI.Graphics {
      */
     set parentStation(value) {
         this._parentStation = value;
-        const angle = Utils.angle(this.x, this.y, this._parentStation.x, this._parentStation.y);
+        const angle = MathUtils.angle(this.x, this.y, this._parentStation.x, this._parentStation.y);
         this.rotation = (angle + (Math.PI / 2)) + Math.PI;
     }
 
@@ -158,7 +158,8 @@ export default class Station extends PIXI.Graphics {
         // this.info.lineStyle(0);
         // this.info.beginFill(0x111111, 0.4);
         // this.info.drawCircle(0, 0, 26 + (c * 0.1));
-        for (let i = 0; i < Math.floor(c / 10); i++) {
+        const num = Math.floor(c / 10);
+        for (let i = 0; i < num; i++) {
             this.info.lineStyle(0);
             this.info.beginFill(0x111111, 1);
             this.info.drawRect(50 + (i % 5 * 14), (-5) + (Math.floor(i / 5) * 14), 10, 10);

@@ -1,7 +1,7 @@
 import * as k from "keymaster";
 import Train from "./train";
 import WayPoint from "./waypoint";
-import Utils from "./utils";
+import MathUtils from "./mathUtils";
 import Station from "./station";
 
 export default class RailWay extends PIXI.Graphics {
@@ -57,13 +57,13 @@ export default class RailWay extends PIXI.Graphics {
 
             // create at least 1 waypoint between stations
             // FIXME: numWayPoints min should be 1, not 2
-            const distanceBtwStations = Utils.distance(sx, sy, px, py);
+            const distanceBtwStations = MathUtils.distance(sx, sy, px, py);
             const numWayPoints = Math.floor(distanceBtwStations / 40);
 
             let prevStop = station;
             for (let i = 0; i < numWayPoints - 1; i++) {
                 const percentage = (1 / numWayPoints) * (i + 1);
-                const [x, y] = Utils.midpoint(px, py, sx, sy, percentage);
+                const [x, y] = MathUtils.midpoint(px, py, sx, sy, percentage);
                 const wp = new WayPoint({ id: `${parentStation._id}-wp-${i}`, prevStop, position: { x: x, y: y } });
                 if (station.dir === 1) {
                     this.layerWayPoints.addChild(wp);
@@ -102,6 +102,9 @@ export default class RailWay extends PIXI.Graphics {
             let stopIndex = i * Math.floor(this.stops.length / numTrains);
             train.parkIn(this.stops[stopIndex], stopIndex);
             train.run();
+            if(i===1) {
+                train.openTrainInfo();
+            }
             this.layerTrains.addChild(train);
         }
     }

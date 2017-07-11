@@ -6,7 +6,7 @@ pages:
   - curl -o- -L https://yarnpkg.com/install.sh | bash
   - yarn
   - yarn run build
-  - cp ./index.html ./public
+  - rm public/bundle.js.map
   artifacts:
     paths:
     - $CI_PROJECT_DIR/public
