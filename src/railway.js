@@ -9,19 +9,11 @@ export default class RailWay extends PIXI.Graphics {
         super();
         // console.log(`RailWay ${id} created ${stations.size}.`);
         this._id = id;
-        this._color = line._color;
-
-        k("" + idx, () => {
-            this.visible = !this.visible;
-        });
+        this._color = line.color;
 
         this.layerLines = new PIXI.Graphics();
         this.layerLines.cacheAsBitmap = true;
         this.addChild(this.layerLines);
-
-        k("r", () => {
-            this.layerLines.visible = !this.layerLines.visible;
-        });
 
         this.layerWayPoints = new PIXI.Graphics();
         this.addChild(this.layerWayPoints);
@@ -85,21 +77,32 @@ export default class RailWay extends PIXI.Graphics {
             parentStation = station;
         }, this);
 
-        // const totalTrains = 1;
-        const totalTrains = Math.floor(stations.length * 0.5);
-        for (let i = 0; i < totalTrains; i++) {
-            const train = new Train(`${i}`, {
-                stops: this.stops,
-                color: this._color
-            });
-            let stopIndex = i * Math.floor(this.stops.length / totalTrains);
-            train.parkIn(this.stops[stopIndex], stopIndex);
-            train.run();
-            this.layerTrains.addChild(train);
-        }
+        this._addTrains(Math.floor(stations.length * 0.5));
+
+
+        k("" + idx, () => {
+            this.visible = !this.visible;
+        });
+
+        k("r", () => {
+            this.layerLines.visible = !this.layerLines.visible;
+        });
     }
 
     get stops() {
         return this._stops;
+    }
+
+    _addTrains(numTrains){
+        for (let i = 0; i < numTrains; i++) {
+            const train = new Train(`${i}`, {
+                stops: this.stops,
+                color: this._color
+            });
+            let stopIndex = i * Math.floor(this.stops.length / numTrains);
+            train.parkIn(this.stops[stopIndex], stopIndex);
+            train.run();
+            this.layerTrains.addChild(train);
+        }
     }
 }

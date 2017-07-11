@@ -6,7 +6,7 @@ export default class Line {
     constructor(id, color, data) {
         this._id = id;
         // console.log(`Line ${this._id} created.`);
-        this._color = color;
+        this.color = color;
         this.list = [];
 
         for (let i = 0; i < data.length; i++) {
@@ -52,12 +52,19 @@ export default class Line {
         return Math.floor(((value - integer) * sS));
     };
 
-
     set list(value) {
         this._list = value;
     }
 
     get list() {
         return this._list;
+    }
+
+    set color(value) {
+        this._color = value;
+    }
+
+    get color() {
+        return this._color;
     }
 }
