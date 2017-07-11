@@ -1,8 +1,8 @@
 export default class Line {
-    constructor(id, data) {
+    constructor(id, color, data) {
         this._id = id;
         // console.log(`Line ${this._id} created.`);
-        this._color = 0x00C03A;
+        this._color = color;
         this.list = [];
 
         for(let i=0; i<data.length; i++){
