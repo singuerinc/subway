@@ -5,14 +5,16 @@
   "license": "MIT",
   "devDependencies": {
     "animejs": "^2.0.2",
+    "babel-core": "^6.25.0",
+    "babel-loader": "^7.1.1",
     "copy-webpack-plugin": "^4.0.1",
     "keymaster": "^1.6.2",
     "pixi.js": "^4.5.3",
-    "webpack": "^3.0.0",
+    "webpack": "^3",
     "webpack-dev-server": "^2.5.0"
   },
   "scripts": {
-    "build": "webpack",
-    "start": "webpack-dev-server"
+    "build": "webpack -p",
+    "start": "webpack-dev-server -d"
   }
 }

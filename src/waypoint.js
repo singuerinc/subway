@@ -6,17 +6,16 @@ export default class WayPoint extends PIXI.Graphics {
         this._id = id;
         this._currentTrain = null;
         this._color = 0xFFFFFF;
-
-        k("w", () => {
-            this.visible = !this.visible;
-        });
-
         this.x = position.x;
         this.y = position.y;
 
         this.prevStop = prevStop;
 
         this._render();
+
+        k("w", () => {
+            this.visible = !this.visible;
+        });
     }
 
     reserve(train) {

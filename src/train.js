@@ -2,7 +2,7 @@ import * as k from "keymaster";
 import anime from "animejs";
 import Station from "./station";
 import WayPoint from "./waypoint";
-import Utils from "./utils";
+import MathUtils from "./mathUtils";
 import Wagon from "./wagon";
 
 const STATE_OPENING_DOORS = 'opening doors';
@@ -42,13 +42,15 @@ export default class Train extends PIXI.Graphics {
         this.head.x = 18;
         this.addChild(this.head);
 
+        const ix = 180;
+
         this.infoContainer = new PIXI.Graphics();
         this.infoContainer.visible = false;
         this.infoContainer.beginFill(0, 0.6);
-        this.infoContainer.drawRect(480, -200, 370, 120);
+        this.infoContainer.drawRect(ix, -200, 370, 120);
         this.infoContainer.lineStyle(2, 0, 1);
         this.infoContainer.moveTo(0, 0);
-        this.infoContainer.lineTo(480, -140);
+        this.infoContainer.lineTo(ix, -140);
         this.infoContainer.closePath();
         this.addChild(this.infoContainer);
 
@@ -57,7 +59,7 @@ export default class Train extends PIXI.Graphics {
             fill: this._trainColor
         });
         // this.info.visible = false;
-        this.info.x = 500;
+        this.info.x = ix + 20;
         this.info.y = -188;
         this.infoContainer.addChild(this.info);
 
@@ -78,6 +80,11 @@ export default class Train extends PIXI.Graphics {
         this.speed = 0;
         this.moving = false;
         this._draw();
+    }
+
+    openTrainInfo(){
+        this.selected = true;
+        this.infoContainer.visible = true;
     }
 
     addWagon(wagon) {
@@ -326,7 +333,7 @@ Speed: ${speed}km/h / ${maxSpeed}km/h
 
             const isWayPoint = this._currentStop instanceof WayPoint;
 
-            const distance = Utils.distance(this.x, this.y, nextStop.x, nextStop.y);
+            const distance = MathUtils.distance(this.x, this.y, nextStop.x, nextStop.y);
 
             this._draw();
             this.state = STATE_GO;
@@ -401,7 +408,7 @@ Speed: ${speed}km/h / ${maxSpeed}km/h
                 return reject();
             }
 
-            const angle = Utils.angle(this.x, this.y, nextStop.x, nextStop.y);
+            const angle = MathUtils.angle(this.x, this.y, nextStop.x, nextStop.y);
             this.rotation = angle + (Math.PI / 2);
             this.infoContainer.rotation = -this.rotation - 5.4;
             // this.rotation = angle + Math.PI;

@@ -53,7 +53,6 @@ t   / trains
 r   / rails
 0-9 / lines`;
 const info = new PIXI.Text(text, {
-    fontFamily: "Inconsolata",
     fontSize: 14,
     fill: 0x1E1E1E
 });
