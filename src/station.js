@@ -8,10 +8,11 @@ export default class Station extends PIXI.Graphics {
         // console.log(`Station ${id} created.`);
         this._id = id;
         this._currentTrain = null;
-        this._color = 0x00FF00;
+        this._color = 0x111111;
         this.dir = dir;
         this.x = position.x;
         this.y = position.y;
+        this.visible = false;
 
         k("s", () => {
             this.visible = !this.visible;
@@ -21,18 +22,19 @@ export default class Station extends PIXI.Graphics {
         this.buttonMode = true;
 
         this.graph = new PIXI.Graphics();
-        this.graph.x = 14;
+        this.graph.x = 20;
         this.addChild(this.graph);
 
         this.info = new PIXI.Graphics();
         this.addChild(this.info);
 
-        this.infoNameText = new PIXI.Text(this._id, {
+        this.infoNameText = new PIXI.Text('', {
+            fontFamily: "Inconsolata",
             fontSize: 22,
-            fill: 0x111111
+            fill: 0x1E1E1E
         });
 
-        // this.infoNameText.visible = false;
+        this.infoNameText.visible = false;
         this.infoNameText.x = 50;
         this.infoNameText.y = -40;
         this.info.addChild(this.infoNameText);
@@ -91,10 +93,8 @@ export default class Station extends PIXI.Graphics {
      */
     leave(train) {
         if (train === this._currentTrain) {
-            setTimeout(() => {
-                this._currentTrain = null;
-            }, 2000);
-            this._color = 0x00FF00;
+            this._currentTrain = null;
+            this._color = 0x111111;
             this._draw();
         }
     }
@@ -157,7 +157,7 @@ export default class Station extends PIXI.Graphics {
         // cargo
         this.info.clear();
         // this.info.lineStyle(0);
-        // this.info.beginFill(0x00FF00, 0.4);
+        // this.info.beginFill(0x111111, 0.4);
         // this.info.drawCircle(0, 0, 26 + (c * 0.1));
         for (let i = 0; i < Math.floor(c / 10); i++) {
             this.info.lineStyle(0);
@@ -176,12 +176,11 @@ export default class Station extends PIXI.Graphics {
 
         // station small
         this.graph.clear();
-        this.graph.lineStyle(0);
-        this.graph.lineStyle(6, 0x000000, 1, 1);
-        this.graph.beginFill(this._color, 0.4);
-        // this.graph.beginFill(this._color, 1);
-        this.graph.drawCircle(0, 0, 20);
-        this.graph.endFill();
+        this.graph.lineStyle(6, 0x1E1E1E, 0.4);
+        this.graph.beginFill(this._color, 0.1);
+        this.graph.drawCircle(0, 0, 32);
+        // this.graph.drawRect(0, 0, 48, 48);
+        // this.graph.endFill();
         this.graph.closePath();
     }
 }

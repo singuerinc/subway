@@ -1,6 +1,5 @@
 import RailWay from "./railway";
 import Station from "./station";
-import Train from "./train";
 import Line from "./lines/Line";
 import l1 from "./lines/l1.json";
 import l2 from "./lines/l2.json";
@@ -15,19 +14,20 @@ import l11 from "./lines/l11.json";
 
 this.zoom = 0.5;
 this.pX = -200;
-this.pY = 300;
-
-const guiEl = document.getElementById('gui');
-console.log(guiEl);
-global.gui = new dat.GUI({ autoPlace: false });
-guiEl.appendChild(gui.domElement);
+this.pY = 400;
 
 PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
 
-var renderer = new PIXI.CanvasRenderer(512, 512, null, false, true, true, 2);
+const renderer = new PIXI.CanvasRenderer(512, 512, null, false, true, true, 2);
+renderer.backgroundColor = 0x2D2D2D;
+renderer.view.style.position = "absolute";
+renderer.view.style.display = "block";
+renderer.autoResize = true;
+renderer.resize(window.innerWidth, window.innerHeight);
+
 document.body.appendChild(renderer.view);
 
-var stage = new PIXI.Container();
+const stage = new PIXI.Container();
 const layerRailways = new PIXI.Container();
 layerRailways.scale = new PIXI.Point(this.zoom, this.zoom);
 layerRailways.x = this.pX;
@@ -35,27 +35,20 @@ layerRailways.y = this.pY;
 layerRailways.rotation = 5.4;
 stage.addChild(layerRailways);
 
-const zoom = global.gui.add(this, 'zoom', 0, 2);
-const pX = global.gui.add(this, 'pX', -500, 500);
-const pY = global.gui.add(this, 'pY', -2000, 2000);
-
-zoom.onChange((value) => {
-    layerRailways.scale = new PIXI.Point(value, value);
+const text = `
+s   / stations
+w   / waypoints
+t   / trains
+r   / rails
+0-9 / lines`;
+const info = new PIXI.Text(text, {
+    fontFamily: "Inconsolata",
+    fontSize: 14,
+    fill: 0x1E1E1E
 });
-
-pX.onChange((value) => {
-    layerRailways.x = value * this.zoom;
-});
-
-pY.onChange((value) => {
-    layerRailways.y = value * this.zoom;
-});
-
-renderer.backgroundColor = 0x212529;
-renderer.view.style.position = "absolute";
-renderer.view.style.display = "block";
-renderer.autoResize = true;
-renderer.resize(window.innerWidth, window.innerHeight);
+info.x = 20;
+info.y = 60;
+stage.addChild(info);
 
 const loop = () => {
     requestAnimationFrame(loop);
