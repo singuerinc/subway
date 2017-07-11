@@ -2,13 +2,14 @@ import * as k from "keymaster";
 import Train from "./train";
 import WayPoint from "./waypoint";
 import Utils from "./utils";
+import Station from "./station";
 
 export default class RailWay extends PIXI.Graphics {
-    constructor({ id, stations, color, idx }) {
+    constructor({ id, line, idx }) {
         super();
         // console.log(`RailWay ${id} created ${stations.size}.`);
         this._id = id;
-        this._color = color;
+        this._color = line._color;
 
         k("" + idx, () => {
             this.visible = !this.visible;
@@ -28,8 +29,10 @@ export default class RailWay extends PIXI.Graphics {
         this.layerStations = new PIXI.Graphics();
         this.addChild(this.layerStations);
 
-        for (let i = 0; i < stations.length; i++) {
-            const station = stations[i];
+        const stations = [];
+        for (let i = 0; i < line.list.length; i++) {
+            const station = new Station(line.list[i]);
+            stations.push(station);
             this.layerStations.addChild(station);
         }
 
