@@ -18,7 +18,7 @@ const STATE_WAITING = 'waiting';
 const STATE_GO = 'go';
 
 export default class Train extends PIXI.Graphics {
-    constructor(id, route) {
+    constructor(id, {stops, color}) {
         super();
         // console.log(`Train ${id} created.`);
         this.buttonMode = true;
@@ -29,9 +29,10 @@ export default class Train extends PIXI.Graphics {
         });
 
         this._id = id;
+        this._trainColor = color;
         this.x = 0;
         this.y = 0;
-        this.stops = route.stops;
+        this.stops = stops;
         this._stopIndex = 0;
 
         this.wagons = [];
@@ -42,7 +43,7 @@ export default class Train extends PIXI.Graphics {
         }
 
         this.head = new PIXI.Graphics();
-        this.head.x = 14;
+        this.head.x = 18;
         this.addChild(this.head);
 
         this.infoContainer = new PIXI.Graphics();
@@ -142,7 +143,7 @@ export default class Train extends PIXI.Graphics {
                 this._stateColor = 0x001F3F;
                 break;
             case STATE_IN_TRANSIT:
-                this._stateColor = 0xAAAAAA;
+                this._stateColor = 0x2d2d2d;
                 break;
         }
     }
@@ -169,16 +170,7 @@ Cargo: ${this.cargo} / ${this.maxCargo}
 Speed: ${speed}km/h / ${maxSpeed}km/h
 `;
         }
-        // ${this._currentStop._id} ⇢ ${nextStop._id}
     }
-
-    // set cargo(value) {
-    //     this._cargo = parseInt(value);
-    // }
-    //
-    // get cargo() {
-    //     return this._cargo;
-    // }
 
     set moving(value) {
         this._moving = value;
@@ -415,7 +407,7 @@ Speed: ${speed}km/h / ${maxSpeed}km/h
 
             const angle = Utils.angle(this.x, this.y, nextStop.x, nextStop.y);
             this.rotation = angle + (Math.PI / 2);
-            this.infoContainer.rotation = -this.rotation;
+            this.infoContainer.rotation = -this.rotation - 5.4;
             // this.rotation = angle + Math.PI;
             // this.infoContainer.rotation = angle;
 
@@ -455,10 +447,10 @@ Speed: ${speed}km/h / ${maxSpeed}km/h
         this.head.clear();
 
         // cargo
-        // this.head.lineStyle(0);
-        // this.head.beginFill(0x00FF2FF, 0.5);
-        // this.head.drawCircle(0, 0, 11 + (this.cargo * 0.1));
-        // this.head.endFill();
+        this.head.lineStyle(0);
+        this.head.beginFill(0x00FF2FF, 0.5);
+        this.head.drawCircle(0, 0, 11 + (this.cargo * 0.1));
+        this.head.endFill();
 
         // max cargo
         // this.wagon.lineStyle(2, 0xFF0000, 0.5);
@@ -473,8 +465,8 @@ Speed: ${speed}km/h / ${maxSpeed}km/h
         // this.wagon.lineTo(-8, 8);
         // this.wagon.endFill();
 
-        this.head.lineStyle(4, 0, 1);
-        this.head.beginFill(this._stateColor, 1);
+        this.head.lineStyle(4, this._stateColor, 1);
+        this.head.beginFill(this._trainColor, 1);
         // for(let i=0; i<this.wagons.length; i++) {
         //     this.wagon.drawCircle(0, i * 18, 8);
         // }

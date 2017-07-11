@@ -10,12 +10,20 @@ export default class RailWay extends PIXI.Graphics {
         this._id = id;
         this._color = color;
 
-        const f = global.gui.addFolder(this._id);
-        f.add(this, 'visible').listen();
-
         k("" + idx, () => {
             this.visible = !this.visible;
         });
+
+        this.layerLines = new PIXI.Graphics();
+        this.layerLines.cacheAsBitmap = true;
+        this.addChild(this.layerLines);
+
+        k("r", () => {
+            this.layerLines.visible = !this.layerLines.visible;
+        });
+
+        this.layerWayPoints = new PIXI.Graphics();
+        this.addChild(this.layerWayPoints);
 
         this.layerStations = new PIXI.Graphics();
         this.addChild(this.layerStations);
@@ -24,9 +32,6 @@ export default class RailWay extends PIXI.Graphics {
             const station = stations[i];
             this.layerStations.addChild(station);
         }
-
-        this.layerWayPoints = new PIXI.Graphics();
-        this.addChild(this.layerWayPoints);
 
         this.layerTrains = new PIXI.Graphics();
         this.addChild(this.layerTrains);
@@ -47,19 +52,22 @@ export default class RailWay extends PIXI.Graphics {
             let sy = station.y;
 
             if (station.dir === 1) {
-                this.lineStyle(25, this._color, 1);
-                this.moveTo(px, py);
-                this.lineTo(sx, sy);
+                this.layerLines.lineStyle(66, this._color, 0.1);
+                this.layerLines.moveTo(px, py);
+                this.layerLines.lineTo(sx, sy);
+                this.layerLines.lineStyle(5, this._color, 1);
+                this.layerLines.moveTo(px, py);
+                this.layerLines.lineTo(sx, sy);
             }
 
             // create at least 1 waypoint between stations
             // FIXME: numWayPoints min should be 1, not 2
             const distanceBtwStations = Utils.distance(sx, sy, px, py);
-            const numWayPoints =  Math.floor(distanceBtwStations / 40);
+            const numWayPoints = Math.floor(distanceBtwStations / 40);
 
             let prevStop = station;
-            for (let i = 0; i < numWayPoints-1; i++) {
-                const percentage = (1 / numWayPoints) * (i+1);
+            for (let i = 0; i < numWayPoints - 1; i++) {
+                const percentage = (1 / numWayPoints) * (i + 1);
                 const [x, y] = Utils.midpoint(px, py, sx, sy, percentage);
                 const wp = new WayPoint({ id: `${parentStation._id}-wp-${i}`, prevStop, position: { x: x, y: y } });
                 if (station.dir === 1) {
@@ -74,20 +82,18 @@ export default class RailWay extends PIXI.Graphics {
             parentStation = station;
         }, this);
 
-        for (let i = 0; i < stations.length * 0.5; i++) {
-        // for (let i = 0; i < 1; i++) {
+        // const totalTrains = 1;
+        const totalTrains = Math.floor(stations.length * 0.5);
+        for (let i = 0; i < totalTrains; i++) {
             const train = new Train(`${i}`, {
-                stops: this.stops
+                stops: this.stops,
+                color: this._color
             });
-            let stopIndex = i * 4;
+            let stopIndex = i * Math.floor(this.stops.length / totalTrains);
             train.parkIn(this.stops[stopIndex], stopIndex);
             train.run();
             this.layerTrains.addChild(train);
         }
-
-        f.add(this.layerStations, 'visible');
-        f.add(this.layerWayPoints, 'visible');
-        f.add(this.layerTrains, 'visible');
     }
 
     get stops() {
