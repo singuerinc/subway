@@ -5,10 +5,6 @@ import WayPoint from "./waypoint";
 import Utils from "./utils";
 import Wagon from "./wagon";
 
-const COLOR_GO = 0xFF9900;
-const COLOR_MOVING = 0x767676;
-const COLOR_WAITING = 0x00FF00;
-
 const STATE_OPENING_DOORS = 'opening doors';
 const STATE_CLOSING_DOORS = 'closing doors';
 const STATE_LOADING = 'loading';
@@ -58,7 +54,7 @@ export default class Train extends PIXI.Graphics {
 
         this.info = new PIXI.Text("", {
             fontSize: 25,
-            fill: 0x01FF70
+            fill: this._trainColor
         });
         // this.info.visible = false;
         this.info.x = 500;
