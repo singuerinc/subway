@@ -4,14 +4,19 @@
   "main": "index.js",
   "license": "MIT",
   "devDependencies": {
-    "animejs": "^2.0.2",
     "babel-core": "^6.25.0",
     "babel-loader": "^7.1.1",
     "copy-webpack-plugin": "^4.0.1",
-    "keymaster": "^1.6.2",
-    "pixi.js": "^4.5.3",
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb-base": "^11.2.0",
+    "eslint-plugin-import": "^2.7.0",
     "webpack": "^3",
     "webpack-dev-server": "^2.5.0"
+  },
+  "dependencies": {
+    "animejs": "^2.0.2",
+    "keymaster": "^1.6.2",
+    "pixi.js": "^4.5.3"
   },
   "scripts": {
     "build": "webpack -p",
