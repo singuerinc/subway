@@ -127,7 +127,7 @@ export default class Train extends PIXI.Graphics {
 
   set state(value) {
     this._state = value;
-    switch (this._state) {
+    switch (this.state) {
       case STATE_OPENING_DOORS:
         // this._stateColor = 0x7FDBFF;
         this._stateColor = 0x2d2d2d;
@@ -172,7 +172,7 @@ export default class Train extends PIXI.Graphics {
       const speed = Math.floor(this.speed * 100);
       const maxSpeed = Math.floor(this.maxSpeed * 100);
       this.info.text =
-        `#${this._id} - ${this._state}
+        `#${this._id} - ${this.state}
 Cargo: ${this.cargo} / ${this.maxCargo}
 Speed: ${speed}km/h / ${maxSpeed}km/h
 `;
@@ -370,7 +370,7 @@ Speed: ${speed}km/h / ${maxSpeed}km/h
         finalSpeed = this.maxSpeed;
       } else if (wayPointToWayPoint) {
         this.speed = this.maxSpeed;
-        duration = (distance * 5000 / 100) / this.maxSpeed;
+        duration = (distance * 50) / this.maxSpeed;
         easing = 'linear';
         finalSpeed = this.maxSpeed;
       } else if (wayPointToStation) {

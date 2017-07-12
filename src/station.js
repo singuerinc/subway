@@ -2,6 +2,7 @@ import * as k from 'keymaster';
 import MathUtils from './mathUtils';
 import anime from 'animejs';
 
+// TODO: Extend from WayPoint
 export default class Station extends PIXI.Graphics {
   constructor({ id, position, dir, color, type }) {
     super();
