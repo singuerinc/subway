@@ -66,14 +66,14 @@ const loop = () => {
 };
 
 const lines = [
-  new Line('L1', 0xFF2136, l1),
-  new Line('L2', 0xB22AA1, l2),
-  new Line('L3', 0x00C03A, l3),
-  new Line('L4', 0xFFB901, l4),
-  new Line('L5', 0x007BCD, l5),
+  // new Line('L1', 0xFF2136, l1),
+  // new Line('L2', 0xB22AA1, l2),
+  // new Line('L3', 0x00C03A, l3),
+  // new Line('L4', 0xFFB901, l4),
+  // new Line('L5', 0x007BCD, l5),
   new Line('L9', 0xFF8615, l9),
   new Line('L10', 0x00B0F2, l10),
-  new Line('L11', 0x89D748, l11),
+  // new Line('L11', 0x89D748, l11),
 ];
 
 lines.forEach((line, idx) => {
