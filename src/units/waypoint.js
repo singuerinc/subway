@@ -55,9 +55,9 @@ export default class WayPoint {
   reserve(train) {
     if (this.getCurrentTrain() === null) {
       this._currentTrain = train;
-      this._color = 0xFFFF00;
       this.emitter.emitEvent('train:reserve', [train]);
     } else {
+      console.log(`${train.id} is trying to reserve a station but ${this.getCurrentTrain().id} is in it.`);
       throw new Error('A train is in this station!');
     }
   }
@@ -69,7 +69,6 @@ export default class WayPoint {
    */
   enter(train) {
     if (train === this.getCurrentTrain()) {
-      this._color = 0xFF0000;
       this.emitter.emitEvent('train:enter', [train]);
     } else {
       throw new Error('A train is in this station!');
@@ -83,7 +82,6 @@ export default class WayPoint {
   leave(train) {
     if (train === this.getCurrentTrain()) {
       this._currentTrain = null;
-      this._color = 0x111111;
       this.emitter.emitEvent('train:reserve', [train]);
     }
   }

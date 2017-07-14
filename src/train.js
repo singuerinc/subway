@@ -12,7 +12,7 @@ const STATE_WAITING = 'waiting';
 const STATE_GO = 'go';
 
 export default class Train extends PIXI.Graphics {
-  constructor(id, { stops, color }) {
+  constructor(id, { route, color }) {
     super();
     // console.log(`Train ${id} created.`);
     this.buttonMode = true;
@@ -26,7 +26,7 @@ export default class Train extends PIXI.Graphics {
     this._trainColor = color;
     this.x = 0;
     this.y = 0;
-    this.stops = stops;
+    this.route = route;
     this._stopIndex = 0;
 
     this.wagons = [];
@@ -103,6 +103,10 @@ export default class Train extends PIXI.Graphics {
 
   get wagons() {
     return this._wagons;
+  }
+
+  get id() {
+    return this._id;
   }
 
   get maxCargo() {
@@ -196,8 +200,8 @@ Speed: ${speed}km/h / ${maxSpeed}km/h
 
   run() {
     if (!this.moving) {
-      const nextIndex = (this._stopIndex + 1) % this.stops.length;
-      const nextStop = this.stops[nextIndex];
+      const nextIndex = (this._stopIndex + 1) % this.route.size;
+      const nextStop = this.route.getWayPointAt(nextIndex);
 
       this.moveToStop(nextStop)
         .then(() => {
@@ -206,7 +210,7 @@ Speed: ${speed}km/h / ${maxSpeed}km/h
         })
         .catch(() => {
           // it happen when the waypoint or station is not free
-          setTimeout(() => this.run(), 500);
+          setTimeout(() => this.run(), 1500);
         });
     }
   }
@@ -326,12 +330,10 @@ Speed: ${speed}km/h / ${maxSpeed}km/h
   go(nextStop) {
     return new Promise((resolve, reject) => {
       try {
-        console.log('try');
         // check if the next stop is free
         // if not, wait.
         nextStop.reserve(this);
       } catch (error) {
-        console.log('reject');
         reject();
         return;
       }
@@ -440,7 +442,6 @@ Speed: ${speed}km/h / ${maxSpeed}km/h
                   // close the train doors
                   this.closeDoors().then(() => {
                     // go
-                    console.log('nextStop', nextStop);
                     this.go(nextStop)
                       .then(resolve)
                       .catch(reject);
