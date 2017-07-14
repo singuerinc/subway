@@ -23,8 +23,6 @@ export default class RailWay extends PIXI.Graphics {
     this.layerStations = new PIXI.Graphics();
     this.addChild(this.layerStations);
 
-    const stations = line.onlyStations;
-
     this.layerTrains = new PIXI.Graphics();
     this.addChild(this.layerTrains);
     //
@@ -33,6 +31,7 @@ export default class RailWay extends PIXI.Graphics {
     let parentStation;
 
     for (const [, wayPoint] of line.wayPoints.entries()) {
+      console.log(wayPoint.type);
       if (wayPoint.type === 1) {
         console.log(wayPoint);
         const station = new StationSprite({ model: wayPoint, color: line.color, dir: 1 });
@@ -64,7 +63,7 @@ export default class RailWay extends PIXI.Graphics {
     }
 
     // this._addTrains(Math.floor(stations.length * 0.5));
-    this._addTrains(1);
+    this._addTrains(10);
 
     //
     // k(`${idx}`, () => {
@@ -81,7 +80,7 @@ export default class RailWay extends PIXI.Graphics {
   }
 
   _addTrains(numTrains) {
-    for (let i = 0; i < numTrains; i++) {
+    for (let i = 0; i < numTrains; i += 1) {
       const train = new Train(`${i}`, {
         stops: this.stops,
         color: this._color,

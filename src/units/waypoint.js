@@ -34,7 +34,7 @@ export default class WayPoint {
   /**
    * @returns {number}
    */
-  static get type() {
+  get type() {
     return this._type;
   }
 

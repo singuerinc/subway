@@ -1,7 +1,7 @@
 export default class Wagon {
   constructor() {
     this._cargo = 0;
-    this._maxCargo = 0;
+    this._maxCargo = 80;
   }
 
   get maxCargo() {
