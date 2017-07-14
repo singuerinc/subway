@@ -1,43 +1,50 @@
 export default class Line {
-    constructor({ id, name, color }) {
-        this._id = id;
-        this._name = name;
-        this._color = color;
-        this._wayPoints = new Map();
-    }
+  constructor({ id, name, color }) {
+    this._id = id;
+    this._name = name;
+    this._color = color;
+    this._wayPoints = new Map();
+  }
 
-    /**
-     * @returns {string}
-     */
-    get id() {
-        return this._id;
-    }
+  /**
+   * @returns {string}
+   */
+  get id() {
+    return this._id;
+  }
 
-    /**
-     * @returns {string}
-     */
-    get name() {
-        return this._name;
-    }
-    /**
-     * @returns {number}
-     */
-    get color() {
-        return this._color;
-    }
+  /**
+   * @returns {string}
+   */
+  get name() {
+    return this._name;
+  }
 
-    /**
-     * @returns {Map}
-     */
-    get wayPoints(){
-        return this._wayPoints;
-    }
+  /**
+   * @returns {number}
+   */
+  get color() {
+    return this._color;
+  }
 
-    get onlyStations(){
-        return Array.from(this.wayPoints).filter(wayPoint => wayPoint[1].type === 1).map((value) => value[1]);
-    }
+  /**
+   * @returns {Map}
+   */
+  get wayPoints() {
+    return this._wayPoints;
+  }
 
-    addWayPoint(wayPoint) {
-        this.wayPoints.set(wayPoint.id, wayPoint);
-    }
+  /**
+   * @returns {Array}
+   */
+  get onlyStations() {
+    const arr = Array.from(this.wayPoints);
+    const stations = arr.filter(wayPoint => wayPoint[1].type === 1);
+
+    return stations.map(value => value[1]);
+  }
+
+  addWayPoint(wayPoint) {
+    this.wayPoints.set(wayPoint.id, wayPoint);
+  }
 }
