@@ -1,5 +1,6 @@
 import * as k from 'keymaster';
 import Train from './train';
+import Route from './units/route';
 import WayPointSprite from './waypoint.sprite';
 import StationSprite from './station.sprite';
 
@@ -26,14 +27,12 @@ export default class RailWay extends PIXI.Graphics {
     this.layerTrains = new PIXI.Graphics();
     this.addChild(this.layerTrains);
     //
-    this._stops = [];
+    this._route = new Route({ id: this.id });
     //
     let parentStation;
 
     for (const [, wayPoint] of line.wayPoints.entries()) {
-      console.log(wayPoint.type);
       if (wayPoint.type === 1) {
-        console.log(wayPoint);
         const station = new StationSprite({ model: wayPoint, color: line.color, dir: 1 });
 
         this.layerStations.addChild(station);
@@ -59,11 +58,11 @@ export default class RailWay extends PIXI.Graphics {
         this.layerWayPoints.addChild(wp);
       }
 
-      this._stops.push(wayPoint);
+      this._route.addWaypoint(wayPoint);
     }
 
     // this._addTrains(Math.floor(stations.length * 0.5));
-    this._addTrains(10);
+    this._addTrains(1);
 
     //
     // k(`${idx}`, () => {
@@ -75,19 +74,15 @@ export default class RailWay extends PIXI.Graphics {
     // });
   }
 
-  get stops() {
-    return this._stops;
-  }
-
   _addTrains(numTrains) {
     for (let i = 0; i < numTrains; i += 1) {
-      const train = new Train(`${i}`, {
-        stops: this.stops,
+      const train = new Train(`${this._route.id}-${i}`, {
+        route: this._route,
         color: this._color,
       });
-      const stopIndex = i * Math.floor(this.stops.length / numTrains);
+      const stopIndex = i * Math.floor(this._route.size / numTrains);
 
-      train.parkIn(this.stops[stopIndex], stopIndex);
+      train.parkIn(this._route.getWayPointAt(stopIndex), stopIndex);
       train.run();
       this.layerTrains.addChild(train);
 
@@ -95,5 +90,12 @@ export default class RailWay extends PIXI.Graphics {
         train.openTrainInfo();
       }
     }
+  }
+
+  /**
+   * @returns {String}
+   */
+  get id() {
+    return this._id;
   }
 }
