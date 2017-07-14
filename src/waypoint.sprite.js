@@ -18,7 +18,7 @@ export default class WayPointSprite extends PIXI.Graphics {
     });
 
     this._model.emitter.addListener('train:leave', () => {
-      this._color = 0x111111;
+      this._color = color;
       this._draw();
     });
 
