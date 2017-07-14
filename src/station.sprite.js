@@ -1,7 +1,6 @@
 import * as k from 'keymaster';
 import MathUtils from './mathUtils';
 
-// TODO: Extend from WayPoint
 export default class StationSprite extends PIXI.Graphics {
   constructor({ model, color }) {
     super();
@@ -30,7 +29,7 @@ export default class StationSprite extends PIXI.Graphics {
       fill: 0x1E1E1E,
     });
 
-    // this.infoNameText.visible = false;
+    this.infoNameText.visible = false;
     this.infoNameText.x = 50;
     this.infoNameText.y = -40;
     this.info.addChild(this.infoNameText);

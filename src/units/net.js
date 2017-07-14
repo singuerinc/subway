@@ -17,23 +17,23 @@ export default class Net {
     this._waypoints = new Map();
     this._lines = new Map();
 
-    // this._parseWayPoints(l1);
-    // this._parseWayPoints(l2);
-    // this._parseWayPoints(l3);
-    // this._parseWayPoints(l4);
-    // this._parseWayPoints(l5);
+    this._parseWayPoints(l1);
+    this._parseWayPoints(l2);
+    this._parseWayPoints(l3);
+    this._parseWayPoints(l4);
+    this._parseWayPoints(l5);
     this._parseWayPoints(l9);
     this._parseWayPoints(l10);
-    // this._parseWayPoints(l11);
+    this._parseWayPoints(l11);
 
-    // this._parseLine(l1, 0xB22AA1);
-    // this._parseLine(l2, 0xB22AA1);
-    // this._parseLine(l3, 0x00C03A);
-    // this._parseLine(l4, 0xFFB901);
-    // this._parseLine(l5, 0x007BCD);
+    this._parseLine(l1, 0xB22AA1);
+    this._parseLine(l2, 0xB22AA1);
+    this._parseLine(l3, 0x00C03A);
+    this._parseLine(l4, 0xFFB901);
+    this._parseLine(l5, 0x007BCD);
     this._parseLine(l9, 0xFF8615);
     this._parseLine(l10, 0x00B0F2);
-    // this._parseLine(l11, 0x89D748);
+    this._parseLine(l11, 0x89D748);
   }
 
   /**
@@ -111,7 +111,7 @@ export default class Net {
             const [x, y] = MathUtils.midpoint(px, py, sx, sy, percentage);
             const wpId = `${prevStation.id}-wp-${j}`;
             let wayPoint;
-            
+
             if (!this._waypoints.has(wpId)) {
               wayPoint = new WayPoint({
                 id: wpId,
