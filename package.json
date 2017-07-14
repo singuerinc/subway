@@ -16,7 +16,8 @@
   "dependencies": {
     "animejs": "^2.0.2",
     "keymaster": "^1.6.2",
-    "pixi.js": "^4.5.3"
+    "pixi.js": "^4.5.3",
+    "wolfy87-eventemitter": "^5.2.2"
   },
   "scripts": {
     "build": "webpack -p",
