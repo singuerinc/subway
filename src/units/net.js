@@ -14,6 +14,7 @@ import l11 from '../lines/l11.json';
 export default class Net {
   constructor() {
     this._stations = new Map();
+    this._waypoints = new Map();
     this._lines = new Map();
 
     // this._parseWayPoints(l1);
@@ -108,15 +109,23 @@ export default class Net {
           for (let j = 0; j < numWayPoints - 1; j += 1) {
             const percentage = (1 / numWayPoints) * (j + 1);
             const [x, y] = MathUtils.midpoint(px, py, sx, sy, percentage);
-            const wayPoint = new WayPoint({
-              id: `${prevStation.id}-wp-${j}`,
-              name: `${prevStation.name}-wp-${j}`,
-              position: {
-                x,
-                y,
-              },
-            });
+            const wpId = `${prevStation.id}-wp-${j}`;
+            let wayPoint;
+            
+            if (!this._waypoints.has(wpId)) {
+              wayPoint = new WayPoint({
+                id: wpId,
+                name: wpId,
+                position: {
+                  x,
+                  y,
+                },
+              });
 
+              this._waypoints.set(wpId, wayPoint);
+            } else {
+              wayPoint = this._waypoints.get(wpId);
+            }
             line.addWayPoint(wayPoint);
           }
         }

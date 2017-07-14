@@ -82,7 +82,7 @@ export default class WayPoint {
   leave(train) {
     if (train === this.getCurrentTrain()) {
       this._currentTrain = null;
-      this.emitter.emitEvent('train:reserve', [train]);
+      this.emitter.emitEvent('train:leave', [train]);
     }
   }
 
