@@ -16,23 +16,19 @@ export default class StationSprite extends PIXI.Graphics {
     this.buttonMode = true;
 
     this.graph = new PIXI.Graphics();
-
-    // this.graph.x = 20;
     this.addChild(this.graph);
 
     this.info = new PIXI.Graphics();
     this.addChild(this.info);
 
     this.infoNameText = new PIXI.Text(this.id, {
-      fontSize: 22,
+      fontSize: 28,
       fill: 0x1E1E1E,
     });
 
-    // this.infoNameText.visible = false;
-    this.infoNameText.x = 40;
-    this.infoNameText.y = 40;
-    // this.infoNameText.rotation = -Math.PI / 4;
-    // this.infoNameText.x = 50;
+    this.infoNameText.visible = false;
+    this.infoNameText.x = 44;
+    this.infoNameText.y = -14;
     this.info.addChild(this.infoNameText);
 
     this.on('click', () => {
@@ -71,15 +67,15 @@ export default class StationSprite extends PIXI.Graphics {
 
     // cargo
     this.info.clear();
-    // this.info.lineStyle(0);
+    this.info.lineStyle(2, this._color, 0.5);
     // this.info.beginFill(0x111111, 0.4);
-    // this.info.drawCircle(0, 0, 26 + (c * 0.1));
+    this.info.drawCircle(0, 0, 26 + (c * 0.1));
     const num = Math.floor(c / 100);
 
     for (let i = 0; i < num; i += 1) {
       this.info.lineStyle(0);
       this.info.beginFill(0x111111, 1);
-      this.info.drawRect(50 + (i % 5 * 14), (-5) + (Math.floor(i / 5) * 14), 10, 10);
+      this.info.drawRect(44 + (i % 5 * 14), 24 + (Math.floor(i / 5) * 14), 10, 10);
     }
     this.info.closePath();
 
