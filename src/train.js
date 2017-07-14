@@ -423,7 +423,7 @@ Speed: ${speed}km/h / ${maxSpeed}km/h
       const angle = MathUtils.angle(this.x, this.y, nextStop.position.x, nextStop.position.y);
 
       this.rotation = angle + (Math.PI / 2);
-      this.infoContainer.rotation = -this.rotation - 5.4;
+      // this.infoContainer.rotation = -this.rotation - 5.4;
       // this.rotation = angle + Math.PI;
       // this.infoContainer.rotation = angle;
 

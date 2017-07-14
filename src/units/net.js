@@ -18,22 +18,22 @@ export default class Net {
     this._lines = new Map();
 
     this._parseWayPoints(l1);
-    this._parseWayPoints(l2);
-    this._parseWayPoints(l3);
-    this._parseWayPoints(l4);
-    this._parseWayPoints(l5);
-    this._parseWayPoints(l9);
-    this._parseWayPoints(l10);
-    this._parseWayPoints(l11);
+    // this._parseWayPoints(l2);
+    // this._parseWayPoints(l3);
+    // this._parseWayPoints(l4);
+    // this._parseWayPoints(l5);
+    // this._parseWayPoints(l9);
+    // this._parseWayPoints(l10);
+    // this._parseWayPoints(l11);
 
-    this._parseLine(l1, 0xB22AA1);
-    this._parseLine(l2, 0xB22AA1);
-    this._parseLine(l3, 0x00C03A);
-    this._parseLine(l4, 0xFFB901);
-    this._parseLine(l5, 0x007BCD);
-    this._parseLine(l9, 0xFF8615);
-    this._parseLine(l10, 0x00B0F2);
-    this._parseLine(l11, 0x89D748);
+    this._parseLine(l1, 0xFF2136);
+    // this._parseLine(l2, 0xB22AA1);
+    // this._parseLine(l3, 0x00C03A);
+    // this._parseLine(l4, 0xFFB901);
+    // this._parseLine(l5, 0x007BCD);
+    // this._parseLine(l9, 0xFF8615);
+    // this._parseLine(l10, 0x00B0F2);
+    // this._parseLine(l11, 0x89D748);
   }
 
   /**
@@ -45,8 +45,10 @@ export default class Net {
       const info = data[i];
 
       if (!this.stations.has(info.id)) {
-        const sx = Net.convert(parseFloat(info.lat)) - (20000 * 0.34);
-        const sy = Net.convert(parseFloat(info.lon)) - (20000 * 0.06);
+        // console.log(Net.convert(parseFloat(info.lat)), Net.convert(parseFloat(info.lon)));
+        const sx = Net.convert(parseFloat(info.lat)) - 20682;
+        const sy = Net.convert(parseFloat(info.lon)) - 5986;
+        console.log(sx, sy);
         const station = new Station({
           id: info.id,
           name: info.name,
@@ -145,6 +147,11 @@ export default class Net {
   static convert(value) {
     const integer = Math.floor(value);
 
-    return Math.floor(((value - integer) * 20000));
+    return Math.floor(((value - integer) * 60000));
   }
+  // static convert(value) {
+  //   const integer = Math.floor(value);
+  //
+  //   return Math.floor(((value - integer) * 20000));
+  // }
 }

@@ -34,7 +34,7 @@ export default class WayPointSprite extends PIXI.Graphics {
 
   _draw() {
     this.clear();
-    this.beginFill(this._color, 0.5);
+    this.beginFill(this._color, 1);
     this.drawCircle(0, 0, 4);
     this.endFill();
   }

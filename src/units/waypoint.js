@@ -57,7 +57,6 @@ export default class WayPoint {
       this._currentTrain = train;
       this.emitter.emitEvent('train:reserve', [train]);
     } else {
-      console.log(`${train.id} is trying to reserve a station but ${this.getCurrentTrain().id} is in it.`);
       throw new Error('A train is in this station!');
     }
   }

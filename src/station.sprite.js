@@ -29,7 +29,7 @@ export default class StationSprite extends PIXI.Graphics {
       fill: 0x1E1E1E,
     });
 
-    this.infoNameText.visible = false;
+    // this.infoNameText.visible = false;
     this.infoNameText.x = 50;
     this.infoNameText.y = -40;
     this.info.addChild(this.infoNameText);
@@ -66,7 +66,7 @@ export default class StationSprite extends PIXI.Graphics {
   _draw(cargo) {
     const c = cargo || this._model.cargo;
 
-    this.infoNameText.text = `${this._model.name} - ${c}`;
+    this.infoNameText.text = `${this._model.name} - ${this.x}/${this.y} - ${c}`;
 
     // cargo
     this.info.clear();

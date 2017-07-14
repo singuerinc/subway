@@ -20,26 +20,59 @@ import RailWay from './railway';
 PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.LINEAR;
 
 const renderer = new PIXI.CanvasRenderer({
-  autoResize: true,
-  antialias: true,
+  // autoResize: true,
+  // antialias: true,
   resolution: 2,
   backgroundColor: 0x2D2D2D,
   roundPixels: true,
+  width: window.innerWidth,
+  height: window.innerHeight,
 });
 
 renderer.view.style.position = 'absolute';
 renderer.view.style.display = 'block';
-renderer.resize(window.innerWidth, window.innerHeight);
+// renderer.resize(window.innerWidth, window.innerHeight);
 
 document.body.appendChild(renderer.view);
 
 const stage = new PIXI.Container();
-const layerRailways = new PIXI.Container();
 
-layerRailways.scale = new PIXI.Point(0.5, 0.5);
-layerRailways.x = -400;
-layerRailways.y = 200;
-layerRailways.rotation = 5.4;
+stage.interactive = true;
+
+const layerRailways = new PIXI.Graphics();
+// layerRailways.scale = new PIXI.Point(0.1, 0.1);
+layerRailways.interactive = true;
+// layerRailways.x = 0;
+// layerRailways.y = 0;
+
+function onDragStart(event) {
+  console.log(event.data);
+  this.data = event.data;
+  this.dragging = true;
+}
+
+function onDragEnd() {
+  this.dragging = false;
+  this.data = null;
+}
+
+function onDragMove() {
+  if (this.dragging) {
+    const newPosition = this.data.getLocalPosition(this.parent);
+
+    this.x = newPosition.x;
+    this.y = newPosition.y;
+  }
+}
+
+layerRailways
+  .on('pointerdown', onDragStart)
+  .on('pointerup', onDragEnd)
+  .on('pointerupoutside', onDragEnd)
+  .on('pointermove', onDragMove);
+
+
+// layerRailways.rotation = 5.4;
 stage.addChild(layerRailways);
 
 const text = `
