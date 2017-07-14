@@ -1,7 +1,7 @@
 import * as k from 'keymaster';
 import anime from 'animejs';
 import MathUtils from './mathUtils';
-import Wagon from './wagon';
+import Wagon from './units/wagon';
 
 const STATE_OPENING_DOORS = 'opening doors';
 const STATE_CLOSING_DOORS = 'closing doors';
@@ -24,14 +24,15 @@ export default class Train extends PIXI.Graphics {
 
     this._id = id;
     this._trainColor = color;
+    this._cargoAccumulated = 0;
     this.x = 0;
     this.y = 0;
     this.route = route;
-    this._stopIndex = 0;
+    // this._stopIndex = 0;
 
     this.wagons = [];
 
-    const n = Math.max(1, Math.floor(Math.random() * 5));
+    const n = Math.max(2, Math.floor(Math.random() * 5));
 
     for (let i = 0; i < n; i += 1) {
       this.addWagon(new Wagon());
@@ -50,18 +51,18 @@ export default class Train extends PIXI.Graphics {
     this.infoContainer = new PIXI.Graphics();
     this.infoContainer.visible = false;
     this.infoContainer.beginFill(0, 0.9);
-    this.infoContainer.drawRect(ix, -200, 370, 120);
+    this.infoContainer.drawRect(ix, -200, 250, 80);
     this.infoContainer.lineStyle(2, 0, 1);
     this.infoContainer.moveTo(0, 0);
     this.infoContainer.lineTo(ix, -140);
-    this.infoContainer.lineStyle(4, this._trainColor, 1);
+    this.infoContainer.lineStyle(6, this._trainColor, 1);
     this.infoContainer.moveTo(ix, -200);
-    this.infoContainer.lineTo(ix, -80);
+    this.infoContainer.lineTo(ix, -120);
     this.infoContainer.closePath();
     this.addChild(this.infoContainer);
 
     this.info = new PIXI.Text('', {
-      fontSize: 25,
+      fontSize: 14,
       fill: 0x464646,
     });
     // this.info.visible = false;
@@ -107,6 +108,14 @@ export default class Train extends PIXI.Graphics {
 
   get id() {
     return this._id;
+  }
+
+  set cargoAccumulated(value) {
+    this._cargoAccumulated = value;
+  }
+
+  get cargoAccumulated() {
+    return this._cargoAccumulated;
   }
 
   get maxCargo() {
@@ -178,7 +187,7 @@ export default class Train extends PIXI.Graphics {
 
       this.info.text =
         `#${this._id} - ${this.state}
-Cargo: ${this.cargo} / ${this.maxCargo}
+Cargo: ${this.cargo} / ${this.maxCargo} / Total: ${this.cargoAccumulated}
 Speed: ${speed}km/h / ${maxSpeed}km/h
 `;
     }
@@ -200,12 +209,12 @@ Speed: ${speed}km/h / ${maxSpeed}km/h
 
   run() {
     if (!this.moving) {
-      const nextIndex = (this._stopIndex + 1) % this.route.size;
-      const nextStop = this.route.getWayPointAt(nextIndex);
+      // const nextIndex = (this._stopIndex + 1) % this.route.size;
+      const nextStop = this.route.getNext(this._currentStop);
 
       this.moveToStop(nextStop)
         .then(() => {
-          this._stopIndex = nextIndex;
+          // this._stopIndex = nextIndex;
           this.run();
         })
         .catch(() => {
@@ -215,19 +224,19 @@ Speed: ${speed}km/h / ${maxSpeed}km/h
     }
   }
 
-  parkIn(stop, stopIndex) {
-    return new Promise((resolve, reject) => {
-      if (this.moving) {
-        return reject();
-      }
+  /**
+   * @param stop {WayPoint}
+   */
+  parkIn(stop) {
+    if (this.moving) {
+      throw new Error('Can not park this train because is in movement.');
+    }
 
-      this.x = stop.position.x;
-      this.y = stop.position.y;
-      this.moving = false;
-      this._currentStop = stop;
-      this._stopIndex = stopIndex;
-      return resolve();
-    });
+    this.x = stop.position.x;
+    this.y = stop.position.y;
+    this.moving = false;
+    this._currentStop = stop;
+    // this._stopIndex = stopIndex;
   }
 
   openDoors() {
@@ -275,7 +284,7 @@ Speed: ${speed}km/h / ${maxSpeed}km/h
         targets: tmp,
         easing: 'linear',
         delay: 1500,
-        duration: 75 * toUnload,
+        duration: 50 * toUnload,
         cargo: tmpCargo,
         round: 1,
         update: () => {
@@ -283,7 +292,9 @@ Speed: ${speed}km/h / ${maxSpeed}km/h
           this._draw();
           this.updateInfo();
         },
-        complete: resolve,
+        complete: () => {
+          resolve();
+        },
       });
     });
   }
@@ -312,7 +323,7 @@ Speed: ${speed}km/h / ${maxSpeed}km/h
         targets: tmp,
         easing: 'linear',
         delay: 1500,
-        duration: 75 * toLoad,
+        duration: 50 * toLoad,
         cargo: tmpCargo,
         stopCargo: this._currentStop.cargo - toLoad,
         round: 1,
@@ -322,7 +333,10 @@ Speed: ${speed}km/h / ${maxSpeed}km/h
           this._draw();
           this.updateInfo();
         },
-        complete: resolve,
+        complete: () => {
+          this.cargoAccumulated += tmpCargo;
+          resolve();
+        },
       });
     });
   }
@@ -423,7 +437,7 @@ Speed: ${speed}km/h / ${maxSpeed}km/h
       const angle = MathUtils.angle(this.x, this.y, nextStop.position.x, nextStop.position.y);
 
       this.rotation = angle + (Math.PI / 2);
-      // this.infoContainer.rotation = -this.rotation - 5.4;
+      this.infoContainer.rotation = -this.rotation;
       // this.rotation = angle + Math.PI;
       // this.infoContainer.rotation = angle;
 
@@ -462,22 +476,6 @@ Speed: ${speed}km/h / ${maxSpeed}km/h
   _draw() {
     this.head.clear();
 
-    // cargo
-    // this.head.lineStyle(0);
-    // this.head.beginFill(0x00FF2FF, 0.5);
-    // this.head.drawCircle(0, 0, 11 + (this.cargo * 0.2));
-    // this.head.endFill();
-
-    this.cargoGrph.clear();
-    const num = Math.floor(this.cargo / 10);
-
-    for (let i = 0; i < num; i += 1) {
-      this.cargoGrph.lineStyle(0);
-      this.cargoGrph.beginFill(0x111111, 1);
-      this.cargoGrph.drawRect(-4, 12 + (i * 12), 10, 10);
-    }
-    this.cargoGrph.closePath();
-
     // max cargo
     // this.wagon.lineStyle(2, 0xFF0000, 0.5);
     // this.wagon.drawCircle(0, 0, 13 + (this.maxCargo * 0.1));
@@ -499,15 +497,39 @@ Speed: ${speed}km/h / ${maxSpeed}km/h
     //     this.head.lineStyle(4, 0xFF0000, 1);
     //     this.head.drawCircle(0, 0, 12);
     // }
-    this.head.lineStyle(4, this._stateColor, 1);
+    this.head.lineStyle(2, this._stateColor, 1);
     this.head.beginFill(this._trainColor, 1);
     // for(let i=0; i<this.wagons.length; i++) {
     //     this.wagon.drawCircle(0, i * 18, 8);
     // }
     this.head.drawCircle(0, 0, 8);
+    // this.head.drawRect(-6, 0, 12, 24);
     this.head.endFill();
-
     this.head.closePath();
+
+    // cargo
+    // this.head.lineStyle(0);
+    // this.head.beginFill(0x00FF2FF, 0.5);
+    // this.head.drawCircle(0, 0, 11 + (this.cargo * 0.2));
+    // this.head.endFill();
+
+    this.cargoGrph.clear();
+    this.cargoGrph.y = 12;
+
+    const numMax = Math.floor(this.maxCargo / 100);
+    const num = Math.floor(this.cargo / 100);
+
+    for (let i = 0; i < numMax; i += 1) {
+      this.cargoGrph.lineStyle(0);
+      if (i < num) {
+        this.cargoGrph.beginFill(0x111111, 1);
+      } else {
+        this.cargoGrph.beginFill(0, 0.2);
+      }
+      this.cargoGrph.drawRect(-6, i * (14 + 2), 14, 14);
+    }
+    this.cargoGrph.closePath();
+
     this.updateInfo();
   }
 

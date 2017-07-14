@@ -25,6 +25,14 @@ export default class Route {
 
   /**
    * @param {Number} index
+   * @returns {Station}
+   */
+  getStationAt(index) {
+    return this.onlyStations[index];
+  }
+
+  /**
+   * @param {Number} index
    * @returns {WayPoint}
    */
   getWayPointAt(index) {
@@ -40,6 +48,16 @@ export default class Route {
 
   addWaypoint(waypoint) {
     this._stops.push(waypoint);
+  }
+
+  /**
+   * @param {WayPoint} waypoint
+   * @returns {WayPoint}
+   */
+  getNext(waypoint) {
+    const idx = this._stops.indexOf(waypoint);
+
+    return this.getWayPointAt(idx + 1);
   }
 }
 

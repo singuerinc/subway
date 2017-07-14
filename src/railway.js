@@ -61,7 +61,7 @@ export default class RailWay extends PIXI.Graphics {
       this._route.addWaypoint(wayPoint);
     }
 
-    this._addTrains(Math.floor(this._route.size * 0.5));
+    this._addTrains(Math.floor(this._route.onlyStations.length * 0.5));
 
     //
     // k(`${idx}`, () => {
@@ -79,10 +79,12 @@ export default class RailWay extends PIXI.Graphics {
         route: this._route,
         color: this._color,
       });
-      const stopIndex = i * Math.floor(this._route.size / numTrains);
 
-      train.parkIn(this._route.getWayPointAt(stopIndex), stopIndex);
+      const initWayPoint = this._route.getStationAt(i);
+
+      train.parkIn(initWayPoint);
       train.run();
+
       this.layerTrains.addChild(train);
 
       if (i === 1 && this._id === 'L1') {

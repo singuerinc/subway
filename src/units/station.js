@@ -7,13 +7,13 @@ export default class Station extends WayPoint {
 
     this._type = 1;
 
-    const initialCargo = anime.random(20, 50);
+    const initialCargo = anime.random(20, 150);
 
     this.cargo = initialCargo;
 
     // simulate cargo arriving
     setInterval(() => {
-      const value = anime.random(1, 10);
+      const value = anime.random(1, 50);
 
       this.cargo += value;
     }, 10000);

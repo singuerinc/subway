@@ -1,5 +1,4 @@
 import * as k from 'keymaster';
-import MathUtils from './mathUtils';
 
 export default class StationSprite extends PIXI.Graphics {
   constructor({ model, color }) {
@@ -30,8 +29,10 @@ export default class StationSprite extends PIXI.Graphics {
     });
 
     // this.infoNameText.visible = false;
-    this.infoNameText.x = 50;
-    this.infoNameText.y = -40;
+    this.infoNameText.x = 40;
+    this.infoNameText.y = 40;
+    // this.infoNameText.rotation = -Math.PI / 4;
+    // this.infoNameText.x = 50;
     this.info.addChild(this.infoNameText);
 
     this.on('click', () => {
@@ -49,11 +50,11 @@ export default class StationSprite extends PIXI.Graphics {
    * Set the nearest station connected to this station
    * @param {Station} value
    */
-  set parentStation(value) {
-    this._parentStation = value;
-    const angle = MathUtils.angle(this.x, this.y, this._parentStation.x, this._parentStation.y);
-    // this.rotation = (angle + (Math.PI / 2)) + Math.PI;
-  }
+  // set parentStation(value) {
+  //   this._parentStation = value;
+  //   const angle = MathUtils.angle(this.x, this.y, this._parentStation.x, this._parentStation.y);
+  //   this.rotation = (angle + (Math.PI / 2)) + Math.PI;
+  // }
 
   /**
    * The nearest station connected to this station
@@ -66,14 +67,14 @@ export default class StationSprite extends PIXI.Graphics {
   _draw(cargo) {
     const c = cargo || this._model.cargo;
 
-    this.infoNameText.text = `${this._model.name} - ${this.x}/${this.y} - ${c}`;
+    this.infoNameText.text = `${this._model.name} / Cargo: ${c}`;
 
     // cargo
     this.info.clear();
     // this.info.lineStyle(0);
     // this.info.beginFill(0x111111, 0.4);
     // this.info.drawCircle(0, 0, 26 + (c * 0.1));
-    const num = Math.floor(c / 10);
+    const num = Math.floor(c / 100);
 
     for (let i = 0; i < num; i += 1) {
       this.info.lineStyle(0);
@@ -86,7 +87,6 @@ export default class StationSprite extends PIXI.Graphics {
     this.graph.clear();
     this.graph.lineStyle(4, this._color, 1);
     this.graph.beginFill(0xFFFFFF, 1);
-    this.graph.beginFill(this._color, 0.2);
     this.graph.drawCircle(0, 0, 10);
     this.graph.endFill();
     this.graph.closePath();

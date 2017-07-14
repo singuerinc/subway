@@ -17,12 +17,12 @@ import RailWay from './railway';
   document.head.appendChild(script);
 }());
 
-PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.LINEAR;
+PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
 
 const renderer = new PIXI.CanvasRenderer({
   // autoResize: true,
   // antialias: true,
-  resolution: 2,
+  resolution: window.devicePixelRatio,
   backgroundColor: 0x2D2D2D,
   roundPixels: true,
   width: window.innerWidth,
@@ -38,39 +38,27 @@ document.body.appendChild(renderer.view);
 const stage = new PIXI.Container();
 
 stage.interactive = true;
+stage.scale.set(1);
 
 const layerRailways = new PIXI.Graphics();
-// layerRailways.scale = new PIXI.Point(0.1, 0.1);
-layerRailways.interactive = true;
-// layerRailways.x = 0;
-// layerRailways.y = 0;
-
-function onDragStart(event) {
-  console.log(event.data);
-  this.data = event.data;
-  this.dragging = true;
-}
 
 function onDragEnd() {
-  this.dragging = false;
-  this.data = null;
+  layerRailways.dragging = false;
 }
 
-function onDragMove() {
-  if (this.dragging) {
-    const newPosition = this.data.getLocalPosition(this.parent);
-
-    this.x = newPosition.x;
-    this.y = newPosition.y;
-  }
-}
-
+layerRailways.interactive = true;
 layerRailways
-  .on('pointerdown', onDragStart)
+  .on('pointerdown', () => {
+    layerRailways.dragging = true;
+  })
   .on('pointerup', onDragEnd)
   .on('pointerupoutside', onDragEnd)
-  .on('pointermove', onDragMove);
-
+  .on('pointermove', (e) => {
+    if (layerRailways.dragging) {
+      layerRailways.x += e.data.originalEvent.movementX;
+      layerRailways.y += e.data.originalEvent.movementY;
+    }
+  });
 
 // layerRailways.rotation = 5.4;
 stage.addChild(layerRailways);
