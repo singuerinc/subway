@@ -61,8 +61,7 @@ export default class RailWay extends PIXI.Graphics {
       this._route.addWaypoint(wayPoint);
     }
 
-    // this._addTrains(Math.floor(stations.length * 0.5));
-    this._addTrains(1);
+    this._addTrains(Math.floor(this._route.size * 0.5));
 
     //
     // k(`${idx}`, () => {

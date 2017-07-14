@@ -48,7 +48,7 @@ export default class Train extends PIXI.Graphics {
     const ix = 180;
 
     this.infoContainer = new PIXI.Graphics();
-    // this.infoContainer.visible = false;
+    this.infoContainer.visible = false;
     this.infoContainer.beginFill(0, 0.9);
     this.infoContainer.drawRect(ix, -200, 370, 120);
     this.infoContainer.lineStyle(2, 0, 1);

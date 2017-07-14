@@ -37,8 +37,8 @@ const stage = new PIXI.Container();
 const layerRailways = new PIXI.Container();
 
 layerRailways.scale = new PIXI.Point(0.5, 0.5);
-layerRailways.x = -1200;
-layerRailways.y = 400;
+layerRailways.x = -400;
+layerRailways.y = 200;
 layerRailways.rotation = 5.4;
 stage.addChild(layerRailways);
 
