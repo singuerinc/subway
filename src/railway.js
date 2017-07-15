@@ -4,8 +4,6 @@ import Route from './units/route';
 import WayPointSprite from './waypoint.sprite';
 import StationSprite from './station.sprite';
 
-let idx = 0;
-
 /**
  * @extends PIXI.Graphics
  */
@@ -13,7 +11,7 @@ export default class RailWay extends PIXI.Graphics {
 
   constructor({ id, line }) {
     super();
-    // console.log(`RailWay ${id} created ${stations.size}.`);
+    // console.log(`RailWay ${id} created.`);
     this._id = id;
     this._color = line.color;
 
@@ -70,10 +68,12 @@ export default class RailWay extends PIXI.Graphics {
     // this._addTrains(Math.floor(this._route.onlyStations.length * 0.5));
     // this._addTrains(1);
 
-    k(`${++idx}`, () => {
+    const key = parseInt(this._id.match(/(\d+)/)[0], 10);
+
+    k(`${key}`, () => {
       this.visible = !this.visible;
     });
-    //
+
     k('r', () => {
       this.layerLines.visible = !this.layerLines.visible;
     });

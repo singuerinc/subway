@@ -2,6 +2,7 @@ import Net from './units/net';
 import RailWay from './railway';
 
 // TODO: Train breaks
+// TODO: Add ui to show/hide stuff
 
 // (function () {
 //   const script = document.createElement('script');

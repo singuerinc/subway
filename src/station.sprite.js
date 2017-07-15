@@ -22,6 +22,15 @@ export default class StationSprite extends PIXI.Graphics {
     this.info = new PIXI.Graphics();
     this.addChild(this.info);
 
+    this.cargoText = new PIXI.Text('000', {
+      fontSize: 18,
+      fill: this._color,
+    });
+    this.cargoText.alpha = 0.7;
+    this.cargoText.x = 48;
+    this.cargoText.y = -6;
+    this.info.addChild(this.cargoText);
+
     this.infoNameText = new PIXI.Text(this.id, {
       fontSize: 28,
       fill: 0x1E1E1E,
@@ -58,20 +67,22 @@ export default class StationSprite extends PIXI.Graphics {
     const c = cargo || this._model.cargo;
 
     this.infoNameText.text = `${this._model.name} / Cargo: ${c}`;
+    this.cargoText.text = `${c}`;
 
     // cargo
     this.info.clear();
-    // this.info.lineStyle(2, this._color, 0.5);
-    // this.info.beginFill(0x111111, 0.4);
-    // this.info.drawCircle(0, 0, 26 + (c * 0.1));
+    this.info.lineStyle(0);
+    this.info.beginFill(this._color, 0.1);
+    this.info.drawRoundedRect(40, -12, 12 + (this.cargoText.text.length * 12), 32, 3);
 
-    const num = Math.floor(c / 100);
-
-    for (let i = 0; i < num; i += 1) {
-      this.info.lineStyle(0);
-      this.info.beginFill(0x666666, 1);
-      this.info.drawCircle(44 + (i % 5 * 14), Math.floor(i / 5) * 14, 5);
-    }
+    // cargo balls
+    // const num = Math.floor(c / 100);
+    //
+    // for (let i = 0; i < num; i += 1) {
+    //   this.info.lineStyle(0);
+    //   this.info.beginFill(0x666666, 1);
+    //   this.info.drawCircle(44 + (i % 5 * 14), Math.floor(i / 5) * 14, 5);
+    // }
     this.info.closePath();
 
     // station big
