@@ -41,9 +41,14 @@ document.body.appendChild(renderer.view);
 const stage = new PIXI.Container();
 const bg = new PIXI.extras.TilingSprite(
   // PIXI.Texture.fromImage('./img/congruent_outline.png'),
-  PIXI.Texture.fromImage('./img/footer_lodyas.png'),
+  PIXI.Texture.fromImage('./img/black_denim.png'),
+  // PIXI.Texture.fromImage('./img/black_paper.png'),
+  // PIXI.Texture.fromImage('./img/random_grey_variations.png'),
+  // PIXI.Texture.fromImage('./img/footer_lodyas.png'),
+  // PIXI.Texture.fromImage('./img/dust.png'),
   // PIXI.Texture.fromImage('./img/pink dust.png'),
   // PIXI.Texture.fromImage('./img/squared_metal_inv_@2X.png'),
+  // PIXI.Texture.fromImage('./img/squared_metal_inv_@2X copy.png'),
   // PIXI.Texture.fromImage('./img/subtle_white_mini_waves.png'),
   renderer.width,
   renderer.height,

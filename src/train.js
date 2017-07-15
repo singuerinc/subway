@@ -64,7 +64,7 @@ export default class Train extends PIXI.Graphics {
       fontSize: 14,
       fill: 0x464646,
     });
-    // this.info.visible = false;
+    this.info.visible = false;
     this.info.x = ix + 20;
     this.info.y = -188;
     this.infoContainer.addChild(this.info);
@@ -85,6 +85,17 @@ export default class Train extends PIXI.Graphics {
 
     this.speed = 0;
     this.moving = false;
+
+    anime({
+      targets: [this.head],
+      direction: 'alternate',
+      easing: 'easeInSine',
+      loop: true,
+      alpha: 0.2,
+      duration: 2000,
+      update: () => this._draw(),
+    });
+
     this._draw();
   }
 
