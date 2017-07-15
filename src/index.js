@@ -1,24 +1,23 @@
 import Net from './units/net';
 import RailWay from './railway';
 
-//TODO: Train breaks
-//FIXME: Error, wagons number is not the same as cargo, num of boxes are wrong
+// TODO: Train breaks
 
-(function () {
-  const script = document.createElement('script');
-
-  script.onload = function () {
-    const stats = new Stats();
-
-    document.body.appendChild(stats.dom);
-    requestAnimationFrame(function loop() {
-      stats.update();
-      requestAnimationFrame(loop);
-    });
-  };
-  script.src = '//rawgit.com/mrdoob/stats.js/master/build/stats.min.js';
-  document.head.appendChild(script);
-}());
+// (function () {
+//   const script = document.createElement('script');
+//
+//   script.onload = function () {
+//     const stats = new Stats();
+//
+//     document.body.appendChild(stats.dom);
+//     requestAnimationFrame(function loop() {
+//       stats.update();
+//       requestAnimationFrame(loop);
+//     });
+//   };
+//   script.src = '//rawgit.com/mrdoob/stats.js/master/build/stats.min.js';
+//   document.head.appendChild(script);
+// }());
 
 PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
 
@@ -58,6 +57,7 @@ stage.addChild(bg);
 stage.interactive = true;
 
 const layers = new PIXI.Graphics();
+
 layers.x = -100;
 layers.y = -300;
 const layerRailways = new PIXI.Graphics();
@@ -92,20 +92,47 @@ layers.addChild(layerTrains);
 
 const text = `
 show / hide
-s   - stations
-w   - waypoints
-t   - trains
-r   - rails
-0-9 - lines`;
+
+stations - S
+waypoints - W
+trains - T
+rails - R
+lines - 0-9`;
 
 const info = new PIXI.Text(text, {
   fontSize: 10,
   fill: 0x7E7E7E,
+  align: 'right',
 });
 
-info.x = 20;
-info.y = 60;
+info.x = window.innerWidth - (info.width + 20);
+info.y = window.innerHeight - (info.height + 60);
 stage.addChild(info);
+
+const title = new PIXI.Text('bcn subway', {
+  fontSize: 18,
+  fill: 0x9E9E9E,
+  align: 'right',
+});
+
+title.x = window.innerWidth - (title.width + 20);
+title.y = 20;
+stage.addChild(title);
+
+const brand = new PIXI.Text('@singuerinc', {
+  fontSize: 16,
+  fill: 0x3E3E3E,
+  align: 'right',
+});
+
+brand.interactive = true;
+brand.buttonMode = true;
+brand.x = window.innerWidth - (brand.width + 20);
+brand.y = window.innerHeight - (brand.height + 20);
+brand.on('click', () => {
+  document.location.href = 'https://www.singuerinc.com/';
+});
+stage.addChild(brand);
 
 const loop = () => {
   requestAnimationFrame(loop);
