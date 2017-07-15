@@ -31,7 +31,7 @@ export default class Net {
     this._parseWayPoints(l5);
     this._parseWayPoints(l9);
     this._parseWayPoints(l10);
-    this._parseWayPoints(l11);
+    // this._parseWayPoints(l11);
 
     const line1 = this._parseLine(l1, 0xFF2136);
     const line1r = this._parseLine(l1r, 0xFF2136, -1);
@@ -55,14 +55,19 @@ export default class Net {
 
     this._createRoutes([line1, line1r, line2, line3, line4, line5, line9, line10]);
 
-    const itinerary = new Itinerary({
-      routes: [this._routes.get('L1'), this._routes.get('L1r')],
-    });
+    const numTrains = 3;
 
-    itinerary.currentRoute = itinerary.getNextRoute();
-    itinerary.currentWayPoint = itinerary.getNextWayPoint();
+    for (let i = 0; i < numTrains; i += 1) {
+      const itinerary = new Itinerary({
+        routes: [this._routes.get('L1'), this._routes.get('L1r')],
+      });
 
-    this._addTrains(line1.onlyStations.length / 2, itinerary, 0xFF2136);
+      itinerary.currentRoute = itinerary.getNextRoute();
+      itinerary.currentWayPoint = itinerary.getNextWayPoint();
+
+      this._addTrains(`${i}`, itinerary, 0xFF2136);
+      // this._addTrains(line1.onlyStations.length / 2, itinerary, 0xFF2136);
+    }
   }
 
   /**
@@ -72,7 +77,7 @@ export default class Net {
   static convert(value) {
     const integer = Math.floor(value);
 
-    return Math.floor(((value - integer) * 40000));
+    return Math.floor(((value - integer) * 20000));
     // return Math.floor(((value - integer) * 60000));
   }
 
@@ -85,8 +90,11 @@ export default class Net {
       const info = data[i];
 
       if (!this.stations.has(info.id)) {
-        const sx = Net.convert(parseFloat(info.lat)) - 13788;
-        const sy = Net.convert(parseFloat(info.lon)) - 3990;
+        const sx = Net.convert(parseFloat(info.lat)) - 6894;
+        const sy = Net.convert(parseFloat(info.lon)) - 2053;
+        // console.log(Net.convert(parseFloat(info.lat)), Net.convert(parseFloat(info.lon)));
+        // const sx = Net.convert(parseFloat(info.lat)) - 13788;
+        // const sy = Net.convert(parseFloat(info.lon)) - 3990;
         // console.log(sx, sy);
         // const sx = Net.convert(parseFloat(info.lat)) - 20682;
         // const sy = Net.convert(parseFloat(info.lon)) - 5986;
@@ -106,20 +114,18 @@ export default class Net {
   }
 
   /**
-   * @param {Number} numTrains
+   * @param {String} id
    * @param {Itinerary} itinerary
    * @param {Number} color
    * @private
    */
-  _addTrains(numTrains, itinerary, color) {
-    for (let i = 0; i < numTrains; i += 1) {
-      const train = new Train(`${i}`, {
-        itinerary,
-        color,
-      });
+  _addTrains(id, itinerary, color) {
+    const train = new Train(id, {
+      itinerary,
+      color,
+    });
 
-      this._trains.push(train);
-    }
+    this._trains.push(train);
   }
 
   /**
@@ -170,7 +176,7 @@ export default class Net {
           const sx = station.position.x;
           const sy = station.position.y;
           const distanceBtwStations = MathUtils.distance(sx, sy, px, py);
-          const numWayPoints = Math.floor(distanceBtwStations / 70);
+          const numWayPoints = Math.floor(distanceBtwStations / 45);
 
           for (let j = 0; j < numWayPoints - 1; j += 1) {
             const percentage = (1 / numWayPoints) * (j + 1);

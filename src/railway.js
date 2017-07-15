@@ -51,10 +51,10 @@ export default class RailWay extends PIXI.Graphics {
           this.layerLines.lineStyle(66, this._color, 0.1);
           this.layerLines.moveTo(px, py);
           this.layerLines.lineTo(sx, sy);
-          this.layerLines.lineStyle(18, 0x2D2D2D, 1);
+          this.layerLines.lineStyle(6, 0x2D2D2D, 1);
           this.layerLines.moveTo(px, py);
           this.layerLines.lineTo(sx, sy);
-          this.layerLines.lineStyle(5, this._color, 1);
+          this.layerLines.lineStyle(3, this._color, 1);
           this.layerLines.moveTo(px, py);
           this.layerLines.lineTo(sx, sy);
         }

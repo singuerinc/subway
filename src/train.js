@@ -199,6 +199,7 @@ export default class Train extends PIXI.Graphics {
         `#${this._id} - ${this.state}
 Cargo: ${this.cargo} / ${this.maxCargo} / Total: ${this.cargoAccumulated}
 Speed: ${speed}km/h / ${maxSpeed}km/h
+Stop: ${this.itinerary.currentWayPoint.name} → ${this.itinerary.getNextRoute().name}
 `;
     }
   }
