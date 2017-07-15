@@ -55,18 +55,32 @@ export default class Net {
 
     this._createRoutes([line1, line1r, line2, line3, line4, line5, line9, line10]);
 
-    const numTrains = 3;
+    const itineraries = [
+      [this._routes.get('L1'), this._routes.get('L1r')],
+      [this._routes.get('L2')],
+      [this._routes.get('L3')],
+      [this._routes.get('L4')],
+      [this._routes.get('L5')],
+      [this._routes.get('L9')],
+      [this._routes.get('L10')],
+    ];
 
-    for (let i = 0; i < numTrains; i += 1) {
-      const itinerary = new Itinerary({
-        routes: [this._routes.get('L1'), this._routes.get('L1r')],
-      });
+    for (let j = 0; j < itineraries.length; j += 1) {
+      const itineraryRoutes = itineraries[j];
+      const numTrains = Math.floor(itineraryRoutes[0].size * 0.25);
 
-      itinerary.currentRoute = itinerary.getNextRoute();
-      itinerary.currentWayPoint = itinerary.getNextWayPoint();
+      // console.log(numTrains);
+      for (let i = 0; i < numTrains; i += 1) {
+        const itinerary = new Itinerary({
+          routes: itineraryRoutes,
+        });
 
-      this._addTrains(`${i}`, itinerary, 0xFF2136);
-      // this._addTrains(line1.onlyStations.length / 2, itinerary, 0xFF2136);
+        itinerary.currentRoute = itinerary.getNextRoute();
+        itinerary.currentWayPoint = itinerary.getNextWayPoint();
+
+        this._addTrains(`${i}`, itinerary, 0xFF2136);
+        // this._addTrains(line1.onlyStations.length / 2, itinerary, 0xFF2136);
+      }
     }
   }
 

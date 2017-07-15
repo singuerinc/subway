@@ -50,13 +50,13 @@ export default class Train extends PIXI.Graphics {
     this.infoContainer = new PIXI.Graphics();
     this.infoContainer.visible = false;
     this.infoContainer.beginFill(0, 0.9);
-    this.infoContainer.drawRect(ix, -200, 250, 80);
+    this.infoContainer.drawRect(ix, -200, 340, 90);
     this.infoContainer.lineStyle(2, 0, 1);
     this.infoContainer.moveTo(0, 0);
     this.infoContainer.lineTo(ix, -140);
     this.infoContainer.lineStyle(6, this._trainColor, 1);
     this.infoContainer.moveTo(ix, -200);
-    this.infoContainer.lineTo(ix, -120);
+    this.infoContainer.lineTo(ix, -110);
     this.infoContainer.closePath();
     this.addChild(this.infoContainer);
 
@@ -199,7 +199,7 @@ export default class Train extends PIXI.Graphics {
         `#${this._id} - ${this.state}
 Cargo: ${this.cargo} / ${this.maxCargo} / Total: ${this.cargoAccumulated}
 Speed: ${speed}km/h / ${maxSpeed}km/h
-Stop: ${this.itinerary.currentWayPoint.name} → ${this.itinerary.getNextRoute().name}
+Stop: ${this.itinerary.currentWayPoint.name} → ${this.itinerary.getNextWayPoint().name}
 `;
     }
   }
