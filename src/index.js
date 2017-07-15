@@ -58,6 +58,8 @@ stage.addChild(bg);
 stage.interactive = true;
 
 const layers = new PIXI.Graphics();
+layers.x = -100;
+layers.y = -300;
 const layerRailways = new PIXI.Graphics();
 
 layers.scale.set(0.5);
