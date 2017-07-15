@@ -26,6 +26,13 @@ export default class Itinerary {
   }
 
   /**
+   * @returns {Array.<Route>}
+   */
+  get routes() {
+    return this._routes;
+  }
+
+  /**
    * @returns {WayPoint|Station}
    */
   getNextWayPoint() {
@@ -58,5 +65,14 @@ export default class Itinerary {
     const nextRouteIndex = (idx + 1) % this._routes.length;
 
     return this._routes[nextRouteIndex];
+  }
+
+  get size() {
+    let size = 0;
+
+    this._routes.forEach((route) => {
+      size += route.size;
+    });
+    return size;
   }
 }

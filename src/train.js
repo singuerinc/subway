@@ -12,7 +12,7 @@ const STATE_WAITING = 'waiting';
 const STATE_GO = 'go';
 
 export default class Train extends PIXI.Graphics {
-  constructor(id, { itinerary, color }) {
+  constructor(id, { itinerary }) {
     super();
     // console.log(`Train ${id} created.`);
     this.buttonMode = true;
@@ -23,11 +23,11 @@ export default class Train extends PIXI.Graphics {
     });
 
     this._id = id;
-    this._trainColor = color;
     this._cargoAccumulated = 0;
     this.x = 0;
     this.y = 0;
     this.itinerary = itinerary;
+    this._trainColor = this.itinerary.currentRoute.color;
 
     this.wagons = [];
 
@@ -194,12 +194,19 @@ export default class Train extends PIXI.Graphics {
     if (this.info.visible) {
       const speed = Math.floor(this.speed * 100);
       const maxSpeed = Math.floor(this.maxSpeed * 100);
+      let nextWayPointName;
+
+      try {
+        nextWayPointName = this.itinerary.getNextWayPoint().name;
+      } catch (e) {
+        nextWayPointName = '';
+      }
 
       this.info.text =
         `#${this._id} - ${this.state}
 Cargo: ${this.cargo} / ${this.maxCargo} / Total: ${this.cargoAccumulated}
 Speed: ${speed}km/h / ${maxSpeed}km/h
-Stop: ${this.itinerary.currentWayPoint.name} → ${this.itinerary.getNextWayPoint().name}
+Stop: ${this.itinerary.currentWayPoint.name} → ${nextWayPointName}
 `;
     }
   }
@@ -241,6 +248,7 @@ Stop: ${this.itinerary.currentWayPoint.name} → ${this.itinerary.getNextWayPoin
         // last stop in this route
         this.unload(true).then(() => {
           this.itinerary.currentRoute = this.itinerary.getNextRoute();
+          this._trainColor = this.itinerary.currentRoute.color;
           this.itinerary.currentWayPoint = this.itinerary.getNextWayPoint();
           nextStop = this.itinerary.currentWayPoint;
           this.run();

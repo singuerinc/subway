@@ -1,6 +1,7 @@
 export default class Route {
-  constructor({ id }) {
+  constructor({ id, color }) {
     this._id = id;
+    this._color = color;
     this._waypoints = [];
   }
 
@@ -11,23 +12,36 @@ export default class Route {
     return this._id;
   }
 
+  /**
+   * @returns {Number}
+   */
+  get color() {
+    return this._color;
+  }
+
+  /**
+   * @returns {Array.<Station>}
+   */
   get onlyStations() {
     return this._waypoints.filter(stop => stop.type === 1);
   }
 
+  /**
+   * @returns {Array.<WayPoint>}
+   */
   get onlyWaypoints() {
     return this._waypoints.filter(stop => stop.type === 0);
   }
 
   /**
-   * @param {Array} value
+   * @param {Array.<WayPoint>} value
    */
   set waypoints(value) {
     this._waypoints = value;
   }
 
   /**
-   * @returns {Array}
+   * @returns {Array.<WayPoint>}
    */
   get waypoints() {
     return this._waypoints;

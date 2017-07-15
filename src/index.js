@@ -41,10 +41,8 @@ document.body.appendChild(renderer.view);
 const stage = new PIXI.Container();
 const bg = new PIXI.extras.TilingSprite(
   // PIXI.Texture.fromImage('./img/congruent_outline.png'),
-  // PIXI.Texture.fromImage('./img/dark-triangles.png'),
-  // PIXI.Texture.fromImage('./img/footer_lodyas.png'),
-  PIXI.Texture.fromImage('./img/pink dust.png'),
-  // PIXI.Texture.fromImage('./img/squared_metal_@2X.png'),
+  PIXI.Texture.fromImage('./img/footer_lodyas.png'),
+  // PIXI.Texture.fromImage('./img/pink dust.png'),
   // PIXI.Texture.fromImage('./img/squared_metal_inv_@2X.png'),
   // PIXI.Texture.fromImage('./img/subtle_white_mini_waves.png'),
   renderer.width,
@@ -57,7 +55,7 @@ stage.interactive = true;
 const layers = new PIXI.Graphics();
 const layerRailways = new PIXI.Graphics();
 
-// layers.scale.set(0.5);
+layers.scale.set(0.5);
 // layerRailways.rotation = -1;
 // layerRailways.x = -600;
 // layerRailways.y = 550;
@@ -120,13 +118,18 @@ net.lines.forEach((line) => {
 });
 
 net.trains.forEach((train) => {
-  console.log(train);
-  train.parkIn(train.itinerary.currentRoute, 0);
+  const randomRouteIndex = Math.floor(Math.random() * train.itinerary.routes.length);
+  const route = train.itinerary.routes[randomRouteIndex];
+
+  train.itinerary.currentRoute = route;
+
+  const randomIndex = Math.floor(Math.random() * train.itinerary.currentRoute.size);
+
+  train.parkIn(route, randomIndex);
   train.run();
 
   layerTrains.addChild(train);
 
-  console.log(train.id);
   if (train.id === '0') {
     train.openTrainInfo();
   }
