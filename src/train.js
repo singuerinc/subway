@@ -93,14 +93,23 @@ export default class Train extends PIXI.Graphics {
     this.infoContainer.visible = true;
   }
 
+  /**
+   * @param {Wagon} wagon
+   */
   addWagon(wagon) {
     this.wagons.push(wagon);
   }
 
+  /**
+   * @param {Array} value
+   */
   set wagons(value) {
     this._wagons = value;
   }
 
+  /**
+   * @returns {Array}
+   */
   get wagons() {
     return this._wagons;
   }
@@ -112,6 +121,9 @@ export default class Train extends PIXI.Graphics {
     return this._currentStop;
   }
 
+  /**
+   * @returns {String}
+   */
   get id() {
     return this._id;
   }
@@ -531,10 +543,9 @@ Speed: ${speed}km/h / ${maxSpeed}km/h
     this.cargoGrph.clear();
     this.cargoGrph.y = 12;
 
-    const numMax = Math.floor(this.maxCargo / 100);
-    const num = Math.floor(this.cargo / 100);
+    const num = Math.floor(this.cargo / 220);
 
-    for (let i = 0; i < numMax; i += 1) {
+    for (let i = 0; i < this.wagons.length; i += 1) {
       this.cargoGrph.lineStyle(0);
       if (i < num) {
         this.cargoGrph.beginFill(0x111111, 1);

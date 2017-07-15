@@ -23,9 +23,9 @@ import RailWay from './railway';
 PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
 
 const renderer = new PIXI.CanvasRenderer({
-  // autoResize: true,
+  autoResize: true,
   // antialias: true,
-  resolution: window.devicePixelRatio,
+  resolution: 2,
   backgroundColor: 0x2D2D2D,
   roundPixels: true,
   width: window.innerWidth,
@@ -114,7 +114,8 @@ net.trains.forEach((train) => {
 
   layerTrains.addChild(train);
 
-  if (train.id === '1') {
+  console.log(train.id);
+  if (train.id === '0') {
     train.openTrainInfo();
   }
 });

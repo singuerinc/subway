@@ -34,7 +34,7 @@ export default class Net {
     this._parseWayPoints(l11);
 
     const line1 = this._parseLine(l1, 0xFF2136);
-    const line1r = this._parseLine(l1r, 0xFF2136);
+    const line1r = this._parseLine(l1r, 0xFF2136, -1);
     const line2 = this._parseLine(l2, 0xB22AA1);
     const line3 = this._parseLine(l3, 0x00C03A);
     const line4 = this._parseLine(l4, 0xFFB901);
@@ -43,26 +43,26 @@ export default class Net {
     const line10 = this._parseLine(l10, 0x00B0F2);
     // const line11 = this._parseLine(l11, 0x89D748);
 
-    // this.lines.set(line1.id, line1);
+    this.lines.set(line1.id, line1);
     this.lines.set(line1r.id, line1r);
-    // this.lines.set(line2.id, line2);
-    // this.lines.set(line3.id, line3);
-    // this.lines.set(line4.id, line4);
-    // this.lines.set(line5.id, line5);
-    // this.lines.set(line9.id, line9);
-    // this.lines.set(line10.id, line10);
+    this.lines.set(line2.id, line2);
+    this.lines.set(line3.id, line3);
+    this.lines.set(line4.id, line4);
+    this.lines.set(line5.id, line5);
+    this.lines.set(line9.id, line9);
+    this.lines.set(line10.id, line10);
     // this.lines.set(line11.id, line11);
 
     this._createRoutes([line1, line1r, line2, line3, line4, line5, line9, line10]);
 
     const itinerary = new Itinerary({
-      routes: [this._routes.get('L1r')],
+      routes: [this._routes.get('L1'), this._routes.get('L1r')],
     });
 
     itinerary.currentRoute = itinerary.getNextRoute();
     itinerary.currentWayPoint = itinerary.getNextWayPoint();
 
-    this._addTrains(1, itinerary, 0xFF2136);
+    this._addTrains(line1.onlyStations.length / 2, itinerary, 0xFF2136);
   }
 
   /**
@@ -145,13 +145,15 @@ export default class Net {
 
   /**
    * @param {Array} data
+   * @returns {Line}
    * @private
    */
-  _parseLine(data, color) {
+  _parseLine(data, color, direction = 1) {
     const line = new Line({
       id: data[0].line,
       name: data[0].line,
       color,
+      direction,
     });
 
     let prevStation = null;

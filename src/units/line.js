@@ -1,9 +1,10 @@
 export default class Line {
-  constructor({ id, name, color }) {
+  constructor({ id, name, color, direction }) {
     this._id = id;
     this._name = name;
     this._color = color;
     this._wayPoints = new Map();
+    this._direction = direction;
   }
 
   /**
@@ -25,6 +26,13 @@ export default class Line {
    */
   get color() {
     return this._color;
+  }
+
+  /**
+   * @returns {number}
+   */
+  get direction() {
+    return this._direction;
   }
 
   /**

@@ -27,7 +27,7 @@ export default class StationSprite extends PIXI.Graphics {
       fill: 0x1E1E1E,
     });
 
-    // this.infoNameText.visible = false;
+    this.infoNameText.visible = false;
     this.infoNameText.x = 44;
     this.infoNameText.y = -14;
     this.info.addChild(this.infoNameText);
