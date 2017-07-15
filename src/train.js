@@ -48,6 +48,7 @@ export default class Train extends PIXI.Graphics {
     const ix = 180;
 
     this.infoContainer = new PIXI.Graphics();
+    this.infoContainer.scale.set(2);
     this.infoContainer.visible = false;
     this.infoContainer.beginFill(0, 0.9);
     this.infoContainer.drawRect(ix, -200, 340, 90);
@@ -64,7 +65,7 @@ export default class Train extends PIXI.Graphics {
       fontSize: 14,
       fill: 0x464646,
     });
-    this.info.visible = false;
+    // this.info.visible = false;
     this.info.x = ix + 20;
     this.info.y = -188;
     this.infoContainer.addChild(this.info);
@@ -90,6 +91,7 @@ export default class Train extends PIXI.Graphics {
       targets: [this.head],
       direction: 'alternate',
       easing: 'easeInSine',
+      delay: Math.random() * 500,
       loop: true,
       alpha: 0.2,
       duration: 2000,

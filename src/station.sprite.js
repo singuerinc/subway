@@ -69,7 +69,7 @@ export default class StationSprite extends PIXI.Graphics {
 
     for (let i = 0; i < num; i += 1) {
       this.info.lineStyle(0);
-      this.info.beginFill(0x111111, 1);
+      this.info.beginFill(0x666666, 1);
       this.info.drawCircle(44 + (i % 5 * 14), Math.floor(i / 5) * 14, 5);
     }
     this.info.closePath();

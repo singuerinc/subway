@@ -61,11 +61,6 @@ const layers = new PIXI.Graphics();
 const layerRailways = new PIXI.Graphics();
 
 layers.scale.set(0.5);
-// layerRailways.rotation = -1;
-// layerRailways.x = -600;
-// layerRailways.y = 550;
-// layerRailways.x = -3031;
-// layerRailways.y = -3480;
 
 function onDragEnd() {
   layers.dragging = false;
@@ -94,15 +89,16 @@ const layerTrains = new PIXI.Graphics();
 layers.addChild(layerTrains);
 
 const text = `
-s   / stations
-w   / waypoints
-t   / trains
-r   / rails
-0-9 / lines`;
+show / hide
+s   - stations
+w   - waypoints
+t   - trains
+r   - rails
+0-9 - lines`;
 
 const info = new PIXI.Text(text, {
   fontSize: 10,
-  fill: 0x1E1E1E,
+  fill: 0x7E7E7E,
 });
 
 info.x = 20;
@@ -122,7 +118,7 @@ net.lines.forEach((line) => {
   layerRailways.addChild(rw);
 });
 
-net.trains.forEach((train) => {
+net.trains.forEach((train, index, trains) => {
   const randomRouteIndex = Math.floor(Math.random() * train.itinerary.routes.length);
   const route = train.itinerary.routes[randomRouteIndex];
 
@@ -135,7 +131,7 @@ net.trains.forEach((train) => {
 
   layerTrains.addChild(train);
 
-  if (train.id === '0') {
+  if (index === 0) {
     train.openTrainInfo();
   }
 });
