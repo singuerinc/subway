@@ -1,7 +1,7 @@
 export default class Route {
   constructor({ id }) {
     this._id = id;
-    this._stops = [];
+    this._waypoints = [];
   }
 
   /**
@@ -12,15 +12,25 @@ export default class Route {
   }
 
   get onlyStations() {
-    return this._stops.filter(stop => stop.type === 1);
+    return this._waypoints.filter(stop => stop.type === 1);
   }
 
   get onlyWaypoints() {
-    return this._stops.filter(stop => stop.type === 0);
+    return this._waypoints.filter(stop => stop.type === 0);
   }
 
+  /**
+   * @param {Array} value
+   */
+  set waypoints(value) {
+    this._waypoints = value;
+  }
+
+  /**
+   * @returns {Array}
+   */
   get waypoints() {
-    return this._stops;
+    return this._waypoints;
   }
 
   /**
@@ -36,18 +46,18 @@ export default class Route {
    * @returns {WayPoint}
    */
   getWayPointAt(index) {
-    return this._stops[index];
+    return this._waypoints[index];
   }
 
   /**
    * @returns {Number}
    */
   get size() {
-    return this._stops.length;
+    return this._waypoints.length;
   }
 
   addWaypoint(waypoint) {
-    this._stops.push(waypoint);
+    this._waypoints.push(waypoint);
   }
 
   /**
@@ -55,7 +65,7 @@ export default class Route {
    * @returns {WayPoint}
    */
   getNext(waypoint) {
-    const idx = this._stops.indexOf(waypoint);
+    const idx = this._waypoints.indexOf(waypoint);
 
     return this.getWayPointAt(idx + 1);
   }

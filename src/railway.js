@@ -4,10 +4,13 @@ import Route from './units/route';
 import WayPointSprite from './waypoint.sprite';
 import StationSprite from './station.sprite';
 
+let idx = 0;
+
 /**
  * @extends PIXI.Graphics
  */
 export default class RailWay extends PIXI.Graphics {
+
   constructor({ id, line }) {
     super();
     // console.log(`RailWay ${id} created ${stations.size}.`);
@@ -24,16 +27,18 @@ export default class RailWay extends PIXI.Graphics {
     this.layerStations = new PIXI.Graphics();
     this.addChild(this.layerStations);
 
-    this.layerTrains = new PIXI.Graphics();
-    this.addChild(this.layerTrains);
-    //
-    this._route = new Route({ id: this.id });
-    //
     let parentStation;
+    let prevStation;
 
     for (const [, wayPoint] of line.wayPoints.entries()) {
       if (wayPoint.type === 1) {
         const station = new StationSprite({ model: wayPoint, color: line.color, dir: 1 });
+
+        if (prevStation) {
+          prevStation.parentStation = station;
+        }
+
+        prevStation = station;
 
         this.layerStations.addChild(station);
 
@@ -44,6 +49,9 @@ export default class RailWay extends PIXI.Graphics {
           const sy = wayPoint.position.y;
 
           this.layerLines.lineStyle(66, this._color, 0.1);
+          this.layerLines.moveTo(px, py);
+          this.layerLines.lineTo(sx, sy);
+          this.layerLines.lineStyle(33, 0x2D2D2D, 1);
           this.layerLines.moveTo(px, py);
           this.layerLines.lineTo(sx, sy);
           this.layerLines.lineStyle(5, this._color, 1);
@@ -57,40 +65,18 @@ export default class RailWay extends PIXI.Graphics {
 
         this.layerWayPoints.addChild(wp);
       }
-
-      this._route.addWaypoint(wayPoint);
     }
 
-    this._addTrains(Math.floor(this._route.onlyStations.length * 0.5));
+    // this._addTrains(Math.floor(this._route.onlyStations.length * 0.5));
+    // this._addTrains(1);
 
+    k(`${++idx}`, () => {
+      this.visible = !this.visible;
+    });
     //
-    // k(`${idx}`, () => {
-    //   this.visible = !this.visible;
-    // });
-    //
-    // k('r', () => {
-    //   this.layerLines.visible = !this.layerLines.visible;
-    // });
-  }
-
-  _addTrains(numTrains) {
-    for (let i = 0; i < numTrains; i += 1) {
-      const train = new Train(`${this._route.id}-${i}`, {
-        route: this._route,
-        color: this._color,
-      });
-
-      const initWayPoint = this._route.getStationAt(i);
-
-      train.parkIn(initWayPoint);
-      train.run();
-
-      this.layerTrains.addChild(train);
-
-      if (i === 1 && this._id === 'L1') {
-        train.openTrainInfo();
-      }
-    }
+    k('r', () => {
+      this.layerLines.visible = !this.layerLines.visible;
+    });
   }
 
   /**

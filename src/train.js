@@ -12,7 +12,7 @@ const STATE_WAITING = 'waiting';
 const STATE_GO = 'go';
 
 export default class Train extends PIXI.Graphics {
-  constructor(id, { route, color }) {
+  constructor(id, { itinerary, color }) {
     super();
     // console.log(`Train ${id} created.`);
     this.buttonMode = true;
@@ -27,8 +27,7 @@ export default class Train extends PIXI.Graphics {
     this._cargoAccumulated = 0;
     this.x = 0;
     this.y = 0;
-    this.route = route;
-    // this._stopIndex = 0;
+    this.itinerary = itinerary;
 
     this.wagons = [];
 
@@ -106,6 +105,13 @@ export default class Train extends PIXI.Graphics {
     return this._wagons;
   }
 
+  /**
+   * @returns {Station|WayPoint}
+   */
+  get currentStop() {
+    return this._currentStop;
+  }
+
   get id() {
     return this._id;
   }
@@ -123,7 +129,7 @@ export default class Train extends PIXI.Graphics {
   }
 
   get maxSpeed() {
-    return this.wagons.reduce((speed, wagon) => wagon.calcSpeed(speed), 1.2);
+    return this.wagons.reduce((speed, wagon) => wagon.calcSpeed(speed), 3.2); // 120km/h
   }
 
   get cargo() {
@@ -172,14 +178,6 @@ export default class Train extends PIXI.Graphics {
     return this._state;
   }
 
-  set stops(value) {
-    this._stops = value;
-  }
-
-  get stops() {
-    return this._stops;
-  }
-
   updateInfo() {
     if (this.info.visible) {
       const speed = Math.floor(this.speed * 100);
@@ -209,34 +207,50 @@ Speed: ${speed}km/h / ${maxSpeed}km/h
 
   run() {
     if (!this.moving) {
-      // const nextIndex = (this._stopIndex + 1) % this.route.size;
-      const nextStop = this.route.getNext(this._currentStop);
+      let nextStop;
 
-      this.moveToStop(nextStop)
-        .then(() => {
-          // this._stopIndex = nextIndex;
+      try {
+        nextStop = this.itinerary.getNextWayPoint();
+      } catch (e) {
+        nextStop = null;
+      }
+
+      if (nextStop) {
+        this.moveToStop(nextStop)
+          .then(() => {
+            this.run();
+          })
+          .catch(() => {
+            // happen when the waypoint or station is not free
+            setTimeout(() => this.run(), 1500);
+          });
+      } else {
+        // last stop in this route
+        this.unload(true).then(() => {
+          this.itinerary.currentRoute = this.itinerary.getNextRoute();
+          this.itinerary.currentWayPoint = this.itinerary.getNextWayPoint();
+          nextStop = this.itinerary.currentWayPoint;
           this.run();
-        })
-        .catch(() => {
-          // it happen when the waypoint or station is not free
-          setTimeout(() => this.run(), 1500);
         });
+      }
     }
   }
 
   /**
-   * @param stop {WayPoint}
+   * @param route {Route}
+   * @param index {Number}
    */
-  parkIn(stop) {
+  parkIn(route, index) {
     if (this.moving) {
       throw new Error('Can not park this train because is in movement.');
     }
 
-    this.x = stop.position.x;
-    this.y = stop.position.y;
+    this.itinerary.currentRoute = route;
+    this.itinerary.currentWayPoint = route.getWayPointAt(index);
     this.moving = false;
-    this._currentStop = stop;
-    // this._stopIndex = stopIndex;
+    this._currentStop = this.itinerary.currentWayPoint;
+    this.x = this._currentStop.position.x;
+    this.y = this._currentStop.position.y;
   }
 
   openDoors() {
@@ -261,9 +275,9 @@ Speed: ${speed}km/h / ${maxSpeed}km/h
     });
   }
 
-  unload() {
+  unload(leaveEmpty = false) {
     return new Promise((resolve) => {
-      const toUnload = anime.random(0, this.cargo);
+      const toUnload = leaveEmpty ? this.cargo : anime.random(0, this.cargo);
       // TODO: Add partial cargo to the station? For stations that connects?
       const tmpCargo = this.cargo - toUnload;
 
@@ -302,7 +316,7 @@ Speed: ${speed}km/h / ${maxSpeed}km/h
   load() {
     return new Promise((resolve) => {
       const spaceInTrain = this.maxCargo - this.cargo;
-      const toLoad = Math.min(spaceInTrain, this._currentStop.cargo);
+      const toLoad = Math.min(spaceInTrain, this.currentStop.cargo);
       const tmpCargo = this.cargo + toLoad;
 
       this.state = STATE_LOADING;
@@ -316,7 +330,7 @@ Speed: ${speed}km/h / ${maxSpeed}km/h
 
       const tmp = {
         cargo: this.cargo,
-        stopCargo: this._currentStop.cargo,
+        stopCargo: this.currentStop.cargo,
       };
 
       anime({
@@ -325,10 +339,10 @@ Speed: ${speed}km/h / ${maxSpeed}km/h
         delay: 1500,
         duration: 50 * toLoad,
         cargo: tmpCargo,
-        stopCargo: this._currentStop.cargo - toLoad,
+        stopCargo: this.currentStop.cargo - toLoad,
         round: 1,
         update: () => {
-          this._currentStop.cargo = parseInt(tmp.stopCargo, 10);
+          this.currentStop.cargo = parseInt(tmp.stopCargo, 10);
           this.cargo = parseInt(tmp.cargo, 10);
           this._draw();
           this.updateInfo();
@@ -352,12 +366,12 @@ Speed: ${speed}km/h / ${maxSpeed}km/h
         return;
       }
 
-      const wayPointToWayPoint = (this._currentStop.type === 0) && (nextStop.type === 0);
-      const wayPointToStation = (this._currentStop.type === 0) && (nextStop.type === 1);
-      const stationToWayPoint = (this._currentStop.type === 1) && (nextStop.type === 0);
-      const stationToStation = (this._currentStop.type === 1) && (nextStop.type === 1);
+      const wayPointToWayPoint = (this.currentStop.type === 0) && (nextStop.type === 0);
+      const wayPointToStation = (this.currentStop.type === 0) && (nextStop.type === 1);
+      const stationToWayPoint = (this.currentStop.type === 1) && (nextStop.type === 0);
+      const stationToStation = (this.currentStop.type === 1) && (nextStop.type === 1);
 
-      const isWayPoint = this._currentStop.type === 0;
+      const isWayPoint = this.currentStop.type === 0;
 
       const distance = MathUtils.distance(this.x, this.y, nextStop.position.x, nextStop.position.y);
 
@@ -366,16 +380,17 @@ Speed: ${speed}km/h / ${maxSpeed}km/h
       this.updateInfo();
 
       const onBegin = () => {
-        if (this._currentStop) {
-          this._currentStop.leave(this);
+        if (this.currentStop) {
+          this.currentStop.leave(this);
         }
         this.moving = true;
       };
 
       const onComplete = () => {
         this.moving = false;
-        this._currentStop = nextStop;
-        this._currentStop.enter(this);
+        this.itinerary.currentWayPoint = nextStop;
+        this._currentStop = this.itinerary.currentWayPoint;
+        this.currentStop.enter(this);
         return resolve();
       };
 
@@ -441,10 +456,10 @@ Speed: ${speed}km/h / ${maxSpeed}km/h
       // this.rotation = angle + Math.PI;
       // this.infoContainer.rotation = angle;
 
-      const isStation = this._currentStop.type === 1;
+      const isStation = this.currentStop.type === 1;
 
       // STATIONS
-      if (this._currentStop && isStation) {
+      if (this.currentStop && isStation) {
         // open the train doors
         this.openDoors()
           .then(() => {

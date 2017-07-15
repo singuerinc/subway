@@ -1,6 +1,9 @@
 import Net from './units/net';
 import RailWay from './railway';
 
+//TODO: Train breaks
+//FIXME: Error, wagons number is not the same as cargo, num of boxes are wrong
+
 (function () {
   const script = document.createElement('script');
 
@@ -38,30 +41,42 @@ document.body.appendChild(renderer.view);
 const stage = new PIXI.Container();
 
 stage.interactive = true;
-stage.scale.set(1);
 
+const layers = new PIXI.Graphics();
 const layerRailways = new PIXI.Graphics();
 
+// layerRailways.scale.set(0.1);
+// layerRailways.rotation = -1;
+// layerRailways.x = -600;
+// layerRailways.y = 550;
+// layerRailways.x = -3031;
+// layerRailways.y = -3480;
+
 function onDragEnd() {
-  layerRailways.dragging = false;
+  layers.dragging = false;
 }
 
-layerRailways.interactive = true;
-layerRailways
+layers.interactive = true;
+layers
   .on('pointerdown', () => {
-    layerRailways.dragging = true;
+    layers.dragging = true;
   })
   .on('pointerup', onDragEnd)
   .on('pointerupoutside', onDragEnd)
   .on('pointermove', (e) => {
-    if (layerRailways.dragging) {
-      layerRailways.x += e.data.originalEvent.movementX;
-      layerRailways.y += e.data.originalEvent.movementY;
+    if (layers.dragging) {
+      layers.x += e.data.originalEvent.movementX;
+      layers.y += e.data.originalEvent.movementY;
     }
   });
 
 // layerRailways.rotation = 5.4;
-stage.addChild(layerRailways);
+stage.addChild(layers);
+layers.addChild(layerRailways);
+
+const layerTrains = new PIXI.Graphics();
+
+layers.addChild(layerTrains);
 
 const text = `
 s   / stations
@@ -89,7 +104,19 @@ const net = new Net();
 net.lines.forEach((line) => {
   const rw = new RailWay({ id: line.id, line });
 
-  layerRailways.addChildAt(rw, 0);
+  layerRailways.addChild(rw);
+});
+
+net.trains.forEach((train) => {
+  console.log(train);
+  train.parkIn(train.itinerary.currentRoute, 0);
+  train.run();
+
+  layerTrains.addChild(train);
+
+  if (train.id === '1') {
+    train.openTrainInfo();
+  }
 });
 
 loop();
