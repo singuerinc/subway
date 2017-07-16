@@ -46,7 +46,7 @@ export default class RailWay extends PIXI.Graphics {
           const sx = wayPoint.position.x;
           const sy = wayPoint.position.y;
 
-          this.layerLines.lineStyle(66, this._color, 0.02);
+          this.layerLines.lineStyle(66, this._color, 0.04);
           this.layerLines.moveTo(px, py);
           this.layerLines.lineTo(sx, sy);
           this.layerLines.lineStyle(6, 0x2D2D2D, 1);

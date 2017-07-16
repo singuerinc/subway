@@ -91,10 +91,9 @@ export default class Train extends PIXI.Graphics {
       targets: [this.head],
       direction: 'alternate',
       easing: 'easeInSine',
-      delay: Math.random() * 500,
       loop: true,
       alpha: 0.2,
-      duration: 2000,
+      duration: 1000,
       update: () => this._draw(),
     });
 

@@ -27,7 +27,7 @@ export default class StationSprite extends PIXI.Graphics {
       fill: this._color,
     });
     this.cargoText.alpha = 0.7;
-    this.cargoText.x = 48;
+    this.cargoText.x = -88;
     this.cargoText.y = -6;
     this.info.addChild(this.cargoText);
 
@@ -59,8 +59,7 @@ export default class StationSprite extends PIXI.Graphics {
   set parentStation(value) {
     const angle = MathUtils.angle(this.x, this.y, value.position.x, value.position.y);
 
-    // this.rotation = (angle + (Math.PI / 2)) + Math.PI;
-    this.rotation = (angle + (Math.PI / 2)) + Math.PI;
+    this.rotation = (angle + (Math.PI * 0.5)) + Math.PI;
   }
 
   _draw(cargo) {
@@ -73,7 +72,7 @@ export default class StationSprite extends PIXI.Graphics {
     this.info.clear();
     this.info.lineStyle(0);
     this.info.beginFill(this._color, 0.1);
-    this.info.drawRoundedRect(40, -12, 12 + (this.cargoText.text.length * 12), 32, 3);
+    this.info.drawRoundedRect(-96, -12, 12 + (this.cargoText.text.length * 12), 32, 3);
 
     // cargo balls
     // const num = Math.floor(c / 100);
@@ -87,9 +86,11 @@ export default class StationSprite extends PIXI.Graphics {
 
     // station big
     this.graph.clear();
+    this.graph.beginFill(this._color, 0.05);
+    this.graph.drawCircle(0, 0, 32);
     this.graph.lineStyle(4, this._color, 1);
     this.graph.beginFill(0xFFFFFF, 1);
-    this.graph.drawCircle(0, 0, 10);
+    this.graph.drawCircle(0, 0, 14);
     this.graph.endFill();
     this.graph.closePath();
 

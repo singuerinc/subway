@@ -1,5 +1,6 @@
 import Net from './units/net';
 import RailWay from './railway';
+import Settings from './settings';
 
 // TODO: Train breaks
 // TODO: Add ui to show/hide stuff
@@ -165,5 +166,8 @@ net.trains.forEach((train, index, trains) => {
     train.openTrainInfo();
   }
 });
+
+const settings = new Settings();
+stage.addChild(settings);
 
 loop();
