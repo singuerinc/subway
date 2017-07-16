@@ -2,6 +2,7 @@ import Net from './units/net';
 import RailWay from './railway';
 import Settings from './settings';
 
+// TODO: Train acceleration
 // TODO: Train close info
 // TODO: Train breaks
 // TODO: Add ui to show/hide stuff
@@ -37,7 +38,10 @@ const renderer = new PIXI.CanvasRenderer({
 
 renderer.view.style.position = 'absolute';
 renderer.view.style.display = 'block';
-// renderer.resize(window.innerWidth, window.innerHeight);
+
+window.addEventListener('resize', () => {
+  renderer.resize(window.innerWidth, window.innerHeight);
+});
 
 document.body.appendChild(renderer.view);
 
@@ -150,9 +154,9 @@ net.trains.forEach((train, index) => {
 
   layerTrains.addChild(train);
 
-  if (index === 0) {
-    train.openTrainInfo();
-  }
+  // if (index === 0) {
+  //   train.openTrainInfo();
+  // }
 });
 
 const settings = new Settings({ net, railways: layerRailways });
