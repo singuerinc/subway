@@ -1,6 +1,3 @@
-import * as k from 'keymaster';
-import Train from './train';
-import Route from './units/route';
 import WayPointSprite from './waypoint.sprite';
 import StationSprite from './station.sprite';
 
@@ -64,19 +61,6 @@ export default class RailWay extends PIXI.Graphics {
         this.layerWayPoints.addChild(wp);
       }
     }
-
-    // this._addTrains(Math.floor(this._route.onlyStations.length * 0.5));
-    // this._addTrains(1);
-
-    const key = parseInt(this._id.match(/(\d+)/)[0], 10);
-
-    k(`${key}`, () => {
-      this.visible = !this.visible;
-    });
-
-    k('r', () => {
-      this.layerLines.visible = !this.layerLines.visible;
-    });
   }
 
   /**

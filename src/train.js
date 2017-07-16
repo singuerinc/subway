@@ -1,4 +1,3 @@
-import * as k from 'keymaster';
 import anime from 'animejs';
 import MathUtils from './mathUtils';
 import Wagon from './units/wagon';
@@ -17,10 +16,6 @@ export default class Train extends PIXI.Graphics {
     // console.log(`Train ${id} created.`);
     this.buttonMode = true;
     this.interactive = true;
-
-    k('t', () => {
-      this.visible = !this.visible;
-    });
 
     this._id = id;
     this._cargoAccumulated = 0;
@@ -216,7 +211,7 @@ export default class Train extends PIXI.Graphics {
 
       this.info.text =
         `#${this._id} - ${this.state}
-Cargo: ${this.cargo} / ${this.maxCargo} / Total: ${this.cargoAccumulated}
+Cargo: ${this.cargo} / Max: ${this.maxCargo} / Today: ${this.cargoAccumulated}
 Speed: ${speed}km/h / ${maxSpeed}km/h
 Stop: ${this.itinerary.currentWayPoint.name} → ${nextWayPointName}
 `;

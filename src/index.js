@@ -2,6 +2,7 @@ import Net from './units/net';
 import RailWay from './railway';
 import Settings from './settings';
 
+// TODO: Train z-order on over
 // TODO: Train breaks
 // TODO: Add ui to show/hide stuff
 
@@ -96,10 +97,7 @@ const text = `
 show / hide
 
 stations - S
-waypoints - W
-trains - T
-rails - R
-lines - 0-9`;
+waypoints - W`;
 
 const info = new PIXI.Text(text, {
   fontSize: 10,
@@ -146,10 +144,14 @@ const net = new Net();
 net.lines.forEach((line) => {
   const rw = new RailWay({ id: line.id, line });
 
+  if (line.id !== 'L1' && line.id !== 'L5' && line.id !== 'L9') {
+    rw.visible = false;
+  }
+
   layerRailways.addChild(rw);
 });
 
-net.trains.forEach((train, index, trains) => {
+net.trains.forEach((train, index) => {
   const randomRouteIndex = Math.floor(Math.random() * train.itinerary.routes.length);
   const route = train.itinerary.routes[randomRouteIndex];
 
@@ -167,7 +169,8 @@ net.trains.forEach((train, index, trains) => {
   }
 });
 
-const settings = new Settings();
+const settings = new Settings({ net, railways: layerRailways });
+
 stage.addChild(settings);
 
 loop();
