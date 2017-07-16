@@ -1,10 +1,10 @@
-import * as k from 'keymaster';
 import MathUtils from './mathUtils';
 
 export default class StationSprite extends PIXI.Graphics {
   constructor({ model, color }) {
     super();
     this._model = model;
+    console.log(this._model);
     // this._model.emitter.addListener('train:reserve', () => this.draw());
     // this._model.emitter.addListener('train:enter', () => this.draw());
     // this._model.emitter.addListener('train:leave', () => this.draw());
@@ -22,7 +22,7 @@ export default class StationSprite extends PIXI.Graphics {
     this.info = new PIXI.Graphics();
     this.addChild(this.info);
 
-    this.cargoText = new PIXI.Text('000', {
+    this.cargoText = new PIXI.Text('', {
       fontSize: 18,
       fill: this._color,
     });
@@ -31,22 +31,19 @@ export default class StationSprite extends PIXI.Graphics {
     this.cargoText.y = -6;
     this.info.addChild(this.cargoText);
 
-    this.infoNameText = new PIXI.Text(this.id, {
-      fontSize: 28,
-      fill: 0x1E1E1E,
+    this.infoNameText = new PIXI.Text(this._model.name, {
+      fontSize: 16,
+      fill: 0x111111,
+      fontWeight: 'bold',
     });
 
     this.infoNameText.visible = false;
     this.infoNameText.x = 44;
     this.infoNameText.y = -14;
-    this.info.addChild(this.infoNameText);
+    this.addChild(this.infoNameText);
 
     this.on('click', () => {
       this.info.visible = !this.info.visible;
-    });
-
-    k('s', () => {
-      this.visible = !this.visible;
     });
 
     this._draw();
@@ -65,7 +62,6 @@ export default class StationSprite extends PIXI.Graphics {
   _draw(cargo) {
     const c = cargo || this._model.cargo;
 
-    this.infoNameText.text = `${this._model.name} / Cargo: ${c}`;
     this.cargoText.text = `${c}`;
 
     // cargo

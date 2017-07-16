@@ -2,9 +2,10 @@ import Net from './units/net';
 import RailWay from './railway';
 import Settings from './settings';
 
-// TODO: Train z-order on over
+// TODO: Train close info
 // TODO: Train breaks
 // TODO: Add ui to show/hide stuff
+// TODO: Resize
 
 // (function () {
 //   const script = document.createElement('script');
@@ -43,7 +44,7 @@ document.body.appendChild(renderer.view);
 const stage = new PIXI.Container();
 const bg = new PIXI.extras.TilingSprite(
   // PIXI.Texture.fromImage('./img/congruent_outline.png'),
-  PIXI.Texture.fromImage('./img/black_denim.png'),
+  // PIXI.Texture.fromImage('./img/black_denim.png'),
   // PIXI.Texture.fromImage('./img/black_paper.png'),
   // PIXI.Texture.fromImage('./img/random_grey_variations.png'),
   // PIXI.Texture.fromImage('./img/footer_lodyas.png'),
@@ -51,11 +52,12 @@ const bg = new PIXI.extras.TilingSprite(
   // PIXI.Texture.fromImage('./img/pink dust.png'),
   // PIXI.Texture.fromImage('./img/squared_metal_inv_@2X.png'),
   // PIXI.Texture.fromImage('./img/squared_metal_inv_@2X copy.png'),
-  // PIXI.Texture.fromImage('./img/subtle_white_mini_waves.png'),
+  PIXI.Texture.fromImage('./img/subtle_white_mini_waves.png'),
   renderer.width,
   renderer.height,
 );
 
+bg.alpha = 0.3;
 stage.addChild(bg);
 stage.interactive = true;
 
@@ -92,22 +94,6 @@ layers.addChild(layerRailways);
 const layerTrains = new PIXI.Graphics();
 
 layers.addChild(layerTrains);
-
-const text = `
-show / hide
-
-stations - S
-waypoints - W`;
-
-const info = new PIXI.Text(text, {
-  fontSize: 10,
-  fill: 0x7E7E7E,
-  align: 'right',
-});
-
-info.x = window.innerWidth - (info.width + 20);
-info.y = window.innerHeight - (info.height + 60);
-stage.addChild(info);
 
 const title = new PIXI.Text('bcn subway', {
   fontSize: 18,

@@ -10,6 +10,8 @@ const STATE_IN_TRANSIT = 'in transit';
 const STATE_WAITING = 'waiting';
 const STATE_GO = 'go';
 
+const MAX_SPEED = 120; // km/h
+
 export default class Train extends PIXI.Graphics {
   constructor(id, { itinerary }) {
     super();
@@ -72,6 +74,7 @@ export default class Train extends PIXI.Graphics {
 
     this.on('mouseover', () => {
       this.infoContainer.visible = true;
+      this.parent.swapChildren(this, this.parent.getChildAt(this.parent.children.length - 1));
     });
 
     this.on('mouseout', () => {
@@ -148,7 +151,7 @@ export default class Train extends PIXI.Graphics {
   }
 
   get maxSpeed() {
-    return this.wagons.reduce((speed, wagon) => wagon.calcSpeed(speed), 3.2); // 120km/h
+    return this.wagons.reduce((speed, wagon) => wagon.calcSpeed(speed), MAX_SPEED * 0.01);
   }
 
   get cargo() {

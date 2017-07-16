@@ -97,6 +97,35 @@ export default class Settings extends PIXI.Sprite {
       cargoBtn.alpha = cargoBtn.cargoVisible ? 1 : 0.5;
     });
     this.addChild(cargoBtn);
+
+    const stationNameBtn = new PIXI.Graphics();
+    const stationNameTextBtn = new PIXI.Text('NAME', {
+      fontSize: 10,
+      fill: 0x000000,
+    });
+
+    stationNameTextBtn.x = 4;
+    stationNameTextBtn.y = 2;
+    stationNameBtn.beginFill(0x777777, 1);
+    stationNameBtn.drawRect(0, 0, 46, 16);
+    stationNameBtn.endFill();
+    stationNameBtn.x = 40;
+    stationNameBtn.y = cargoBtn.y + 18;
+    stationNameBtn.buttonMode = true;
+    stationNameBtn.interactive = true;
+    stationNameBtn.addChild(stationNameTextBtn);
+    stationNameBtn.nameVisible = false;
+    stationNameBtn.alpha = 0.5;
+    stationNameBtn.on('click', () => {
+      stationNameBtn.nameVisible = !stationNameBtn.nameVisible;
+      railways.children.forEach((railway) => {
+        railway.layerStations.children.forEach((station) => {
+          station.infoNameText.visible = stationNameBtn.nameVisible;
+        });
+      });
+      stationNameBtn.alpha = stationNameBtn.nameVisible ? 1 : 0.5;
+    });
+    this.addChild(stationNameBtn);
   }
 
   onOff(btn, net, show) {
