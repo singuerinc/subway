@@ -5,6 +5,7 @@
   "license": "MIT",
   "devDependencies": {
     "@types/animejs": "kohashi/types-npm-animejs",
+    "@types/fbemitter": "^2.0.32",
     "@types/keymaster": "^1.6.28",
     "@types/pixi.js": "^4.5.1",
     "awesome-typescript-loader": "^3.2.1",
@@ -25,15 +26,14 @@
     "webpack": "^3",
     "webpack-dev-server": "^2.5.0"
   },
-  "scripts": {
-    "build": "webpack -p",
-    "start": "webpack-dev-server -d"
-  },
   "dependencies": {
-    "@types/fbemitter": "^2.0.32",
     "animejs": "^2.0.2",
     "fbemitter": "^2.1.1",
     "keymaster": "^1.6.2",
     "pixi.js": "^4.5.3"
+  },
+  "scripts": {
+    "build": "webpack -p",
+    "start": "webpack-dev-server -d"
   }
 }
