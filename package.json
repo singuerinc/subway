@@ -14,9 +14,16 @@
     "webpack-dev-server": "^2.5.0"
   },
   "dependencies": {
+    "@types/animejs": "kohashi/types-npm-animejs",
+    "@types/keymaster": "^1.6.28",
+    "@types/pixi.js": "^4.5.1",
+    "@types/wolfy87-eventemitter": "^4.2.31",
     "animejs": "^2.0.2",
+    "awesome-typescript-loader": "^3.2.1",
     "keymaster": "^1.6.2",
     "pixi.js": "^4.5.3",
+    "ts-loader": "^2.3.1",
+    "typescript": "^2.4.2",
     "wolfy87-eventemitter": "^5.2.2"
   },
   "scripts": {
