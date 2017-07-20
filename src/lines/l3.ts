@@ -1,4 +1,6 @@
-[
+import ILineData from "./linedata";
+
+export const data: ILineData[] = [
   {
     "id": "383",
     "line": "L3",

@@ -14,6 +14,7 @@ module.exports = {
     hot: true, // Tell the dev-server we're using HMR
     contentBase: path.resolve(__dirname, 'public'),
     publicPath: '/',
+    host: '192.168.1.122',
   },
   devtool: 'cheap-eval-source-map',
   entry: './src/index.ts',

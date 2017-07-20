@@ -19,7 +19,6 @@ export default class StationSprite extends PIXI.Graphics {
     constructor({model, color}: { model: Station, color: number }) {
         super();
         this._model = model;
-        console.log(this._model);
         // this._model.emitter.addListener('train:reserve', () => this.draw());
         // this._model.emitter.addListener('train:enter', () => this.draw());
         // this._model.emitter.addListener('train:leave', () => this.draw());

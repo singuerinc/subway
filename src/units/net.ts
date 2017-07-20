@@ -1,5 +1,3 @@
-///<reference path="../../custom_typings/typings.d.ts"/>
-
 import MathUtils from '../mathUtils';
 import Station from './station';
 import WayPoint from './waypoint';
@@ -7,27 +5,23 @@ import Line from './line';
 import Route from './route';
 import Train from '../train';
 import Itinerary from './itinerary';
-import l1Data from '../lines/l1.json';
-import l1rData from '../lines/l1-r.json';
-import l2Data from '../lines/l2.json';
-import l2rData from '../lines/l2-r.json';
-import l3Data from '../lines/l3.json';
-import l3rData from '../lines/l3-r.json';
-import l4Data from '../lines/l4.json';
-import l4rData from '../lines/l4-r.json';
-import l5Data from '../lines/l5.json';
-import l5rData from '../lines/l5-r.json';
-import l9Data from '../lines/l9.json';
-import l9rData from '../lines/l9-r.json';
-import l10Data from '../lines/l10.json';
-import l10rData from '../lines/l10-r.json';
-import l11Data from '../lines/l11.json';
-import l11rData from '../lines/l11-r.json';
-
-interface ILineData {
-    id: string,
-    line: string
-}
+import ILineData from '../lines/linedata';
+import {data as l1Data} from '../lines/l1';
+import {data as l1rData} from '../lines/l1-r';
+import {data as l2Data} from '../lines/l2';
+import {data as l2rData} from '../lines/l2-r';
+import {data as l3Data} from '../lines/l3';
+import {data as l3rData} from '../lines/l3-r';
+import {data as l4Data} from '../lines/l4';
+import {data as l4rData} from '../lines/l4-r';
+import {data as l5Data} from '../lines/l5';
+import {data as l5rData} from '../lines/l5-r';
+import {data as l9Data} from '../lines/l9';
+import {data as l9rData} from '../lines/l9-r';
+import {data as l10Data} from '../lines/l10';
+import {data as l10rData} from '../lines/l10-r';
+import {data as l11Data} from '../lines/l11';
+import {data as l11rData} from '../lines/l11-r';
 
 export default class Net {
     private _stations: Map<string, Station>;
@@ -43,14 +37,14 @@ export default class Net {
         this._routes = new Map();
         this._trains = [];
 
-        const l1 = [].concat(l1Data, l1rData);
-        const l2 = [].concat(l2Data, l2rData);
-        const l3 = [].concat(l3Data, l3rData);
-        const l4 = [].concat(l4Data, l4rData);
-        const l5 = [].concat(l5Data, l5rData);
-        const l9 = [].concat(l9Data, l9rData);
-        const l10 = [].concat(l10Data, l10rData);
-        const l11 = [].concat(l11Data, l11rData);
+        const l1 = [].concat(l1Data as never[], l1rData as never[]);
+        const l2 = [].concat(l2Data as never[], l2rData as never[]);
+        const l3 = [].concat(l3Data as never[], l3rData as never[]);
+        const l4 = [].concat(l4Data as never[], l4rData as never[]);
+        const l5 = [].concat(l5Data as never[], l5rData as never[]);
+        const l9 = [].concat(l9Data as never[], l9rData as never[]);
+        const l10 = [].concat(l10Data as never[], l10rData as never[]);
+        const l11 = [].concat(l11Data as never[], l11rData as never[]);
 
         this._parseWayPoints(l1);
         this._parseWayPoints(l2);

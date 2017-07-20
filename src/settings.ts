@@ -174,8 +174,6 @@ export default class Settings extends PIXI.Sprite {
             return acc;
         }, []);
 
-        console.log(trainsInRailway);
-
         trainsInRailway.forEach((train) => {
             train.visible = railway.visible;
         });
