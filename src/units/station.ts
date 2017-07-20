@@ -23,7 +23,7 @@ export default class Station extends WayPoint {
 
     set cargo(value: number) {
         this._cargo = value;
-        this.emitter.emitEvent('cargo:changed', [this._cargo]);
+        this.emitter.emit('cargo:changed', this._cargo);
     }
 
     get cargo(): number {

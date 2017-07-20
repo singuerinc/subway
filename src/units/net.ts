@@ -1,4 +1,4 @@
-///<reference path="../../typings.d.ts"/>
+///<reference path="../../custom_typings/typings.d.ts"/>
 
 import MathUtils from '../mathUtils';
 import Station from './station';

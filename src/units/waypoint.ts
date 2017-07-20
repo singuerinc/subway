@@ -1,5 +1,5 @@
 import Train from "../train";
-import EventEmitter from "wolfy87-eventemitter";
+import {EventEmitter} from "fbemitter";
 
 export default class WayPoint {
     protected _currentTrain: Train | null;
@@ -45,7 +45,7 @@ export default class WayPoint {
     reserve(train: Train): void {
         if (this.getCurrentTrain() === null) {
             this._currentTrain = train;
-            this.emitter.emitEvent('train:reserve', [train]);
+            this.emitter.emit('train:reserve', train);
         } else {
             throw new Error('A train is in this station!');
         }
@@ -53,7 +53,7 @@ export default class WayPoint {
 
     enter(train: Train): void {
         if (train === this.getCurrentTrain()) {
-            this.emitter.emitEvent('train:enter', [train]);
+            this.emitter.emit('train:enter', train);
         } else {
             throw new Error('A train is in this station!');
         }
@@ -62,7 +62,7 @@ export default class WayPoint {
     leave(train: Train): void {
         if (train === this.getCurrentTrain()) {
             this._currentTrain = null;
-            this.emitter.emitEvent('train:leave', [train]);
+            this.emitter.emit('train:leave', train);
         }
     }
 

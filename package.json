@@ -4,30 +4,30 @@
   "main": "index.js",
   "license": "MIT",
   "devDependencies": {
+    "@types/animejs": "kohashi/types-npm-animejs",
+    "@types/keymaster": "^1.6.28",
+    "@types/pixi.js": "^4.5.1",
+    "animejs": "^2.0.2",
+    "awesome-typescript-loader": "^3.2.1",
     "babel-core": "^6.25.0",
     "babel-loader": "^7.1.1",
     "copy-webpack-plugin": "^4.0.1",
     "eslint": "^3.19.0",
     "eslint-config-airbnb-base": "^11.2.0",
     "eslint-plugin-import": "^2.7.0",
-    "webpack": "^3",
-    "webpack-dev-server": "^2.5.0"
-  },
-  "dependencies": {
-    "@types/animejs": "kohashi/types-npm-animejs",
-    "@types/keymaster": "^1.6.28",
-    "@types/pixi.js": "^4.5.1",
-    "@types/wolfy87-eventemitter": "^4.2.31",
-    "animejs": "^2.0.2",
-    "awesome-typescript-loader": "^3.2.1",
     "keymaster": "^1.6.2",
     "pixi.js": "^4.5.3",
     "ts-loader": "^2.3.1",
     "typescript": "^2.4.2",
-    "wolfy87-eventemitter": "^5.2.2"
+    "webpack": "^3",
+    "webpack-dev-server": "^2.5.0"
   },
   "scripts": {
     "build": "webpack -p",
     "start": "webpack-dev-server -d"
+  },
+  "dependencies": {
+    "@types/fbemitter": "^2.0.32",
+    "fbemitter": "^2.1.1"
   }
 }
