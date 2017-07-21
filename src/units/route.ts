@@ -20,27 +20,27 @@ export default class Route {
         return this._color;
     }
 
-    get onlyStations(): Array<Station> {
-        return (this._wayPoints.filter(stop => stop.type === 1) as Station[]);
+    get onlyStations(): Station[] {
+        return (this._wayPoints.filter((stop) => stop.type === 1) as Station[]);
     }
 
-    get onlyWaypoints(): Array<WayPoint> {
-        return this._wayPoints.filter(stop => stop.type === 0);
+    get onlyWaypoints(): WayPoint[] {
+        return this._wayPoints.filter((stop) => stop.type === 0);
     }
 
-    set wayPoints(value: Array<WayPoint>) {
+    set wayPoints(value: WayPoint[]) {
         this._wayPoints = value;
     }
 
-    get wayPoints(): Array<WayPoint> {
+    get wayPoints(): WayPoint[] {
         return this._wayPoints;
     }
 
-    getStationAt(index: number): Station {
+    public getStationAt(index: number): Station {
         return this.onlyStations[index];
     }
 
-    getWayPointAt(index: number): WayPoint {
+    public getWayPointAt(index: number): WayPoint {
         return this._wayPoints[index];
     }
 
@@ -48,14 +48,13 @@ export default class Route {
         return this._wayPoints.length;
     }
 
-    addWaypoint(waypoint) {
+    public addWaypoint(waypoint) {
         this._wayPoints.push(waypoint);
     }
 
-    getNext(waypoint: WayPoint): WayPoint | null {
+    public getNext(waypoint: WayPoint): WayPoint | null {
         const idx = this._wayPoints.indexOf(waypoint);
 
         return this.getWayPointAt(idx + 1);
     }
 }
-

@@ -1,5 +1,5 @@
-import WayPointSprite from './waypoint.sprite';
-import StationSprite from './station.sprite';
+import StationSprite from "./station.sprite";
+import WayPointSprite from "./waypoint.sprite";
 
 /**
  * @extends PIXI.Graphics
@@ -8,11 +8,12 @@ export default class RailWay extends PIXI.Graphics {
     get layerStations(): PIXI.Graphics {
         return this._layerStations;
     }
+
     private _id: string;
     private _color: number;
-    private layerLines: PIXI.Graphics;
     private _layerWayPoints: PIXI.Graphics;
     private _layerStations: PIXI.Graphics;
+    private layerLines: PIXI.Graphics;
 
     constructor({id, line}) {
         super();

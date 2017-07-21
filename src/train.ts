@@ -1,29 +1,33 @@
-import * as anime from 'animejs';
-import MathUtils from './mathUtils';
-import Wagon from './units/wagon';
+import * as anime from "animejs";
+import MathUtils from "./mathUtils";
 import Itinerary from "./units/itinerary";
-import Station from "./units/station";
-import WayPoint from "./units/waypoint";
 import Route from "./units/route";
+import Station from "./units/station";
+import Wagon from "./units/wagon";
+import WayPoint from "./units/waypoint";
 
 interface ICargo {
-    cargo: number,
-    stopCargo: number
+    cargo: number;
+    stopCargo: number;
 }
 
 enum TrainState {
-    OPENING_DOORS = 'opening doors',
-    CLOSING_DOORS = 'closing doors',
-    LOADING = 'loading',
-    UNLOADING = 'unloading',
-    IN_TRANSIT = 'in transit',
-    WAITING = 'waiting',
-    GO = 'go'
+    OPENING_DOORS = "opening doors",
+    CLOSING_DOORS = "closing doors",
+    LOADING = "loading",
+    UNLOADING = "unloading",
+    IN_TRANSIT = "in transit",
+    WAITING = "waiting",
+    GO = "go",
 }
 
 const MAX_SPEED = 120; // km/h
 
 export default class Train extends PIXI.Graphics {
+    private static getSegmentTime(distance: number, maxSpeed: number): number {
+        return (distance * 100) / maxSpeed;
+    }
+
     private _moving: boolean;
     private _stateColor: number;
     private _currentStop: Station | WayPoint;
@@ -31,13 +35,13 @@ export default class Train extends PIXI.Graphics {
     private _id: string;
     private _cargoAccumulated: number;
     private _trainColor: number;
+    private _wagons: Wagon[];
     private cargoGraphics: PIXI.Graphics;
     private head: PIXI.Graphics;
     private infoContainer: PIXI.Graphics;
     private info: PIXI.Text;
     private selected: boolean;
     private speed: number;
-    private _wagons: Array<Wagon>;
 
     get itinerary(): Itinerary {
         return this._itinerary;
@@ -94,27 +98,29 @@ export default class Train extends PIXI.Graphics {
         // this.infoContainer.closePath();
         this.addChild(this.infoContainer);
 
-        this.info = new PIXI.Text('', {
-            fontSize: 14,
+        this.info = new PIXI.Text("", {
             fill: 0x464646,
+            fontSize: 14,
         });
         // this.info.visible = false;
         this.info.x = ix + 20;
         this.info.y = -188;
         this.infoContainer.addChild(this.info);
 
-        this.on('click', () => {
+        this.on("click", () => {
             this.selected = !this.selected;
             this.infoContainer.visible = this.selected;
         });
 
-        this.on('mouseover', () => {
+        this.on("mouseover", () => {
             this.infoContainer.visible = true;
             this.parent.swapChildren(this, this.parent.getChildAt(this.parent.children.length - 1));
         });
 
-        this.on('mouseout', () => {
-            if (this.selected === true) return;
+        this.on("mouseout", () => {
+            if (this.selected === true) {
+                return;
+            }
             this.infoContainer.visible = false;
         });
 
@@ -122,27 +128,72 @@ export default class Train extends PIXI.Graphics {
         this.moving = false;
 
         anime({
-            targets: [this.head],
-            direction: 'alternate',
-            easing: 'easeInSine',
-            loop: true,
             alpha: 0.2,
+            direction: "alternate",
             duration: 1000,
+            easing: "easeInSine",
+            loop: true,
+            targets: [this.head],
             update: () => this._draw(),
         });
 
         this._draw();
     }
 
-    addWagon(wagon: Wagon): number {
+    public run(): void {
+        if (!this.moving) {
+            let nextStop;
+
+            try {
+                nextStop = this._itinerary.getNextWayPoint();
+            } catch (e) {
+                nextStop = null;
+            }
+
+            if (nextStop) {
+                this.moveToStop(nextStop)
+                    .then(() => {
+                        this.run();
+                    })
+                    .catch(() => {
+                        // happen when the waypoint or station is not free
+                        setTimeout(() => this.run(), 1500);
+                    });
+            } else {
+                // last stop in this route
+                this.unload(true).then(() => {
+                    this._itinerary.currentRoute = this._itinerary.getNextRoute();
+                    this._trainColor = this._itinerary.currentRoute.color;
+                    this._itinerary.currentWayPoint = this._itinerary.getNextWayPoint();
+                    nextStop = this._itinerary.currentWayPoint;
+                    this.run();
+                });
+            }
+        }
+    }
+
+    public parkIn(route: Route, index: number): void {
+        if (this.moving) {
+            throw new Error("Can not park this train because is in movement.");
+        }
+
+        this._itinerary.currentRoute = route;
+        this._itinerary.currentWayPoint = route.getWayPointAt(index);
+        this.moving = false;
+        this._currentStop = this._itinerary.currentWayPoint as WayPoint;
+        this.x = this._currentStop.position.x;
+        this.y = this._currentStop.position.y;
+    }
+
+    private addWagon(wagon: Wagon): number {
         return this.wagons.push(wagon);
     }
 
-    set wagons(value: Array<Wagon>) {
+    set wagons(value: Wagon[]) {
         this._wagons = value;
     }
 
-    get wagons(): Array<Wagon> {
+    get wagons(): Wagon[] {
         return this._wagons;
     }
 
@@ -216,7 +267,7 @@ export default class Train extends PIXI.Graphics {
         return this._state;
     }
 
-    updateInfo(): void {
+    private updateInfo(): void {
         if (this.info.visible) {
             const speed = Math.floor(this.speed * 100);
             const maxSpeed = Math.floor(this.maxSpeed * 100);
@@ -225,7 +276,7 @@ export default class Train extends PIXI.Graphics {
             try {
                 nextWayPointName = this._itinerary.getNextWayPoint().name;
             } catch (e) {
-                nextWayPointName = '';
+                nextWayPointName = "";
             }
 
             this.info.text =
@@ -251,52 +302,7 @@ Stop: ${(this._itinerary.currentWayPoint as WayPoint).name} → ${nextWayPointNa
         return this._moving;
     }
 
-    run(): void {
-        if (!this.moving) {
-            let nextStop;
-
-            try {
-                nextStop = this._itinerary.getNextWayPoint();
-            } catch (e) {
-                nextStop = null;
-            }
-
-            if (nextStop) {
-                this.moveToStop(nextStop)
-                    .then(() => {
-                        this.run();
-                    })
-                    .catch(() => {
-                        // happen when the waypoint or station is not free
-                        setTimeout(() => this.run(), 1500);
-                    });
-            } else {
-                // last stop in this route
-                this.unload(true).then(() => {
-                    this._itinerary.currentRoute = this._itinerary.getNextRoute();
-                    this._trainColor = this._itinerary.currentRoute.color;
-                    this._itinerary.currentWayPoint = this._itinerary.getNextWayPoint();
-                    nextStop = this._itinerary.currentWayPoint;
-                    this.run();
-                });
-            }
-        }
-    }
-
-    parkIn(route: Route, index: number): void {
-        if (this.moving) {
-            throw new Error('Can not park this train because is in movement.');
-        }
-
-        this._itinerary.currentRoute = route;
-        this._itinerary.currentWayPoint = route.getWayPointAt(index);
-        this.moving = false;
-        this._currentStop = this._itinerary.currentWayPoint as WayPoint;
-        this.x = this._currentStop.position.x;
-        this.y = this._currentStop.position.y;
-    }
-
-    openDoors(): Promise<void> {
+    private openDoors(): Promise<void> {
         return new Promise((resolve) => {
             this.state = TrainState.OPENING_DOORS;
             this._draw();
@@ -307,7 +313,7 @@ Stop: ${(this._itinerary.currentWayPoint as WayPoint).name} → ${nextWayPointNa
         });
     }
 
-    closeDoors(): Promise<void> {
+    private closeDoors(): Promise<void> {
         return new Promise((resolve) => {
             this.state = TrainState.CLOSING_DOORS;
             this._draw();
@@ -318,7 +324,7 @@ Stop: ${(this._itinerary.currentWayPoint as WayPoint).name} → ${nextWayPointNa
         });
     }
 
-    unload(leaveEmpty: boolean = false): Promise<void> {
+    private unload(leaveEmpty: boolean = false): Promise<void> {
         return new Promise((resolve) => {
             const toUnload = leaveEmpty ? this.cargo : anime.random(0, this.cargo);
             // TODO: Add partial cargo to the station? For stations that connects?
@@ -338,25 +344,25 @@ Stop: ${(this._itinerary.currentWayPoint as WayPoint).name} → ${nextWayPointNa
             };
 
             anime({
-                targets: tmp,
-                easing: 'linear',
+                cargo: tmpCargo,
+                complete: () => {
+                    resolve();
+                },
                 delay: 1500,
                 duration: 50 * toUnload,
-                cargo: tmpCargo,
+                easing: "linear",
                 round: 1,
+                targets: tmp,
                 update: () => {
                     this.cargo = tmp.cargo;
                     this._draw();
                     this.updateInfo();
                 },
-                complete: () => {
-                    resolve();
-                },
             });
         });
     }
 
-    load(): Promise<void> {
+    private load(): Promise<void> {
         return new Promise((resolve) => {
             const currentStop = (this.currentStop as Station);
             const spaceInTrain = this.maxCargo - this.cargo;
@@ -372,34 +378,34 @@ Stop: ${(this._itinerary.currentWayPoint as WayPoint).name} → ${nextWayPointNa
                 return;
             }
 
-            const tmp = <ICargo>{
-                stopCargo: currentStop.cargo,
+            const tmp = {
                 cargo: this.cargo,
-            };
+                stopCargo: currentStop.cargo,
+            } as ICargo;
 
             anime({
-                targets: tmp,
-                easing: 'linear',
-                delay: 1500,
-                duration: 50 * toLoad,
                 cargo: tmpCargo,
-                stopCargo: currentStop.cargo - toLoad,
-                round: 1,
-                update: () => {
-                    currentStop.cargo = parseInt(`${tmp.stopCargo}`, 10);
-                    this.cargo = parseInt(`${tmp.cargo}`);
-                    this._draw();
-                    this.updateInfo();
-                },
                 complete: () => {
                     this.cargoAccumulated += tmpCargo;
                     resolve();
+                },
+                delay: 1500,
+                duration: 50 * toLoad,
+                easing: "linear",
+                round: 1,
+                stopCargo: currentStop.cargo - toLoad,
+                targets: tmp,
+                update: () => {
+                    currentStop.cargo = parseInt(`${tmp.stopCargo}`, 10);
+                    this.cargo = parseInt(`${tmp.cargo}`, 10);
+                    this._draw();
+                    this.updateInfo();
                 },
             });
         });
     }
 
-    go(nextStop: WayPoint): Promise<void> {
+    private go(nextStop: WayPoint): Promise<void> {
         return new Promise((resolve, reject) => {
             try {
                 // check if the next stop is free
@@ -444,20 +450,20 @@ Stop: ${(this._itinerary.currentWayPoint as WayPoint).name} → ${nextWayPointNa
 
             if (stationToWayPoint) {
                 this.speed = 0;
-                easing = 'easeInSine';
+                easing = "easeInSine";
                 finalSpeed = this.maxSpeed;
             } else if (wayPointToWayPoint) {
                 this.speed = this.maxSpeed;
                 duration = (distance * 50) / this.maxSpeed;
-                easing = 'linear';
+                easing = "linear";
                 finalSpeed = this.maxSpeed;
             } else if (wayPointToStation) {
                 this.speed = this.maxSpeed;
-                easing = 'easeOutSine';
+                easing = "easeOutSine";
                 finalSpeed = 0;
             } else if (stationToStation) {
                 this.speed = 0;
-                easing = 'easeInOutSine';
+                easing = "easeInOutSine";
                 finalSpeed = this.maxSpeed;
             }
 
@@ -486,7 +492,7 @@ Stop: ${(this._itinerary.currentWayPoint as WayPoint).name} → ${nextWayPointNa
         });
     }
 
-    moveToStop(nextStop: WayPoint): Promise<void> {
+    private moveToStop(nextStop: WayPoint): Promise<void> {
         return new Promise((resolve, reject) => {
             if (this.moving) {
                 reject();
@@ -532,7 +538,7 @@ Stop: ${(this._itinerary.currentWayPoint as WayPoint).name} → ${nextWayPointNa
         });
     }
 
-    _draw(): void {
+    private _draw(): void {
         this.head.clear();
 
         // max cargo
@@ -589,9 +595,5 @@ Stop: ${(this._itinerary.currentWayPoint as WayPoint).name} → ${nextWayPointNa
         // this.cargoGrph.closePath();
 
         this.updateInfo();
-    }
-
-    static getSegmentTime(distance: number, maxSpeed: number): number {
-        return (distance * 100) / maxSpeed;
     }
 }

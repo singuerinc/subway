@@ -1,7 +1,7 @@
-import Net from './units/net';
-import RailWay from './railway';
-import Settings from './settings';
+import RailWay from "./railway";
+import Settings from "./settings";
 import Train from "./train";
+import Net from "./units/net";
 
 // TODO: Train acceleration
 // TODO: Train close info
@@ -9,38 +9,21 @@ import Train from "./train";
 // TODO: Add ui to show/hide stuff
 // TODO: Resize
 
-// (function () {
-//   const script = document.createElement('script');
-//
-//   script.onload = function () {
-//     const stats = new Stats();
-//
-//     document.body.appendChild(stats.dom);
-//     requestAnimationFrame(function loop() {
-//       stats.update();
-//       requestAnimationFrame(loop);
-//     });
-//   };
-//   script.src = '//rawgit.com/mrdoob/stats.js/master/build/stats.min.js';
-//   document.head.appendChild(script);
-// }());
-
 PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
 
 const renderer = new PIXI.CanvasRenderer({
     autoResize: true,
-    // antialias: true,
-    resolution: 2,
     backgroundColor: 0x2D2D2D,
+    height: window.innerHeight,
+    resolution: 2,
     roundPixels: true,
     width: window.innerWidth,
-    height: window.innerHeight,
 });
 
-renderer.view.style.position = 'absolute';
-renderer.view.style.display = 'block';
+renderer.view.style.position = "absolute";
+renderer.view.style.display = "block";
 
-window.addEventListener('resize', () => {
+window.addEventListener("resize", () => {
     renderer.resize(window.innerWidth, window.innerHeight);
 });
 
@@ -57,7 +40,7 @@ const bg = new PIXI.extras.TilingSprite(
     // PIXI.Texture.fromImage('./img/pink dust.png'),
     // PIXI.Texture.fromImage('./img/squared_metal_inv_@2X.png'),
     // PIXI.Texture.fromImage('./img/squared_metal_inv_@2X copy.png'),
-    PIXI.Texture.fromImage('./img/subtle_white_mini_waves.png'),
+    PIXI.Texture.fromImage("./img/subtle_white_mini_waves.png"),
     renderer.width,
     renderer.height,
 );
@@ -82,12 +65,12 @@ function onDragEnd() {
 
 layers.interactive = true;
 layers
-    .on('pointerdown', () => {
+    .on("pointerdown", () => {
         dragging = true;
     })
-    .on('pointerup', onDragEnd)
-    .on('pointerupoutside', onDragEnd)
-    .on('pointermove', (e) => {
+    .on("pointerup", onDragEnd)
+    .on("pointerupoutside", onDragEnd)
+    .on("pointermove", (e) => {
         if (dragging) {
             layers.x += e.data.originalEvent.movementX;
             layers.y += e.data.originalEvent.movementY;
@@ -102,28 +85,28 @@ const layerTrains = new PIXI.Graphics();
 
 layers.addChild(layerTrains);
 
-const title = new PIXI.Text('bcn subway', {
-    fontSize: 18,
+const title = new PIXI.Text("bcn subway", {
+    align: "right",
     fill: 0x9E9E9E,
-    align: 'right',
+    fontSize: 18,
 });
 
 title.x = window.innerWidth - (title.width + 20);
 title.y = 20;
 stage.addChild(title);
 
-const brand = new PIXI.Text('@singuerinc', {
-    fontSize: 16,
+const brand = new PIXI.Text("@singuerinc", {
+    align: "right",
     fill: 0x3E3E3E,
-    align: 'right',
+    fontSize: 16,
 });
 
 brand.interactive = true;
 brand.buttonMode = true;
 brand.x = window.innerWidth - (brand.width + 20);
 brand.y = window.innerHeight - (brand.height + 20);
-brand.on('click', () => {
-    document.location.href = 'https://www.singuerinc.com/';
+brand.on("click", () => {
+    document.location.href = "https://www.singuerinc.com/";
 });
 stage.addChild(brand);
 
@@ -137,14 +120,14 @@ const net = new Net();
 net.lines.forEach((line) => {
     const rw = new RailWay({id: line.id, line});
 
-    if (line.id !== 'L1' && line.id !== 'L5' && line.id !== 'L9') {
+    if (line.id !== "L1" && line.id !== "L5" && line.id !== "L9") {
         rw.visible = false;
     }
 
     layerRailways.addChild(rw);
 });
 
-net.trains.forEach((train: Train, index: number) => {
+net.trains.forEach((train: Train) => {
     const randomRouteIndex = Math.floor(Math.random() * train.itinerary.routes.length);
     const route = train.itinerary.routes[randomRouteIndex];
 

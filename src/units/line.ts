@@ -1,5 +1,5 @@
-import WayPoint from "./waypoint";
 import Station from "./station";
+import WayPoint from "./waypoint";
 
 export default class Line {
     private _id: string;
@@ -36,14 +36,14 @@ export default class Line {
         return this._wayPoints;
     }
 
-    get onlyStations(): Array<Station> {
+    get onlyStations(): Station[] {
         const arr = Array.from(this.wayPoints);
-        const stations = arr.filter(wayPoint => wayPoint[1].type === 1);
+        const stations = arr.filter((wayPoint) => wayPoint[1].type === 1);
 
-        return stations.map(value => value[1] as Station);
+        return stations.map((value) => value[1] as Station);
     }
 
-    addWayPoint(wayPoint: WayPoint | Station): void {
+    public addWayPoint(wayPoint: WayPoint | Station): void {
         this.wayPoints.set(wayPoint.id, wayPoint);
     }
 }

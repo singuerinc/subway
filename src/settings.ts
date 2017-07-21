@@ -1,17 +1,18 @@
-import Line from "./units/line";
-import Net from "./units/net";
 import RailWay from "./railway";
 import StationSprite from "./station.sprite";
+import Line from "./units/line";
+import Net from "./units/net";
 
 class StationNameButton extends PIXI.Graphics {
-    nameVisible: boolean;
+    public nameVisible: boolean;
 
     constructor() {
         super();
     }
 }
+
 class CargoButton extends PIXI.Graphics {
-    cargoVisible: boolean;
+    public cargoVisible: boolean;
 
     constructor() {
         super();
@@ -19,7 +20,7 @@ class CargoButton extends PIXI.Graphics {
 }
 
 class StationsButton extends PIXI.Graphics {
-    stationsVisible: boolean;
+    public stationsVisible: boolean;
 
     constructor() {
         super();
@@ -27,7 +28,7 @@ class StationsButton extends PIXI.Graphics {
 }
 
 class LineButton extends PIXI.Graphics {
-    railway: PIXI.Graphics;
+    public railway: PIXI.Graphics;
 
     constructor() {
         super();
@@ -50,8 +51,8 @@ export default class Settings extends PIXI.Sprite {
 
         net.lines.forEach((line: Line, key) => {
             const lineTextBtn = new PIXI.Text(line.name, {
-                fontSize: 10,
                 fill: 0x000000,
+                fontSize: 10,
             });
 
             lineTextBtn.x = 4;
@@ -62,7 +63,7 @@ export default class Settings extends PIXI.Sprite {
             lineBtn.buttonMode = true;
             lineBtn.interactive = true;
             lineBtn.railway = railways.getChildAt(i) as PIXI.Graphics;
-            lineBtn.on('click', () => {
+            lineBtn.on("click", () => {
                 this.onOff(lineBtn, net, !lineBtn.railway.visible);
             });
 
@@ -77,9 +78,9 @@ export default class Settings extends PIXI.Sprite {
         });
 
         const stationsBtn: StationsButton = new StationsButton();
-        const lineTextBtn: PIXI.Text = new PIXI.Text('STATIONS', {
-            fontSize: 10,
+        const lineTextBtn: PIXI.Text = new PIXI.Text("STATIONS", {
             fill: 0x000000,
+            fontSize: 10,
         });
 
         lineTextBtn.x = 4;
@@ -93,7 +94,7 @@ export default class Settings extends PIXI.Sprite {
         stationsBtn.interactive = true;
         stationsBtn.addChild(lineTextBtn);
         stationsBtn.stationsVisible = true;
-        stationsBtn.on('click', () => {
+        stationsBtn.on("click", () => {
             stationsBtn.stationsVisible = !stationsBtn.stationsVisible;
             cargoBtn.visible = stationsBtn.stationsVisible;
             railways.children.forEach((railway: RailWay) => {
@@ -104,9 +105,9 @@ export default class Settings extends PIXI.Sprite {
         this.addChild(stationsBtn);
 
         const cargoBtn: CargoButton = new CargoButton();
-        const cargoTextBtn: PIXI.Text = new PIXI.Text('CARGO', {
-            fontSize: 10,
+        const cargoTextBtn: PIXI.Text = new PIXI.Text("CARGO", {
             fill: 0x000000,
+            fontSize: 10,
         });
 
         cargoTextBtn.x = 4;
@@ -120,7 +121,7 @@ export default class Settings extends PIXI.Sprite {
         cargoBtn.interactive = true;
         cargoBtn.addChild(cargoTextBtn);
         cargoBtn.cargoVisible = true;
-        cargoBtn.on('click', () => {
+        cargoBtn.on("click", () => {
             cargoBtn.cargoVisible = !cargoBtn.cargoVisible;
             railways.children.forEach((railway: RailWay) => {
                 railway.layerStations.children.forEach((station: StationSprite) => {
@@ -132,9 +133,9 @@ export default class Settings extends PIXI.Sprite {
         this.addChild(cargoBtn);
 
         const stationNameBtn: StationNameButton = new StationNameButton();
-        const stationNameTextBtn: PIXI.Text = new PIXI.Text('NAME', {
-            fontSize: 10,
+        const stationNameTextBtn: PIXI.Text = new PIXI.Text("NAME", {
             fill: 0x000000,
+            fontSize: 10,
         });
 
         stationNameTextBtn.x = 4;
@@ -149,7 +150,7 @@ export default class Settings extends PIXI.Sprite {
         stationNameBtn.addChild(stationNameTextBtn);
         stationNameBtn.nameVisible = false;
         stationNameBtn.alpha = 0.5;
-        stationNameBtn.on('click', () => {
+        stationNameBtn.on("click", () => {
             stationNameBtn.nameVisible = !stationNameBtn.nameVisible;
             railways.children.forEach((railway: RailWay) => {
                 railway.layerStations.children.forEach((station: StationSprite) => {
@@ -161,7 +162,7 @@ export default class Settings extends PIXI.Sprite {
         this.addChild(stationNameBtn);
     }
 
-    onOff(btn, net, show) {
+    private onOff(btn, net, show) {
         const railway = btn.railway;
 
         railway.visible = show;

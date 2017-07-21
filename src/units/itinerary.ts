@@ -2,7 +2,7 @@ import Route from "./route";
 import WayPoint from "./waypoint";
 
 export default class Itinerary {
-    private _routes: Array<Route>;
+    private _routes: Route[];
     private _currentWayPoint: WayPoint | null;
     private _currentRoute: Route;
 
@@ -10,7 +10,7 @@ export default class Itinerary {
         this._routes = routes;
     }
 
-    addRoute(route: Route): void {
+    public addRoute(route: Route): void {
         this._routes.push(route);
     }
 
@@ -22,11 +22,11 @@ export default class Itinerary {
         return this._currentWayPoint;
     }
 
-    get routes(): Array<Route> {
+    get routes(): Route[] {
         return this._routes;
     }
 
-    getNextWayPoint(): WayPoint {
+    public getNextWayPoint(): WayPoint {
         const next = this._currentRoute.getNext(this.currentWayPoint as WayPoint);
 
         if (!next) {
@@ -45,7 +45,7 @@ export default class Itinerary {
         return this._currentRoute;
     }
 
-    getNextRoute(): Route {
+    public getNextRoute(): Route {
         const idx = this._routes.indexOf(this.currentRoute);
         const nextRouteIndex = (idx + 1) % this._routes.length;
 

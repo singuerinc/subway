@@ -11,7 +11,7 @@ export default class Wagon {
         return this._maxCargo;
     }
 
-    calcSpeed(speed) {
+    public calcSpeed(speed) {
         const v = this.cargo / this.maxCargo;
         const f = 0.03 * v;
 

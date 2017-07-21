@@ -1,5 +1,5 @@
-import Train from "../train";
 import {EventEmitter} from "fbemitter";
+import Train from "../train";
 
 export default class WayPoint {
     protected _currentTrain: Train | null;
@@ -42,31 +42,31 @@ export default class WayPoint {
         return this._position;
     }
 
-    reserve(train: Train): void {
+    public reserve(train: Train): void {
         if (this.getCurrentTrain() === null) {
             this._currentTrain = train;
-            this.emitter.emit('train:reserve', train);
+            this.emitter.emit("train:reserve", train);
         } else {
-            throw new Error('A train is in this station!');
+            throw new Error("A train is in this station!");
         }
     }
 
-    enter(train: Train): void {
+    public enter(train: Train): void {
         if (train === this.getCurrentTrain()) {
-            this.emitter.emit('train:enter', train);
+            this.emitter.emit("train:enter", train);
         } else {
-            throw new Error('A train is in this station!');
+            throw new Error("A train is in this station!");
         }
     }
 
-    leave(train: Train): void {
+    public leave(train: Train): void {
         if (train === this.getCurrentTrain()) {
             this._currentTrain = null;
-            this.emitter.emit('train:leave', train);
+            this.emitter.emit("train:leave", train);
         }
     }
 
-    getCurrentTrain(): Train | null {
+    public getCurrentTrain(): Train | null {
         return this._currentTrain;
     }
 }

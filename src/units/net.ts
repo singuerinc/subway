@@ -1,34 +1,41 @@
-import MathUtils from '../mathUtils';
-import Station from './station';
-import WayPoint from './waypoint';
-import Line from './line';
-import Route from './route';
-import Train from '../train';
-import Itinerary from './itinerary';
-import ILineData from '../lines/linedata';
-import {data as l1Data} from '../lines/l1';
-import {data as l1rData} from '../lines/l1-r';
-import {data as l2Data} from '../lines/l2';
-import {data as l2rData} from '../lines/l2-r';
-import {data as l3Data} from '../lines/l3';
-import {data as l3rData} from '../lines/l3-r';
-import {data as l4Data} from '../lines/l4';
-import {data as l4rData} from '../lines/l4-r';
-import {data as l5Data} from '../lines/l5';
-import {data as l5rData} from '../lines/l5-r';
-import {data as l9Data} from '../lines/l9';
-import {data as l9rData} from '../lines/l9-r';
-import {data as l10Data} from '../lines/l10';
-import {data as l10rData} from '../lines/l10-r';
-import {data as l11Data} from '../lines/l11';
-import {data as l11rData} from '../lines/l11-r';
+import {data as l1Data} from "../lines/l1";
+import {data as l1rData} from "../lines/l1-r";
+import {data as l10Data} from "../lines/l10";
+import {data as l10rData} from "../lines/l10-r";
+import {data as l11Data} from "../lines/l11";
+import {data as l11rData} from "../lines/l11-r";
+import {data as l2Data} from "../lines/l2";
+import {data as l2rData} from "../lines/l2-r";
+import {data as l3Data} from "../lines/l3";
+import {data as l3rData} from "../lines/l3-r";
+import {data as l4Data} from "../lines/l4";
+import {data as l4rData} from "../lines/l4-r";
+import {data as l5Data} from "../lines/l5";
+import {data as l5rData} from "../lines/l5-r";
+import {data as l9Data} from "../lines/l9";
+import {data as l9rData} from "../lines/l9-r";
+import ILineData from "../lines/linedata";
+import MathUtils from "../mathUtils";
+import Train from "../train";
+import Itinerary from "./itinerary";
+import Line from "./line";
+import Route from "./route";
+import Station from "./station";
+import WayPoint from "./waypoint";
 
 export default class Net {
+    private static convert(value: number): number {
+        const integer = Math.floor(value);
+
+        return Math.floor(((value - integer) * 20000));
+        // return Math.floor(((value - integer) * 60000));
+    }
+
     private _stations: Map<string, Station>;
     private _wayPoints: Map<string, WayPoint>;
     private _lines: Map<string, Line>;
     private _routes: Map<string, Route>;
-    private _trains: Array<Train>;
+    private _trains: Train[];
 
     constructor() {
         this._stations = new Map();
@@ -76,14 +83,14 @@ export default class Net {
         this._createRoutes([line1, line2, line3, line4, line5, line9, line10, line11]);
 
         const itineraries = [
-            [this._routes.get('L1')],
-            [this._routes.get('L2')],
-            [this._routes.get('L3')],
-            [this._routes.get('L4')],
-            [this._routes.get('L5')],
-            [this._routes.get('L9')],
-            [this._routes.get('L10')],
-            [this._routes.get('L11')],
+            [this._routes.get("L1")],
+            [this._routes.get("L2")],
+            [this._routes.get("L3")],
+            [this._routes.get("L4")],
+            [this._routes.get("L5")],
+            [this._routes.get("L9")],
+            [this._routes.get("L10")],
+            [this._routes.get("L11")],
         ];
 
         for (let j = 0; j < itineraries.length; j += 1) {
@@ -105,22 +112,7 @@ export default class Net {
         }
     }
 
-    /**
-     * @param {number} value
-     * @returns {number}
-     */
-    static convert(value) {
-        const integer = Math.floor(value);
-
-        return Math.floor(((value - integer) * 20000));
-        // return Math.floor(((value - integer) * 60000));
-    }
-
-    /**
-     * @param {Array} data
-     * @private
-     */
-    _parseWayPoints(data) {
+    private _parseWayPoints(data: any[]) {
         for (let i = 0; i < data.length; i += 1) {
             const info = data[i];
 
@@ -164,16 +156,16 @@ export default class Net {
         return this._lines;
     }
 
-    get trains(): Array<Train> {
+    get trains(): Train[] {
         return this._trains;
     }
 
-    private _parseLine(data: Array<ILineData>, color: number, direction: number = 1): Line {
+    private _parseLine(data: ILineData[], color: number, direction: number = 1): Line {
         const line = new Line({
-            id: data[0].line,
-            name: data[0].line,
             color,
             direction,
+            id: data[0].line,
+            name: data[0].line,
         });
 
         let prevStation: Station | null = null;
@@ -226,7 +218,7 @@ export default class Net {
         return line;
     }
 
-    private _createRoutes(lines: Array<Line>): void {
+    private _createRoutes(lines: Line[]): void {
         lines.forEach((line) => {
             const route = new Route({id: line.id, color: line.color});
 
