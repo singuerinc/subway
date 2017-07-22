@@ -475,18 +475,18 @@ Stop: ${(this._itinerary.currentWayPoint as WayPoint).name} → ${nextWayPointNa
                 onComplete();
             } else {
                 anime({
-                    targets: this,
-                    easing,
-                    duration,
-                    delay: isWayPoint ? 0 : 500,
-                    speed: finalSpeed,
-                    x: nextStop.position.x,
-                    y: nextStop.position.y,
                     begin: onBegin,
+                    complete: onComplete,
+                    delay: isWayPoint ? 0 : 500,
+                    duration,
+                    easing,
+                    speed: finalSpeed,
+                    targets: this,
                     update: () => {
                         this.updateInfo();
                     },
-                    complete: onComplete,
+                    x: nextStop.position.x,
+                    y: nextStop.position.y,
                 });
             }
         });

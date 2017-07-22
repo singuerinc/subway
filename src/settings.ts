@@ -78,13 +78,13 @@ export default class Settings extends PIXI.Sprite {
         });
 
         const stationsBtn: StationsButton = new StationsButton();
-        const lineTextBtn: PIXI.Text = new PIXI.Text("STATIONS", {
+        const stationTextBtn: PIXI.Text = new PIXI.Text("STATIONS", {
             fill: 0x000000,
             fontSize: 10,
         });
 
-        lineTextBtn.x = 4;
-        lineTextBtn.y = 2;
+        stationTextBtn.x = 4;
+        stationTextBtn.y = 2;
         stationsBtn.beginFill(0x777777, 1);
         stationsBtn.drawRect(0, 0, 58, 16);
         stationsBtn.endFill();
@@ -92,7 +92,7 @@ export default class Settings extends PIXI.Sprite {
         stationsBtn.y = lines.y + lines.height + 20;
         stationsBtn.buttonMode = true;
         stationsBtn.interactive = true;
-        stationsBtn.addChild(lineTextBtn);
+        stationsBtn.addChild(stationTextBtn);
         stationsBtn.stationsVisible = true;
         stationsBtn.on("click", () => {
             stationsBtn.stationsVisible = !stationsBtn.stationsVisible;
