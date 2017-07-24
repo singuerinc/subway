@@ -112,7 +112,7 @@ export default class Net {
         }
     }
 
-    private _parseWayPoints(data: any[]) {
+    private _parseWayPoints(data: any[]): void {
         for (let i = 0; i < data.length; i += 1) {
             const info = data[i];
 
@@ -126,7 +126,7 @@ export default class Net {
                 // const sx = Net.convert(parseFloat(info.lat)) - 20682;
                 // const sy = Net.convert(parseFloat(info.lon)) - 5986;
 
-                const station = new Station({
+                const station: Station = new Station({
                     id: info.id,
                     name: info.name,
                     position: {

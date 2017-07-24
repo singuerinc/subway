@@ -6,7 +6,7 @@ export default class Itinerary {
     private _currentWayPoint: WayPoint | null;
     private _currentRoute: Route;
 
-    constructor({routes}) {
+    constructor({routes}: {routes: Route[]}) {
         this._routes = routes;
     }
 

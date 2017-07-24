@@ -1,10 +1,9 @@
-import StationSprite from "./station.sprite";
-import WayPointSprite from "./waypoint.sprite";
+import Line from "./units/line";
 import PIXI = require("pixi.js");
+import StationSprite from "./station.sprite";
+import Station from "./units/station";
+import WayPointSprite from "./waypoint.sprite";
 
-/**
- * @extends PIXI.Graphics
- */
 export default class RailWay extends PIXI.Graphics {
     get layerStations(): PIXI.Graphics {
         return this._layerStations;
@@ -14,17 +13,17 @@ export default class RailWay extends PIXI.Graphics {
     private _color: number;
     private _layerWayPoints: PIXI.Graphics;
     private _layerStations: PIXI.Graphics;
-    private layerLines: PIXI.Graphics;
+    private _layerLines: PIXI.Graphics;
 
-    constructor({id, line}) {
+    constructor({id, line}: {id: string, line: Line}) {
         super();
         // console.log(`RailWay ${id} created.`);
         this._id = id;
         this._color = line.color;
 
-        this.layerLines = new PIXI.Graphics();
-        this.layerLines.cacheAsBitmap = true;
-        this.addChild(this.layerLines);
+        this._layerLines = new PIXI.Graphics();
+        this._layerLines.cacheAsBitmap = true;
+        this.addChild(this._layerLines);
 
         this._layerWayPoints = new PIXI.Graphics();
         this.addChild(this._layerWayPoints);
@@ -37,7 +36,7 @@ export default class RailWay extends PIXI.Graphics {
 
         for (const [, wayPoint] of line.wayPoints.entries()) {
             if (wayPoint.type === 1) {
-                const station = new StationSprite({model: wayPoint, color: line.color});
+                const station = new StationSprite({model: wayPoint as Station, color: line.color});
 
                 if (prevStation) {
                     prevStation.parentStation = station;
@@ -53,15 +52,15 @@ export default class RailWay extends PIXI.Graphics {
                     const sx = wayPoint.position.x;
                     const sy = wayPoint.position.y;
 
-                    this.layerLines.lineStyle(66, this._color, 0.04);
-                    this.layerLines.moveTo(px, py);
-                    this.layerLines.lineTo(sx, sy);
-                    this.layerLines.lineStyle(6, 0x2D2D2D, 1);
-                    this.layerLines.moveTo(px, py);
-                    this.layerLines.lineTo(sx, sy);
-                    this.layerLines.lineStyle(12, this._color, 1);
-                    this.layerLines.moveTo(px, py);
-                    this.layerLines.lineTo(sx, sy);
+                    this._layerLines.lineStyle(66, this._color, 0.04);
+                    this._layerLines.moveTo(px, py);
+                    this._layerLines.lineTo(sx, sy);
+                    this._layerLines.lineStyle(6, 0x2D2D2D, 1);
+                    this._layerLines.moveTo(px, py);
+                    this._layerLines.lineTo(sx, sy);
+                    this._layerLines.lineStyle(12, this._color, 1);
+                    this._layerLines.moveTo(px, py);
+                    this._layerLines.lineTo(sx, sy);
                 }
 
                 parentStation = wayPoint;
@@ -73,9 +72,6 @@ export default class RailWay extends PIXI.Graphics {
         }
     }
 
-    /**
-     * @returns {String}
-     */
     get id(): string {
         return this._id;
     }

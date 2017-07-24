@@ -7,22 +7,22 @@ export default class Wagon {
         this._maxCargo = 220;
     }
 
-    get maxCargo() {
+    get maxCargo(): number {
         return this._maxCargo;
     }
 
-    public calcSpeed(speed) {
+    public calcSpeed(speed): number {
         const v = this.cargo / this.maxCargo;
         const f = 0.03 * v;
 
         return (speed * 0.9) - f;
     }
 
-    set cargo(value) {
+    set cargo(value: number) {
         this._cargo = value;
     }
 
-    get cargo() {
+    get cargo(): number {
         return this._cargo;
     }
 }
