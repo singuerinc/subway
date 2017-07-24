@@ -5,6 +5,7 @@ import Route from "./units/route";
 import Station from "./units/station";
 import Wagon from "./units/wagon";
 import WayPoint from "./units/waypoint";
+import PIXI = require("pixi.js");
 
 interface ICargo {
     cargo: number;

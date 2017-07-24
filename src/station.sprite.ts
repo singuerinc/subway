@@ -1,5 +1,6 @@
 import MathUtils from "./mathUtils";
 import Station from "./units/station";
+import PIXI = require("pixi.js");
 
 export default class StationSprite extends PIXI.Graphics {
     get info(): PIXI.Graphics {

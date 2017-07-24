@@ -2,6 +2,7 @@ import RailWay from "./railway";
 import StationSprite from "./station.sprite";
 import Line from "./units/line";
 import Net from "./units/net";
+import PIXI = require("pixi.js");
 
 class StationNameButton extends PIXI.Graphics {
     public nameVisible: boolean;

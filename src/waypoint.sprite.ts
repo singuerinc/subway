@@ -1,5 +1,6 @@
 import * as k from "keymaster";
 import WayPoint from "./units/waypoint";
+import PIXI = require("pixi.js");
 
 export default class WayPointSprite extends PIXI.Graphics {
     private _model: WayPoint;

@@ -1,5 +1,6 @@
 import StationSprite from "./station.sprite";
 import WayPointSprite from "./waypoint.sprite";
+import PIXI = require("pixi.js");
 
 /**
  * @extends PIXI.Graphics

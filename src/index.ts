@@ -2,6 +2,7 @@ import RailWay from "./railway";
 import Settings from "./settings";
 import Train from "./train";
 import Net from "./units/net";
+import PIXI = require("pixi.js");
 
 // TODO: Train acceleration
 // TODO: Train close info
