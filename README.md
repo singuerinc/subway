@@ -4,6 +4,8 @@ A metro/subway flow simulation.
 
 [Demo](https://singuerinc-labs.gitlab.io/subway/)
 
+![Subway](./subway.jpg)
+
 ## About
 
 I am quiet a fan of transportation systems. I used to play a lot to [OpenTTD](https://www.openttd.org/en/): an open source version of [Transport Tycoon](https://en.wikipedia.org/wiki/Transport_Tycoon).
