@@ -16,7 +16,7 @@ I was always fascinated by the (almost) perfect synchronization that the train s
 
 A few statements about this experiment:
 
-- There is no API connected to the app: I was considering the idea to use an API to get the data but the problem in that case is that becomes a "visualization" rather that a simulation.
+- There is no API connected to the app: I was considering the idea to use an API to get the data, but the problem in that case is than becomes a "visualization" rather that a simulation.
 
 - Is based on the Barcelona subway net
 
