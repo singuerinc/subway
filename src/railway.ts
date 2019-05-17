@@ -15,7 +15,7 @@ export default class RailWay extends PIXI.Graphics {
     private _layerStations: PIXI.Graphics;
     private _layerLines: PIXI.Graphics;
 
-    constructor({id, line}: {id: string, line: Line}) {
+    constructor({ id, line }: { id: string; line: Line }) {
         super();
         // console.log(`RailWay ${id} created.`);
         this._id = id;
@@ -34,9 +34,12 @@ export default class RailWay extends PIXI.Graphics {
         let parentStation;
         let prevStation;
 
-        for (const [, wayPoint] of line.wayPoints.entries()) {
+        line.wayPoints.forEach(wayPoint => {
             if (wayPoint.type === 1) {
-                const station = new StationSprite({model: wayPoint as Station, color: line.color});
+                const station = new StationSprite({
+                    model: wayPoint as Station,
+                    color: line.color
+                });
 
                 if (prevStation) {
                     prevStation.parentStation = station;
@@ -55,7 +58,7 @@ export default class RailWay extends PIXI.Graphics {
                     this._layerLines.lineStyle(66, this._color, 0.04);
                     this._layerLines.moveTo(px, py);
                     this._layerLines.lineTo(sx, sy);
-                    this._layerLines.lineStyle(6, 0x2D2D2D, 1);
+                    this._layerLines.lineStyle(6, 0x2d2d2d, 1);
                     this._layerLines.moveTo(px, py);
                     this._layerLines.lineTo(sx, sy);
                     this._layerLines.lineStyle(12, this._color, 1);
@@ -65,11 +68,11 @@ export default class RailWay extends PIXI.Graphics {
 
                 parentStation = wayPoint;
             } else if (wayPoint.type === 0) {
-                const wp = new WayPointSprite({model: wayPoint});
+                const wp = new WayPointSprite({ model: wayPoint });
 
                 this._layerWayPoints.addChild(wp);
             }
-        }
+        });
     }
 
     get id(): string {

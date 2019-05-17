@@ -1,11 +1,19 @@
-import * as anime from "animejs";
+import anime from "animejs";
 import WayPoint from "./waypoint";
 
 export default class Station extends WayPoint {
     private _cargo: number;
 
-    constructor({id, name, position}: { id: string, name: string, position: any }) {
-        super({id, name, position});
+    constructor({
+        id,
+        name,
+        position
+    }: {
+        id: string;
+        name: string;
+        position: any;
+    }) {
+        super({ id, name, position });
 
         this.type = 1;
 

@@ -1,4 +1,4 @@
-import * as anime from "animejs";
+import anime from "animejs";
 import MathUtils from "./mathUtils";
 import Itinerary from "./units/itinerary";
 import Route from "./units/route";
@@ -19,7 +19,7 @@ enum TrainState {
     UNLOADING = "unloading",
     IN_TRANSIT = "in transit",
     WAITING = "waiting",
-    GO = "go",
+    GO = "go"
 }
 
 const MAX_SPEED = 120; // km/h
@@ -54,7 +54,7 @@ export default class Train extends PIXI.Graphics {
 
     private _itinerary: Itinerary;
 
-    constructor(id, {itinerary}) {
+    constructor(id, { itinerary }) {
         super();
         // console.log(`Train ${id} created.`);
         this.buttonMode = true;
@@ -101,7 +101,7 @@ export default class Train extends PIXI.Graphics {
 
         this.info = new PIXI.Text("", {
             fill: 0x464646,
-            fontSize: 14,
+            fontSize: 14
         });
         // this.info.visible = false;
         this.info.x = ix + 20;
@@ -115,7 +115,10 @@ export default class Train extends PIXI.Graphics {
 
         this.on("mouseover", () => {
             this.infoContainer.visible = true;
-            this.parent.swapChildren(this, this.parent.getChildAt(this.parent.children.length - 1));
+            this.parent.swapChildren(
+                this,
+                this.parent.getChildAt(this.parent.children.length - 1)
+            );
         });
 
         this.on("mouseout", () => {
@@ -135,7 +138,7 @@ export default class Train extends PIXI.Graphics {
             easing: "easeInSine",
             loop: true,
             targets: [this.head],
-            update: () => this._draw(),
+            update: () => this._draw()
         });
 
         this._draw();
@@ -219,7 +222,10 @@ export default class Train extends PIXI.Graphics {
     }
 
     get maxSpeed(): number {
-        return this.wagons.reduce((speed, wagon) => wagon.calcSpeed(speed), MAX_SPEED * 0.01);
+        return this.wagons.reduce(
+            (speed, wagon) => wagon.calcSpeed(speed),
+            MAX_SPEED * 0.01
+        );
     }
 
     get cargo(): number {
@@ -229,7 +235,7 @@ export default class Train extends PIXI.Graphics {
     set cargo(cargo: number) {
         const cargoPerWagon = cargo / this.wagons.length;
 
-        this.wagons.forEach((wagon) => {
+        this.wagons.forEach(wagon => {
             wagon.cargo = cargoPerWagon;
         });
     }
@@ -246,16 +252,16 @@ export default class Train extends PIXI.Graphics {
                 this._stateColor = 0x2d2d2d;
                 break;
             case TrainState.GO:
-                this._stateColor = 0x2ECC40;
+                this._stateColor = 0x2ecc40;
                 break;
             case TrainState.LOADING:
-                this._stateColor = 0x01FF70;
+                this._stateColor = 0x01ff70;
                 break;
             case TrainState.UNLOADING:
-                this._stateColor = 0xFF4136;
+                this._stateColor = 0xff4136;
                 break;
             case TrainState.WAITING:
-                this._stateColor = 0x001F3F;
+                this._stateColor = 0x001f3f;
                 break;
             case TrainState.IN_TRANSIT:
                 this._stateColor = 0x2d2d2d;
@@ -280,11 +286,12 @@ export default class Train extends PIXI.Graphics {
                 nextWayPointName = "";
             }
 
-            this.info.text =
-                `#${this._id} - ${this.state}
+            this.info.text = `#${this._id} - ${this.state}
 Cargo: ${this.cargo} / Max: ${this.maxCargo} / Today: ${this.cargoAccumulated}
 Speed: ${speed}km/h / ${maxSpeed}km/h
-Stop: ${(this._itinerary.currentWayPoint as WayPoint).name} → ${nextWayPointName}
+Stop: ${
+                (this._itinerary.currentWayPoint as WayPoint).name
+            } → ${nextWayPointName}
 `;
         }
     }
@@ -304,7 +311,7 @@ Stop: ${(this._itinerary.currentWayPoint as WayPoint).name} → ${nextWayPointNa
     }
 
     private openDoors(): Promise<void> {
-        return new Promise((resolve) => {
+        return new Promise(resolve => {
             this.state = TrainState.OPENING_DOORS;
             this._draw();
             this.updateInfo();
@@ -315,7 +322,7 @@ Stop: ${(this._itinerary.currentWayPoint as WayPoint).name} → ${nextWayPointNa
     }
 
     private closeDoors(): Promise<void> {
-        return new Promise((resolve) => {
+        return new Promise(resolve => {
             this.state = TrainState.CLOSING_DOORS;
             this._draw();
             this.updateInfo();
@@ -326,8 +333,10 @@ Stop: ${(this._itinerary.currentWayPoint as WayPoint).name} → ${nextWayPointNa
     }
 
     private unload(leaveEmpty: boolean = false): Promise<void> {
-        return new Promise((resolve) => {
-            const toUnload = leaveEmpty ? this.cargo : anime.random(0, this.cargo);
+        return new Promise(resolve => {
+            const toUnload = leaveEmpty
+                ? this.cargo
+                : anime.random(0, this.cargo);
             // TODO: Add partial cargo to the station? For stations that connects?
             const tmpCargo = this.cargo - toUnload;
 
@@ -341,7 +350,7 @@ Stop: ${(this._itinerary.currentWayPoint as WayPoint).name} → ${nextWayPointNa
             }
 
             const tmp = {
-                cargo: this.cargo,
+                cargo: this.cargo
             };
 
             anime({
@@ -358,14 +367,14 @@ Stop: ${(this._itinerary.currentWayPoint as WayPoint).name} → ${nextWayPointNa
                     this.cargo = tmp.cargo;
                     this._draw();
                     this.updateInfo();
-                },
+                }
             });
         });
     }
 
     private load(): Promise<void> {
-        return new Promise((resolve) => {
-            const currentStop = (this.currentStop as Station);
+        return new Promise(resolve => {
+            const currentStop = this.currentStop as Station;
             const spaceInTrain = this.maxCargo - this.cargo;
             const toLoad = Math.min(spaceInTrain, currentStop.cargo);
             const tmpCargo = this.cargo + toLoad;
@@ -381,7 +390,7 @@ Stop: ${(this._itinerary.currentWayPoint as WayPoint).name} → ${nextWayPointNa
 
             const tmp = {
                 cargo: this.cargo,
-                stopCargo: currentStop.cargo,
+                stopCargo: currentStop.cargo
             } as ICargo;
 
             anime({
@@ -401,7 +410,7 @@ Stop: ${(this._itinerary.currentWayPoint as WayPoint).name} → ${nextWayPointNa
                     this.cargo = parseInt(`${tmp.cargo}`, 10);
                     this._draw();
                     this.updateInfo();
-                },
+                }
             });
         });
     }
@@ -417,14 +426,23 @@ Stop: ${(this._itinerary.currentWayPoint as WayPoint).name} → ${nextWayPointNa
                 return;
             }
 
-            const wayPointToWayPoint = (this.currentStop.type === 0) && (nextStop.type === 0);
-            const wayPointToStation = (this.currentStop.type === 0) && (nextStop.type === 1);
-            const stationToWayPoint = (this.currentStop.type === 1) && (nextStop.type === 0);
-            const stationToStation = (this.currentStop.type === 1) && (nextStop.type === 1);
+            const wayPointToWayPoint =
+                this.currentStop.type === 0 && nextStop.type === 0;
+            const wayPointToStation =
+                this.currentStop.type === 0 && nextStop.type === 1;
+            const stationToWayPoint =
+                this.currentStop.type === 1 && nextStop.type === 0;
+            const stationToStation =
+                this.currentStop.type === 1 && nextStop.type === 1;
 
             const isWayPoint = this.currentStop.type === 0;
 
-            const distance = MathUtils.distance(this.x, this.y, nextStop.position.x, nextStop.position.y);
+            const distance = MathUtils.distance(
+                this.x,
+                this.y,
+                nextStop.position.x,
+                nextStop.position.y
+            );
 
             this._draw();
             this.state = TrainState.GO;
@@ -487,7 +505,7 @@ Stop: ${(this._itinerary.currentWayPoint as WayPoint).name} → ${nextWayPointNa
                         this.updateInfo();
                     },
                     x: nextStop.position.x,
-                    y: nextStop.position.y,
+                    y: nextStop.position.y
                 });
             }
         });
@@ -500,9 +518,14 @@ Stop: ${(this._itinerary.currentWayPoint as WayPoint).name} → ${nextWayPointNa
                 return;
             }
 
-            const angle = MathUtils.angle(this.x, this.y, nextStop.position.x, nextStop.position.y);
+            const angle = MathUtils.angle(
+                this.x,
+                this.y,
+                nextStop.position.x,
+                nextStop.position.y
+            );
 
-            this.rotation = angle + (Math.PI / 2);
+            this.rotation = angle + Math.PI / 2;
             this.infoContainer.rotation = -this.rotation;
             // this.rotation = angle + Math.PI;
             // this.infoContainer.rotation = angle;
@@ -512,24 +535,22 @@ Stop: ${(this._itinerary.currentWayPoint as WayPoint).name} → ${nextWayPointNa
             // STATIONS
             if (this.currentStop && isStation) {
                 // open the train doors
-                this.openDoors()
-                    .then(() => {
-                        // unload partial cargo
-                        this.unload()
-                            .then(() => {
-                                // load waiting cargo
-                                this.load().then(() => {
-                                    // close the train doors
-                                    this.closeDoors().then(() => {
-                                        // go
-                                        this.go(nextStop)
-                                            .then(resolve)
-                                            .catch(reject);
-                                        // FIXME: If "go" is rejected it will repeat all actions
-                                    });
-                                });
+                this.openDoors().then(() => {
+                    // unload partial cargo
+                    this.unload().then(() => {
+                        // load waiting cargo
+                        this.load().then(() => {
+                            // close the train doors
+                            this.closeDoors().then(() => {
+                                // go
+                                this.go(nextStop)
+                                    .then(resolve)
+                                    .catch(reject);
+                                // FIXME: If "go" is rejected it will repeat all actions
                             });
+                        });
                     });
+                });
             } else {
                 // WAY-POINTS
                 this.go(nextStop)
