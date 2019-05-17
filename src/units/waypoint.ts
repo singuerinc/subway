@@ -1,15 +1,23 @@
-import {EventEmitter} from "fbemitter";
+import { EventEmitter } from "fbemitter";
 import Train from "../train";
 
 export default class WayPoint {
     protected _currentTrain: Train | null;
     protected _type: number;
-    protected _position: { x: number, y: number };
+    protected _position: { x: number; y: number };
     protected _name: string;
     protected _id: string;
     protected _emitter: EventEmitter;
 
-    constructor({id, name, position}: { id: string, name: string, position: any }) {
+    constructor({
+        id,
+        name,
+        position
+    }: {
+        id: string;
+        name: string;
+        position: any;
+    }) {
         this._emitter = new EventEmitter();
         this._id = id;
         this._name = name;
@@ -38,7 +46,7 @@ export default class WayPoint {
         return this._type;
     }
 
-    get position(): { x: number, y: number } {
+    get position(): { x: number; y: number } {
         return this._position;
     }
 

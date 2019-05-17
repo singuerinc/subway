@@ -1,24 +1,26 @@
 {
-    "name": "subway",
-    "version": "1.0.0",
-    "main": "index.js",
-    "license": "MIT",
-    "devDependencies": {
-        "@types/animejs": "kohashi/types-npm-animejs",
-        "@types/fbemitter": "^2.0.32",
-        "@types/keymaster": "^1.6.28",
-        "@types/pixi.js": "^4.5.1",
-        "parcel-bundler": "^1.12.3",
-        "typescript": "^3.4.5"
-    },
-    "dependencies": {
-        "animejs": "^2.0.2",
-        "fbemitter": "^2.1.1",
-        "keymaster": "^1.6.2",
-        "pixi.js": "^4.5.3"
-    },
-    "scripts": {
-        "build": "parcel build ./index.html",
-        "start": "parcel ./index.html"
-    }
+  "name": "subway",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/animejs": "kohashi/types-npm-animejs",
+    "@types/fbemitter": "^2.0.32",
+    "@types/keymaster": "^1.6.28",
+    "@types/pixi.js": "^4.5.1",
+    "parcel-bundler": "^1.12.3",
+    "prettier": "1.17.1",
+    "typescript": "^3.4.5"
+  },
+  "dependencies": {
+    "animejs": "^2.0.2",
+    "fbemitter": "^2.1.1",
+    "keymaster": "^1.6.2",
+    "pixi.js": "^4.5.3"
+  },
+  "scripts": {
+    "build": "parcel build ./index.html",
+    "format": "prettier --write 'src/**/*.ts'",
+    "start": "parcel ./index.html"
+  }
 }

@@ -37,7 +37,7 @@ class LineButton extends PIXI.Graphics {
 }
 
 export default class Settings extends PIXI.Sprite {
-    constructor({net, railways}: { net: Net, railways: PIXI.Graphics }) {
+    constructor({ net, railways }: { net: Net; railways: PIXI.Graphics }) {
         super();
 
         const lines = new PIXI.Graphics();
@@ -53,7 +53,7 @@ export default class Settings extends PIXI.Sprite {
         net.lines.forEach((line: Line, key) => {
             const lineTextBtn = new PIXI.Text(line.name, {
                 fill: 0x000000,
-                fontSize: 10,
+                fontSize: 10
             });
 
             lineTextBtn.x = 4;
@@ -81,7 +81,7 @@ export default class Settings extends PIXI.Sprite {
         const stationsBtn: StationsButton = new StationsButton();
         const stationTextBtn: PIXI.Text = new PIXI.Text("STATIONS", {
             fill: 0x000000,
-            fontSize: 10,
+            fontSize: 10
         });
 
         stationTextBtn.x = 4;
@@ -108,7 +108,7 @@ export default class Settings extends PIXI.Sprite {
         const cargoBtn: CargoButton = new CargoButton();
         const cargoTextBtn: PIXI.Text = new PIXI.Text("CARGO", {
             fill: 0x000000,
-            fontSize: 10,
+            fontSize: 10
         });
 
         cargoTextBtn.x = 4;
@@ -125,9 +125,11 @@ export default class Settings extends PIXI.Sprite {
         cargoBtn.on("click", () => {
             cargoBtn.cargoVisible = !cargoBtn.cargoVisible;
             railways.children.forEach((railway: RailWay) => {
-                railway.layerStations.children.forEach((station: StationSprite) => {
-                    station.info.visible = cargoBtn.cargoVisible;
-                });
+                railway.layerStations.children.forEach(
+                    (station: StationSprite) => {
+                        station.info.visible = cargoBtn.cargoVisible;
+                    }
+                );
             });
             cargoBtn.alpha = cargoBtn.cargoVisible ? 1 : 0.5;
         });
@@ -136,7 +138,7 @@ export default class Settings extends PIXI.Sprite {
         const stationNameBtn: StationNameButton = new StationNameButton();
         const stationNameTextBtn: PIXI.Text = new PIXI.Text("NAME", {
             fill: 0x000000,
-            fontSize: 10,
+            fontSize: 10
         });
 
         stationNameTextBtn.x = 4;
@@ -154,9 +156,12 @@ export default class Settings extends PIXI.Sprite {
         stationNameBtn.on("click", () => {
             stationNameBtn.nameVisible = !stationNameBtn.nameVisible;
             railways.children.forEach((railway: RailWay) => {
-                railway.layerStations.children.forEach((station: StationSprite) => {
-                    station.infoNameText.visible = stationNameBtn.nameVisible;
-                });
+                railway.layerStations.children.forEach(
+                    (station: StationSprite) => {
+                        station.infoNameText.visible =
+                            stationNameBtn.nameVisible;
+                    }
+                );
             });
             stationNameBtn.alpha = stationNameBtn.nameVisible ? 1 : 0.5;
         });
@@ -176,7 +181,7 @@ export default class Settings extends PIXI.Sprite {
             return acc;
         }, []);
 
-        trainsInRailway.forEach((train) => {
+        trainsInRailway.forEach(train => {
             train.visible = railway.visible;
         });
     }

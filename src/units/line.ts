@@ -8,7 +8,17 @@ export default class Line {
     private _wayPoints: Map<string, WayPoint>;
     private _direction: number;
 
-    constructor({id, name, color, direction}: {id: string, name: string, color: number, direction: number}) {
+    constructor({
+        id,
+        name,
+        color,
+        direction
+    }: {
+        id: string;
+        name: string;
+        color: number;
+        direction: number;
+    }) {
         this._id = id;
         this._name = name;
         this._color = color;
@@ -38,9 +48,9 @@ export default class Line {
 
     get onlyStations(): Station[] {
         const arr = Array.from(this.wayPoints);
-        const stations = arr.filter((wayPoint) => wayPoint[1].type === 1);
+        const stations = arr.filter(wayPoint => wayPoint[1].type === 1);
 
-        return stations.map((value) => value[1] as Station);
+        return stations.map(value => value[1] as Station);
     }
 
     public addWayPoint(wayPoint: WayPoint | Station): void {

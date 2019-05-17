@@ -6,7 +6,7 @@ export default class Itinerary {
     private _currentWayPoint: WayPoint | null;
     private _currentRoute: Route;
 
-    constructor({routes}: {routes: Route[]}) {
+    constructor({ routes }: { routes: Route[] }) {
         this._routes = routes;
     }
 
@@ -27,7 +27,8 @@ export default class Itinerary {
     }
 
     public getNextWayPoint(): WayPoint {
-        const next = this._currentRoute.getNext(this.currentWayPoint as WayPoint);
+        const next = this._currentRoute.getNext(this
+            .currentWayPoint as WayPoint);
 
         if (!next) {
             throw new Error();
@@ -55,7 +56,7 @@ export default class Itinerary {
     get size(): number {
         let size = 0;
 
-        this._routes.forEach((route) => {
+        this._routes.forEach(route => {
             size += route.size;
         });
         return size;
