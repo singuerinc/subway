@@ -18,7 +18,7 @@ import ILineData from "../lines/linedata";
 import MathUtils from "../mathUtils";
 import Train from "../train";
 import Itinerary from "./itinerary";
-import Line from "./line";
+import { Line } from "./line";
 import Route from "./route";
 import Station from "./station";
 import WayPoint from "./waypoint";
