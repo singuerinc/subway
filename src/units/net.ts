@@ -1,19 +1,19 @@
-import {data as l1Data} from "../lines/l1";
-import {data as l1rData} from "../lines/l1-r";
-import {data as l10Data} from "../lines/l10";
-import {data as l10rData} from "../lines/l10-r";
-import {data as l11Data} from "../lines/l11";
-import {data as l11rData} from "../lines/l11-r";
-import {data as l2Data} from "../lines/l2";
-import {data as l2rData} from "../lines/l2-r";
-import {data as l3Data} from "../lines/l3";
-import {data as l3rData} from "../lines/l3-r";
-import {data as l4Data} from "../lines/l4";
-import {data as l4rData} from "../lines/l4-r";
-import {data as l5Data} from "../lines/l5";
-import {data as l5rData} from "../lines/l5-r";
-import {data as l9Data} from "../lines/l9";
-import {data as l9rData} from "../lines/l9-r";
+import { data as l1Data } from "../lines/l1";
+import { data as l1rData } from "../lines/l1-r";
+import { data as l10Data } from "../lines/l10";
+import { data as l10rData } from "../lines/l10-r";
+import { data as l11Data } from "../lines/l11";
+import { data as l11rData } from "../lines/l11-r";
+import { data as l2Data } from "../lines/l2";
+import { data as l2rData } from "../lines/l2-r";
+import { data as l3Data } from "../lines/l3";
+import { data as l3rData } from "../lines/l3-r";
+import { data as l4Data } from "../lines/l4";
+import { data as l4rData } from "../lines/l4-r";
+import { data as l5Data } from "../lines/l5";
+import { data as l5rData } from "../lines/l5-r";
+import { data as l9Data } from "../lines/l9";
+import { data as l9rData } from "../lines/l9-r";
 import ILineData from "../lines/linedata";
 import MathUtils from "../mathUtils";
 import Train from "../train";
@@ -27,7 +27,7 @@ export default class Net {
     private static convert(value: number): number {
         const integer = Math.floor(value);
 
-        return Math.floor(((value - integer) * 20000));
+        return Math.floor((value - integer) * 20000);
         // return Math.floor(((value - integer) * 60000));
     }
 
@@ -62,14 +62,14 @@ export default class Net {
         this._parseWayPoints(l10);
         this._parseWayPoints(l11);
 
-        const line1 = this._parseLine(l1, 0xFF2136);
-        const line2 = this._parseLine(l2, 0xB22AA1);
-        const line3 = this._parseLine(l3, 0x00C03A);
-        const line4 = this._parseLine(l4, 0xFFB901);
-        const line5 = this._parseLine(l5, 0x007BCD);
-        const line9 = this._parseLine(l9, 0xFF8615);
-        const line10 = this._parseLine(l10, 0x00B0F2);
-        const line11 = this._parseLine(l11, 0x89D748);
+        const line1 = this._parseLine(l1, 0xff2136);
+        const line2 = this._parseLine(l2, 0xb22aa1);
+        const line3 = this._parseLine(l3, 0x00c03a);
+        const line4 = this._parseLine(l4, 0xffb901);
+        const line5 = this._parseLine(l5, 0x007bcd);
+        const line9 = this._parseLine(l9, 0xff8615);
+        const line10 = this._parseLine(l10, 0x00b0f2);
+        const line11 = this._parseLine(l11, 0x89d748);
 
         this.lines.set(line1.id, line1);
         this.lines.set(line2.id, line2);
@@ -80,7 +80,16 @@ export default class Net {
         this.lines.set(line10.id, line10);
         this.lines.set(line11.id, line11);
 
-        this._createRoutes([line1, line2, line3, line4, line5, line9, line10, line11]);
+        this._createRoutes([
+            line1,
+            line2,
+            line3,
+            line4,
+            line5,
+            line9,
+            line10,
+            line11
+        ]);
 
         const itineraries = [
             [this._routes.get("L1")],
@@ -90,7 +99,7 @@ export default class Net {
             [this._routes.get("L5")],
             [this._routes.get("L9")],
             [this._routes.get("L10")],
-            [this._routes.get("L11")],
+            [this._routes.get("L11")]
         ];
 
         for (let j = 0; j < itineraries.length; j += 1) {
@@ -100,7 +109,7 @@ export default class Net {
             // console.log(numTrains);
             for (let i = 0; i < numTrains; i += 1) {
                 const itinerary = new Itinerary({
-                    routes: itineraryRoutes,
+                    routes: itineraryRoutes
                 });
 
                 itinerary.currentRoute = itinerary.getNextRoute();
@@ -131,8 +140,8 @@ export default class Net {
                     name: info.name,
                     position: {
                         x: sx,
-                        y: sy,
-                    },
+                        y: sy
+                    }
                 });
 
                 this.stations.set(info.id, station);
@@ -142,7 +151,7 @@ export default class Net {
 
     private _addTrains(id: string, itinerary: Itinerary): void {
         const train = new Train(id, {
-            itinerary,
+            itinerary
         });
 
         this._trains.push(train);
@@ -160,12 +169,16 @@ export default class Net {
         return this._trains;
     }
 
-    private _parseLine(data: ILineData[], color: number, direction: number = 1): Line {
+    private _parseLine(
+        data: ILineData[],
+        color: number,
+        direction: number = 1
+    ): Line {
         const line = new Line({
             color,
             direction,
             id: data[0].line,
-            name: data[0].line,
+            name: data[0].line
         });
 
         let prevStation: Station | null = null;
@@ -181,13 +194,26 @@ export default class Net {
                     const py = prevStation.position.y;
                     const sx = station.position.x;
                     const sy = station.position.y;
-                    const distanceBtwStations = MathUtils.distance(sx, sy, px, py);
+                    const distanceBtwStations = MathUtils.distance(
+                        sx,
+                        sy,
+                        px,
+                        py
+                    );
                     const numWayPoints = Math.floor(distanceBtwStations / 45);
 
                     for (let j = 0; j < numWayPoints - 1; j += 1) {
                         const percentage = (1 / numWayPoints) * (j + 1);
-                        const [x, y] = MathUtils.midpoint(px, py, sx, sy, percentage);
-                        const wpId = `${prevStation.id}-2-${station.id}-wp-${j}`;
+                        const [x, y] = MathUtils.midpoint(
+                            px,
+                            py,
+                            sx,
+                            sy,
+                            percentage
+                        );
+                        const wpId = `${prevStation.id}-2-${
+                            station.id
+                        }-wp-${j}`;
                         let wayPoint;
 
                         if (!this._wayPoints.has(wpId)) {
@@ -196,8 +222,8 @@ export default class Net {
                                 name: wpId,
                                 position: {
                                     x,
-                                    y,
-                                },
+                                    y
+                                }
                             });
 
                             this._wayPoints.set(wpId, wayPoint);
@@ -219,12 +245,14 @@ export default class Net {
     }
 
     private _createRoutes(lines: Line[]): void {
-        lines.forEach((line) => {
-            const route = new Route({id: line.id, color: line.color});
+        lines.forEach(line => {
+            const route = new Route({ id: line.id, color: line.color });
 
-            for (const [, wayPoint] of line.wayPoints.entries()) {
+            console.log("hola");
+
+            line.wayPoints.forEach(wayPoint => {
                 route.addWaypoint(wayPoint);
-            }
+            });
 
             this._routes.set(route.id, route);
         });

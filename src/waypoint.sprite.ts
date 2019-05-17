@@ -1,4 +1,4 @@
-import * as k from "keymaster";
+import k from "keymaster";
 import WayPoint from "./units/waypoint";
 import PIXI = require("pixi.js");
 
@@ -6,19 +6,19 @@ export default class WayPointSprite extends PIXI.Graphics {
     private _model: WayPoint;
     private _color: number;
 
-    constructor({model}: { model: WayPoint }) {
+    constructor({ model }: { model: WayPoint }) {
         super();
 
         this._model = model;
         this._color = 0x000000;
 
         this._model.emitter.addListener("train:reserve", () => {
-            this._color = 0xFFFF00;
+            this._color = 0xffff00;
             this._draw();
         });
 
         this._model.emitter.addListener("train:enter", () => {
-            this._color = 0xFF0000;
+            this._color = 0xff0000;
             this._draw();
         });
 
