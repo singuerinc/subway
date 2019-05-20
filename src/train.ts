@@ -169,10 +169,12 @@ export default class Train extends PIXI.Graphics {
                         nextWayPoint(
                             this._itinerary.route,
                             this._itinerary.wayPoint
-                        ).then(nwp => {
-                            this._itinerary.wayPoint = nwp;
-                            this.run();
-                        });
+                        )
+                            .then(nwp => {
+                                this._itinerary.wayPoint = nwp;
+                                this.run();
+                            })
+                            .catch(e => e);
                     });
                 });
         }

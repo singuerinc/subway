@@ -1,8 +1,8 @@
 import Station from "./station";
-import WayPoint from "./waypoint";
+import { IWayPoint } from "./waypoint";
 
 export default class Route {
-    private _wayPoints: Array<WayPoint | Station>;
+    private _wayPoints: Array<IWayPoint | Station>;
     private _id: string;
     private _color: number;
 
@@ -24,15 +24,15 @@ export default class Route {
         return this._wayPoints.filter(stop => stop.type === 1) as Station[];
     }
 
-    get onlyWaypoints(): WayPoint[] {
+    get onlyWaypoints(): IWayPoint[] {
         return this._wayPoints.filter(stop => stop.type === 0);
     }
 
-    set wayPoints(value: WayPoint[]) {
+    set wayPoints(value: IWayPoint[]) {
         this._wayPoints = value;
     }
 
-    get wayPoints(): WayPoint[] {
+    get wayPoints(): IWayPoint[] {
         return this._wayPoints;
     }
 
@@ -40,7 +40,7 @@ export default class Route {
         return this.onlyStations[index];
     }
 
-    public getWayPointAt(index: number): WayPoint {
+    public getWayPointAt(index: number): IWayPoint {
         return this._wayPoints[index];
     }
 
@@ -52,7 +52,7 @@ export default class Route {
         this._wayPoints.push(waypoint);
     }
 
-    public getNext(waypoint: WayPoint): WayPoint | null {
+    public getNext(waypoint: IWayPoint): IWayPoint | null {
         const idx = this._wayPoints.indexOf(waypoint);
 
         return this.getWayPointAt(idx + 1);

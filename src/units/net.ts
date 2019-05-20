@@ -20,8 +20,8 @@ import Train from "../train";
 import { Itinerary, nextRoute, nextWayPoint, IItinerary } from "./itinerary";
 import { Line, ILine, addWayPoint } from "./line";
 import Route from "./route";
-import Station from "./station";
-import WayPoint from "./waypoint";
+import { Station, IStation } from "./station";
+import { IWayPoint, WayPoint } from "./waypoint";
 
 export default class Net {
     private static convert(value: number): number {
@@ -31,8 +31,8 @@ export default class Net {
         // return Math.floor(((value - integer) * 60000));
     }
 
-    private _stations: Map<string, Station>;
-    private _wayPoints: Map<string, WayPoint>;
+    private _stations: Map<string, IStation>;
+    private _wayPoints: Map<string, IWayPoint>;
     private _lines: Map<string, ILine>;
     private _routes: Map<string, Route>;
     private _trains: Train[];
@@ -138,7 +138,7 @@ export default class Net {
                 // const sx = Net.convert(parseFloat(info.lat)) - 20682;
                 // const sy = Net.convert(parseFloat(info.lon)) - 5986;
 
-                const station: Station = new Station({
+                const station: IStation = Station({
                     id: info.id,
                     name: info.name,
                     position: {
@@ -160,7 +160,7 @@ export default class Net {
         this._trains.push(train);
     }
 
-    get stations(): Map<string, Station> {
+    get stations(): Map<string, IStation> {
         return this._stations;
     }
 
@@ -184,13 +184,13 @@ export default class Net {
             name: data[0].line
         });
 
-        let prevStation: Station | null = null;
+        let prevStation: IStation | null = null;
 
         for (let i = 0; i < data.length; i += 1) {
             const info: ILineData = data[i] as ILineData;
 
             if (this.stations.has(info.id)) {
-                const station: Station = this.stations.get(info.id) as Station;
+                const station: IStation = this.stations.get(info.id);
 
                 if (prevStation) {
                     const px = prevStation.position.x;
@@ -220,7 +220,7 @@ export default class Net {
                         let wayPoint;
 
                         if (!this._wayPoints.has(wpId)) {
-                            wayPoint = new WayPoint({
+                            wayPoint = WayPoint({
                                 id: wpId,
                                 name: wpId,
                                 position: {

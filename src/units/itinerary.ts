@@ -1,5 +1,5 @@
 import Route from "./route";
-import WayPoint from "./waypoint";
+import { IWayPoint } from "./waypoint";
 
 export const nextRoute = (routes: Route[], current: Route): Route => {
     const idx = routes.indexOf(current);
@@ -9,8 +9,8 @@ export const nextRoute = (routes: Route[], current: Route): Route => {
 
 export const nextWayPoint = (
     route: Route,
-    current: WayPoint
-): Promise<WayPoint> => {
+    current: IWayPoint
+): Promise<IWayPoint> => {
     const next = route.getNext(current);
 
     if (!next) {
@@ -21,13 +21,13 @@ export const nextWayPoint = (
 };
 
 export interface IItinerary {
-    wayPoint: WayPoint | null;
+    wayPoint: IWayPoint | null;
     route: Route;
     routes: Route[];
 }
 
 export const Itinerary = function({ routes }: { routes: Route[] }): IItinerary {
-    let _wayPoint: WayPoint | null;
+    let _wayPoint: IWayPoint | null;
     let _route: Route;
 
     return {
