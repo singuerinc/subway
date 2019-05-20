@@ -1,64 +1,59 @@
 import Route from "./route";
 import WayPoint from "./waypoint";
 
-export default class Itinerary {
-    private _routes: Route[];
-    private _currentWayPoint: WayPoint | null;
-    private _currentRoute: Route;
+export const nextRoute = (routes: Route[], current: Route): Route => {
+    const idx = routes.indexOf(current);
+    const nextRouteIndex = (idx + 1) % routes.length;
+    return routes[nextRouteIndex];
+};
 
-    constructor({ routes }: { routes: Route[] }) {
-        this._routes = routes;
+export const nextWayPoint = (
+    route: Route,
+    current: WayPoint
+): Promise<WayPoint> => {
+    const next = route.getNext(current);
+
+    if (!next) {
+        return Promise.reject("no waypoint");
     }
 
-    public addRoute(route: Route): void {
-        this._routes.push(route);
-    }
+    return Promise.resolve(next);
+};
 
-    set currentWayPoint(value: WayPoint | null) {
-        this._currentWayPoint = value;
-    }
-
-    get currentWayPoint(): WayPoint | null {
-        return this._currentWayPoint;
-    }
-
-    get routes(): Route[] {
-        return this._routes;
-    }
-
-    public getNextWayPoint(): WayPoint {
-        const next = this._currentRoute.getNext(this
-            .currentWayPoint as WayPoint);
-
-        if (!next) {
-            throw new Error();
-        }
-
-        return next;
-    }
-
-    set currentRoute(route: Route) {
-        this._currentRoute = route;
-        this.currentWayPoint = null;
-    }
-
-    get currentRoute(): Route {
-        return this._currentRoute;
-    }
-
-    public getNextRoute(): Route {
-        const idx = this._routes.indexOf(this.currentRoute);
-        const nextRouteIndex = (idx + 1) % this._routes.length;
-
-        return this._routes[nextRouteIndex];
-    }
-
-    get size(): number {
-        let size = 0;
-
-        this._routes.forEach(route => {
-            size += route.size;
-        });
-        return size;
-    }
+export interface IItinerary {
+    addRoute: (route: Route) => number;
+    wayPoint: WayPoint | null;
+    route: Route;
+    routes: Route[];
 }
+
+export const Itinerary = function({ routes }): IItinerary {
+    let _routes: Route[] = routes;
+    let _currentWayPoint: WayPoint | null;
+    let _route: Route;
+
+    return {
+        addRoute: (route: Route) => _routes.push(route),
+
+        set wayPoint(wayPoint: WayPoint) {
+            _currentWayPoint = wayPoint;
+        },
+
+        get wayPoint(): WayPoint | null {
+            return _currentWayPoint;
+        },
+
+        set route(route: Route) {
+            _route = route;
+            _currentWayPoint = null;
+        },
+
+        get route(): Route {
+            return _route;
+        },
+
+        get routes(): Route[] {
+            return _routes;
+        }
+    };
+};
