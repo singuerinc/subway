@@ -1,24 +1,29 @@
 import Station from "./station";
 import WayPoint from "./waypoint";
 
-interface ILine {
+export interface ILine {
     id: string;
     name: string;
     color: number;
     direction: number;
+    wayPoints: Map<string, WayPoint | Station>;
 }
 
-export function Line({ id, name, color, direction }: ILine) {
-    const wayPoints = new Map();
+export const addWayPoint = (
+    wayPoints: Map<string, WayPoint | Station>,
+    wayPoint: WayPoint | Station
+) => wayPoints.set(wayPoint.id, wayPoint);
+
+export function Line({ id, name, color, direction }): ILine {
+    const _wayPoints = new Map<string, WayPoint | Station>();
 
     return {
         id,
         name,
         color,
-        wayPoints,
-        direction,
-        addWayPoint: (wayPoint: WayPoint | Station) => {
-            wayPoints.set(wayPoint.id, wayPoint);
-        }
+        get wayPoints() {
+            return _wayPoints;
+        },
+        direction
     };
 }
