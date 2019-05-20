@@ -21,39 +21,24 @@ export const nextWayPoint = (
 };
 
 export interface IItinerary {
-    addRoute: (route: Route) => number;
     wayPoint: WayPoint | null;
     route: Route;
     routes: Route[];
 }
 
-export const Itinerary = function({ routes }): IItinerary {
-    let _routes: Route[] = routes;
-    let _currentWayPoint: WayPoint | null;
+export const Itinerary = function({ routes }: { routes: Route[] }): IItinerary {
+    let _wayPoint: WayPoint | null;
     let _route: Route;
 
     return {
-        addRoute: (route: Route) => _routes.push(route),
-
-        set wayPoint(wayPoint: WayPoint) {
-            _currentWayPoint = wayPoint;
-        },
-
-        get wayPoint(): WayPoint | null {
-            return _currentWayPoint;
-        },
-
+        wayPoint: _wayPoint,
         set route(route: Route) {
             _route = route;
-            _currentWayPoint = null;
+            _wayPoint = null;
         },
-
         get route(): Route {
             return _route;
         },
-
-        get routes(): Route[] {
-            return _routes;
-        }
+        routes
     };
 };
