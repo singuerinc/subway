@@ -1,6 +1,6 @@
 import anime from "animejs";
 import MathUtils from "./mathUtils";
-import Itinerary from "./units/itinerary";
+import { nextRoute, IItinerary, nextWayPoint } from "./units/itinerary";
 import Route from "./units/route";
 import Station from "./units/station";
 import Wagon from "./units/wagon";
@@ -44,15 +44,15 @@ export default class Train extends PIXI.Graphics {
     private selected: boolean;
     private speed: number;
 
-    get itinerary(): Itinerary {
+    get itinerary(): IItinerary {
         return this._itinerary;
     }
 
-    set itinerary(value: Itinerary) {
+    set itinerary(value: IItinerary) {
         this._itinerary = value;
     }
 
-    private _itinerary: Itinerary;
+    private _itinerary: IItinerary;
 
     constructor(id, { itinerary }) {
         super();
@@ -65,7 +65,7 @@ export default class Train extends PIXI.Graphics {
         this.x = 0;
         this.y = 0;
         this._itinerary = itinerary;
-        this._trainColor = this._itinerary.currentRoute.color;
+        this._trainColor = this._itinerary.route.color;
 
         this.wagons = [];
 
@@ -146,33 +146,35 @@ export default class Train extends PIXI.Graphics {
 
     public run(): void {
         if (!this.moving) {
-            let nextStop;
+            nextWayPoint(this._itinerary.route, this._itinerary.wayPoint)
+                .then(wayPoint => {
+                    this._itinerary.wayPoint = wayPoint;
+                    this.moveToStop(this._itinerary.wayPoint)
+                        .then(() => {
+                            this.run();
+                        })
+                        .catch(() => {
+                            // happen when the waypoint or station is not free
+                            setTimeout(() => this.run(), 1500);
+                        });
+                })
+                .catch(() => {
+                    this.unload(true).then(() => {
+                        this._itinerary.route = nextRoute(
+                            this._itinerary.routes,
+                            this._itinerary.route
+                        );
+                        this._trainColor = this._itinerary.route.color;
 
-            try {
-                nextStop = this._itinerary.getNextWayPoint();
-            } catch (e) {
-                nextStop = null;
-            }
-
-            if (nextStop) {
-                this.moveToStop(nextStop)
-                    .then(() => {
-                        this.run();
-                    })
-                    .catch(() => {
-                        // happen when the waypoint or station is not free
-                        setTimeout(() => this.run(), 1500);
+                        nextWayPoint(
+                            this._itinerary.route,
+                            this._itinerary.wayPoint
+                        ).then(nwp => {
+                            this._itinerary.wayPoint = nwp;
+                            this.run();
+                        });
                     });
-            } else {
-                // last stop in this route
-                this.unload(true).then(() => {
-                    this._itinerary.currentRoute = this._itinerary.getNextRoute();
-                    this._trainColor = this._itinerary.currentRoute.color;
-                    this._itinerary.currentWayPoint = this._itinerary.getNextWayPoint();
-                    nextStop = this._itinerary.currentWayPoint;
-                    this.run();
                 });
-            }
         }
     }
 
@@ -181,10 +183,10 @@ export default class Train extends PIXI.Graphics {
             throw new Error("Can not park this train because is in movement.");
         }
 
-        this._itinerary.currentRoute = route;
-        this._itinerary.currentWayPoint = route.getWayPointAt(index);
+        this._itinerary.route = route;
+        this._itinerary.wayPoint = route.getWayPointAt(index);
         this.moving = false;
-        this._currentStop = this._itinerary.currentWayPoint as WayPoint;
+        this._currentStop = this._itinerary.wayPoint as WayPoint;
         this.x = this._currentStop.position.x;
         this.y = this._currentStop.position.y;
     }
@@ -278,21 +280,27 @@ export default class Train extends PIXI.Graphics {
         if (this.info.visible) {
             const speed = Math.floor(this.speed * 100);
             const maxSpeed = Math.floor(this.maxSpeed * 100);
-            let nextWayPointName;
 
-            try {
-                nextWayPointName = this._itinerary.getNextWayPoint().name;
-            } catch (e) {
-                nextWayPointName = "";
-            }
-
-            this.info.text = `#${this._id} - ${this.state}
-Cargo: ${this.cargo} / Max: ${this.maxCargo} / Today: ${this.cargoAccumulated}
-Speed: ${speed}km/h / ${maxSpeed}km/h
-Stop: ${
-                (this._itinerary.currentWayPoint as WayPoint).name
-            } → ${nextWayPointName}
-`;
+            nextWayPoint(this._itinerary.route, this._itinerary.wayPoint)
+                .then(w => {
+                    this.info.text = `
+                #${this._id} - ${this.state}
+                Cargo: ${this.cargo} / Max: ${this.maxCargo} / Today: ${
+                        this.cargoAccumulated
+                    }
+                Speed: ${speed}km/h / ${maxSpeed}km/h
+                Stop: ${(this._itinerary.wayPoint as WayPoint).name} → ${w.name}
+                `;
+                })
+                .catch(e => {
+                    this.info.text = `
+                #${this._id} - ${this.state}
+                Cargo: ${this.cargo} / Max: ${this.maxCargo} / Today: ${
+                        this.cargoAccumulated
+                    }
+                Speed: ${speed}km/h / ${maxSpeed}km/h
+                `;
+                });
         }
     }
 
@@ -457,8 +465,8 @@ Stop: ${
 
             const onComplete = () => {
                 this.moving = false;
-                this._itinerary.currentWayPoint = nextStop;
-                this._currentStop = this._itinerary.currentWayPoint;
+                this._itinerary.wayPoint = nextStop;
+                this._currentStop = this._itinerary.wayPoint;
                 this.currentStop.enter(this);
                 return resolve();
             };

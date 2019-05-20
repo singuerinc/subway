@@ -134,11 +134,9 @@ net.trains.forEach((train: Train) => {
     );
     const route = train.itinerary.routes[randomRouteIndex];
 
-    train.itinerary.currentRoute = route;
+    train.itinerary.route = route;
 
-    const randomIndex = Math.floor(
-        Math.random() * train.itinerary.currentRoute.size
-    );
+    const randomIndex = Math.floor(Math.random() * train.itinerary.route.size);
 
     train.parkIn(route, randomIndex);
     train.run();

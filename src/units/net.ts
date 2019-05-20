@@ -17,8 +17,8 @@ import { data as l9rData } from "../lines/l9-r";
 import ILineData from "../lines/linedata";
 import MathUtils from "../mathUtils";
 import Train from "../train";
-import Itinerary from "./itinerary";
-import { Line } from "./line";
+import { Itinerary, nextRoute, nextWayPoint, IItinerary } from "./itinerary";
+import { Line, ILine, addWayPoint } from "./line";
 import Route from "./route";
 import Station from "./station";
 import WayPoint from "./waypoint";
@@ -33,7 +33,7 @@ export default class Net {
 
     private _stations: Map<string, Station>;
     private _wayPoints: Map<string, WayPoint>;
-    private _lines: Map<string, Line>;
+    private _lines: Map<string, ILine>;
     private _routes: Map<string, Route>;
     private _trains: Train[];
 
@@ -108,12 +108,15 @@ export default class Net {
 
             // console.log(numTrains);
             for (let i = 0; i < numTrains; i += 1) {
-                const itinerary = new Itinerary({
+                const itinerary = Itinerary({
                     routes: itineraryRoutes
                 });
 
-                itinerary.currentRoute = itinerary.getNextRoute();
-                itinerary.currentWayPoint = itinerary.getNextWayPoint();
+                itinerary.route = nextRoute(itinerary.routes, itinerary.route);
+
+                nextWayPoint(itinerary.route, itinerary.wayPoint).then(
+                    w => (itinerary.wayPoint = w)
+                );
 
                 this._addTrains(`${i}`, itinerary);
                 // this._addTrains(line1.onlyStations.length / 2, itinerary, 0xFF2136);
@@ -149,7 +152,7 @@ export default class Net {
         }
     }
 
-    private _addTrains(id: string, itinerary: Itinerary): void {
+    private _addTrains(id: string, itinerary: IItinerary): void {
         const train = new Train(id, {
             itinerary
         });
@@ -161,7 +164,7 @@ export default class Net {
         return this._stations;
     }
 
-    get lines(): Map<string, Line> {
+    get lines(): Map<string, ILine> {
         return this._lines;
     }
 
@@ -173,8 +176,8 @@ export default class Net {
         data: ILineData[],
         color: number,
         direction: number = 1
-    ): Line {
-        const line = new Line({
+    ): ILine {
+        const line = Line({
             color,
             direction,
             id: data[0].line,
@@ -230,11 +233,11 @@ export default class Net {
                         } else {
                             wayPoint = this._wayPoints.get(wpId);
                         }
-                        line.addWayPoint(wayPoint);
+                        addWayPoint(line.wayPoints, wayPoint);
                     }
                 }
 
-                line.addWayPoint(station);
+                addWayPoint(line.wayPoints, station);
                 prevStation = station;
             } else {
                 throw new Error(`Can't parse, station not found ${info.id}`);
@@ -244,11 +247,9 @@ export default class Net {
         return line;
     }
 
-    private _createRoutes(lines: Line[]): void {
+    private _createRoutes(lines: ILine[]): void {
         lines.forEach(line => {
             const route = new Route({ id: line.id, color: line.color });
-
-            console.log("hola");
 
             line.wayPoints.forEach(wayPoint => {
                 route.addWaypoint(wayPoint);

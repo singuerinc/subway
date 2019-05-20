@@ -1,4 +1,4 @@
-import Line from "./units/line";
+import { Line } from "./units/line";
 import PIXI = require("pixi.js");
 import StationSprite from "./station.sprite";
 import Station from "./units/station";
