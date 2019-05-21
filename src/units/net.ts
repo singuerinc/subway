@@ -16,23 +16,39 @@ import { data as l9Data } from "../lines/l9";
 import { data as l9rData } from "../lines/l9-r";
 import ILineData from "../lines/linedata";
 import MathUtils from "../mathUtils";
-import Train from "../train";
-import { Itinerary, nextRoute, nextWayPoint, IItinerary } from "./itinerary";
-import { Line, addWayPoint } from "./line";
+import { Train } from "../train";
+import { IItinerary, Itinerary, nextRoute, nextWayPoint } from "./itinerary";
+import { addWayPoint, Line } from "./line";
 import { Route } from "./route";
-import { Station, IStation } from "./station";
-import { IWayPoint, WayPoint } from "./waypoint";
+import { Station } from "./station";
+import { WayPoint } from "./waypoint";
 
-export default class Net {
-    private static convert(value: number): number {
-        const integer = Math.floor(value);
+const convert = (value: number): number =>
+    Math.floor((value - Math.floor(value)) * 20000);
 
-        return Math.floor((value - integer) * 20000);
-        // return Math.floor(((value - integer) * 60000));
+const parseWayPoints = (all: Map<string, Station>, data): Station[] => {
+    let stations: Station[] = [];
+    for (let i = 0; i < data.length; i += 1) {
+        const info = data[i];
+
+        if (!all.has(info.id)) {
+            const sx = convert(parseFloat(info.lat)) - 6894;
+            const sy = convert(parseFloat(info.lon)) - 2053;
+            const s = new Station(info.id, info.name, {
+                x: sx,
+                y: sy
+            });
+
+            stations = [...stations, s];
+        }
     }
 
-    private _stations: Map<string, IStation>;
-    private _wayPoints: Map<string, IWayPoint>;
+    return stations;
+};
+
+export default class Net {
+    private _stations: Map<string, Station>;
+    private _wayPoints: Map<string, WayPoint>;
     private _lines: Map<string, Line>;
     private _routes: Map<string, Route>;
     private _trains: Train[];
@@ -44,23 +60,21 @@ export default class Net {
         this._routes = new Map();
         this._trains = [];
 
-        const l1 = [].concat(l1Data as never[], l1rData as never[]);
-        const l2 = [].concat(l2Data as never[], l2rData as never[]);
-        const l3 = [].concat(l3Data as never[], l3rData as never[]);
-        const l4 = [].concat(l4Data as never[], l4rData as never[]);
-        const l5 = [].concat(l5Data as never[], l5rData as never[]);
-        const l9 = [].concat(l9Data as never[], l9rData as never[]);
-        const l10 = [].concat(l10Data as never[], l10rData as never[]);
-        const l11 = [].concat(l11Data as never[], l11rData as never[]);
+        const l1 = [...l1Data, ...l1rData];
+        const l2 = [...l2Data, ...l2rData];
+        const l3 = [...l3Data, ...l3rData];
+        const l4 = [...l4Data, ...l4rData];
+        const l5 = [...l5Data, ...l5rData];
+        const l9 = [...l9Data, ...l9rData];
+        const l10 = [...l10Data, ...l10rData];
+        const l11 = [...l11Data, ...l11rData];
 
-        this._parseWayPoints(l1);
-        this._parseWayPoints(l2);
-        this._parseWayPoints(l3);
-        this._parseWayPoints(l4);
-        this._parseWayPoints(l5);
-        this._parseWayPoints(l9);
-        this._parseWayPoints(l10);
-        this._parseWayPoints(l11);
+        const all = [l1, l2, l3, l4, l5, l9, l10, l11];
+
+        all.forEach(line => {
+            const waypoints = parseWayPoints(this._stations, line);
+            waypoints.forEach(w => this._stations.set(w.id, w));
+        });
 
         const line1 = this._parseLine(l1, 0xff2136);
         const line2 = this._parseLine(l2, 0xb22aa1);
@@ -124,30 +138,6 @@ export default class Net {
         }
     }
 
-    private _parseWayPoints(data: any[]): void {
-        for (let i = 0; i < data.length; i += 1) {
-            const info = data[i];
-
-            if (!this.stations.has(info.id)) {
-                const sx = Net.convert(parseFloat(info.lat)) - 6894;
-                const sy = Net.convert(parseFloat(info.lon)) - 2053;
-                // console.log(Net.convert(parseFloat(info.lat)), Net.convert(parseFloat(info.lon)));
-                // const sx = Net.convert(parseFloat(info.lat)) - 13788;
-                // const sy = Net.convert(parseFloat(info.lon)) - 3990;
-                // console.log(sx, sy);
-                // const sx = Net.convert(parseFloat(info.lat)) - 20682;
-                // const sy = Net.convert(parseFloat(info.lon)) - 5986;
-
-                const station: IStation = new Station(info.id, info.name, {
-                    x: sx,
-                    y: sy
-                });
-
-                this.stations.set(info.id, station);
-            }
-        }
-    }
-
     private _addTrains(id: string, itinerary: IItinerary): void {
         const train = new Train(id, {
             itinerary
@@ -156,7 +146,7 @@ export default class Net {
         this._trains.push(train);
     }
 
-    get stations(): Map<string, IStation> {
+    get stations(): Map<string, Station> {
         return this._stations;
     }
 
@@ -175,13 +165,13 @@ export default class Net {
     ) {
         const line = new Line(data[0].line, data[0].line, color, direction);
 
-        let prevStation: IStation | null = null;
+        let prevStation: Station | null = null;
 
         for (let i = 0; i < data.length; i += 1) {
             const info: ILineData = data[i] as ILineData;
 
             if (this.stations.has(info.id)) {
-                const station: IStation = this.stations.get(info.id);
+                const station: Station = this.stations.get(info.id);
 
                 if (prevStation) {
                     const px = prevStation.position.x;

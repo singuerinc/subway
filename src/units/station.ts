@@ -1,11 +1,7 @@
 import anime from "animejs";
-import { IWayPoint, WayPoint } from "./waypoint";
+import { WayPoint } from "./waypoint";
 
-export interface IStation extends IWayPoint {
-    cargo: number;
-}
-
-export class Station extends WayPoint implements IWayPoint, IStation {
+export class Station extends WayPoint {
     private _cargo: number = anime.random(20, 150);
 
     constructor(

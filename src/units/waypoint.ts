@@ -1,21 +1,9 @@
 import { EventEmitter } from "fbemitter";
-import Train from "../train";
-
-export interface IWayPoint {
-    id: string;
-    name: string;
-    type: number;
-    position: { x: number; y: number };
-    currentTrain: Train;
-    emitter: EventEmitter;
-    reserve: (train: Train) => void;
-    enter: (train: Train) => void;
-    leave: (train: Train) => void;
-}
+import { Train } from "../train";
 
 const isEmpty = waypoint => waypoint.train === null;
 
-export class WayPoint implements IWayPoint {
+export class WayPoint {
     public emitter: EventEmitter = new EventEmitter();
     public type: number = 0;
     public currentTrain: Train = null;

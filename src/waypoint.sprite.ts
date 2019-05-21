@@ -1,12 +1,12 @@
 import k from "keymaster";
-import WayPoint from "./units/waypoint";
+import { WayPoint } from "./units/waypoint";
 import PIXI = require("pixi.js");
 
-export default class WayPointSprite extends PIXI.Graphics {
+export class WayPointSprite extends PIXI.Graphics {
     private _model: WayPoint;
     private _color: number;
 
-    constructor({ model }: { model: WayPoint }) {
+    constructor(model: WayPoint) {
         super();
 
         this._model = model;

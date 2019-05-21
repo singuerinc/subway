@@ -24,7 +24,7 @@ enum TrainState {
 
 const MAX_SPEED = 120; // km/h
 
-export default class Train extends PIXI.Graphics {
+export class Train extends PIXI.Graphics {
     private static getSegmentTime(distance: number, maxSpeed: number): number {
         return (distance * 100) / maxSpeed;
     }

@@ -1,24 +1,16 @@
 import MathUtils from "./mathUtils";
-import Station from "./units/station";
+import { Station } from "./units/station";
 import PIXI = require("pixi.js");
 
-export default class StationSprite extends PIXI.Graphics {
-    get info(): PIXI.Graphics {
-        return this._info;
-    }
-
-    get infoNameText(): PIXI.Text {
-        return this._infoNameText;
-    }
-
-    private _infoNameText: PIXI.Text;
+export class StationSprite extends PIXI.Graphics {
     private _color: number;
     private _model: Station;
-    private _info: PIXI.Graphics;
+    public infoNameText: PIXI.Text;
+    public info: PIXI.Graphics;
     private graph: PIXI.Graphics;
     private cargoText: PIXI.Text;
 
-    constructor({ model, color }: { model: Station; color: number }) {
+    constructor(model: Station, color: number) {
         super();
         this._model = model;
         // this._model.emitter.addListener('train:reserve', () => this.draw());
@@ -37,8 +29,8 @@ export default class StationSprite extends PIXI.Graphics {
         this.graph = new PIXI.Graphics();
         this.addChild(this.graph);
 
-        this._info = new PIXI.Graphics();
-        this.addChild(this._info);
+        this.info = new PIXI.Graphics();
+        this.addChild(this.info);
 
         this.cargoText = new PIXI.Text("", {
             fill: this._color,
@@ -47,21 +39,21 @@ export default class StationSprite extends PIXI.Graphics {
         this.cargoText.alpha = 0.7;
         this.cargoText.x = -88;
         this.cargoText.y = -6;
-        this._info.addChild(this.cargoText);
+        this.info.addChild(this.cargoText);
 
-        this._infoNameText = new PIXI.Text(this._model.name, {
+        this.infoNameText = new PIXI.Text(this._model.name, {
             fill: 0x111111,
             fontSize: 16,
             fontWeight: "bold"
         });
 
-        this._infoNameText.visible = false;
-        this._infoNameText.x = 44;
-        this._infoNameText.y = -14;
-        this.addChild(this._infoNameText);
+        this.infoNameText.visible = false;
+        this.infoNameText.x = 44;
+        this.infoNameText.y = -14;
+        this.addChild(this.infoNameText);
 
         this.on("click", () => {
-            this._info.visible = !this._info.visible;
+            this.info.visible = !this.info.visible;
         });
 
         this._draw(this._model.cargo);
@@ -84,10 +76,10 @@ export default class StationSprite extends PIXI.Graphics {
         this.cargoText.text = `${c}`;
 
         // cargo
-        this._info.clear();
-        this._info.lineStyle(0);
-        this._info.beginFill(this._color, 0.1);
-        this._info.drawRoundedRect(
+        this.info.clear();
+        this.info.lineStyle(0);
+        this.info.beginFill(this._color, 0.1);
+        this.info.drawRoundedRect(
             -96,
             -12,
             12 + this.cargoText.text.length * 12,

@@ -1,6 +1,6 @@
-import RailWay from "./railway";
+import { RailWay } from "./railway";
 import Settings from "./settings";
-import Train from "./train";
+import { Train } from "./train";
 import Net from "./units/net";
 import PIXI = require("pixi.js");
 
@@ -119,7 +119,7 @@ const loop = () => {
 const net = new Net();
 
 net.lines.forEach(line => {
-    const rw = new RailWay({ id: line.id, line });
+    const rw = new RailWay(line.id, line);
 
     if (line.id !== "L1" && line.id !== "L5" && line.id !== "L9") {
         rw.visible = false;
