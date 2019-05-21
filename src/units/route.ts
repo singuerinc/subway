@@ -1,60 +1,25 @@
-import Station from "./station";
+import { Station, IStation } from "./station";
 import { IWayPoint } from "./waypoint";
 
-export default class Route {
-    private _wayPoints: Array<IWayPoint | Station>;
-    private _id: string;
-    private _color: number;
+export const stationAt = (stations: IStation[], idx: number): IStation =>
+    stations[idx];
+export const wayPointAt = (waypoints: IWayPoint[], index: number): IWayPoint =>
+    waypoints[index];
+export const onlyStations = (stops: Array<IWayPoint | Station>): Station[] =>
+    stops.filter(stop => stop.type === 1) as Station[];
+export const onlyWaypoints = (stops: Array<IWayPoint | Station>): Station[] =>
+    stops.filter(stop => stop.type === 0) as Station[];
+export const next = (
+    waypoints: IWayPoint[],
+    waypoint: IWayPoint
+): IWayPoint | null => wayPointAt(waypoints, waypoints.indexOf(waypoint) + 1);
 
-    constructor({ id, color }) {
-        this._id = id;
-        this._color = color;
-        this._wayPoints = [];
-    }
+export class Route {
+    public wayPoints: Array<IWayPoint | Station> = [];
 
-    get id(): string {
-        return this._id;
-    }
+    constructor(public id: string, public color: number) {}
 
-    get color(): number {
-        return this._color;
-    }
-
-    get onlyStations(): Station[] {
-        return this._wayPoints.filter(stop => stop.type === 1) as Station[];
-    }
-
-    get onlyWaypoints(): IWayPoint[] {
-        return this._wayPoints.filter(stop => stop.type === 0);
-    }
-
-    set wayPoints(value: IWayPoint[]) {
-        this._wayPoints = value;
-    }
-
-    get wayPoints(): IWayPoint[] {
-        return this._wayPoints;
-    }
-
-    public getStationAt(index: number): Station {
-        return this.onlyStations[index];
-    }
-
-    public getWayPointAt(index: number): IWayPoint {
-        return this._wayPoints[index];
-    }
-
-    get size(): number {
-        return this._wayPoints.length;
-    }
-
-    public addWaypoint(waypoint) {
-        this._wayPoints.push(waypoint);
-    }
-
-    public getNext(waypoint: IWayPoint): IWayPoint | null {
-        const idx = this._wayPoints.indexOf(waypoint);
-
-        return this.getWayPointAt(idx + 1);
-    }
+    public size = () => this.wayPoints.length;
+    public addWaypoint = (waypoint: IWayPoint | Station) =>
+        (this.wayPoints = [...this.wayPoints, waypoint]);
 }

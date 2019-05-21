@@ -1,10 +1,10 @@
 import anime from "animejs";
 import MathUtils from "./mathUtils";
 import { nextRoute, IItinerary, nextWayPoint } from "./units/itinerary";
-import Route from "./units/route";
-import Station from "./units/station";
+import { Route, wayPointAt } from "./units/route";
+import { Station } from "./units/station";
 import Wagon from "./units/wagon";
-import WayPoint from "./units/waypoint";
+import { WayPoint, IWayPoint } from "./units/waypoint";
 import PIXI = require("pixi.js");
 
 interface ICargo {
@@ -186,7 +186,7 @@ export default class Train extends PIXI.Graphics {
         }
 
         this._itinerary.route = route;
-        this._itinerary.wayPoint = route.getWayPointAt(index);
+        this._itinerary.wayPoint = wayPointAt(route.wayPoints, index);
         this.moving = false;
         this._currentStop = this._itinerary.wayPoint as WayPoint;
         this.x = this._currentStop.position.x;
@@ -425,7 +425,7 @@ export default class Train extends PIXI.Graphics {
         });
     }
 
-    private go(nextStop: WayPoint): Promise<void> {
+    private go(nextStop: IWayPoint): Promise<void> {
         return new Promise((resolve, reject) => {
             try {
                 // check if the next stop is free
@@ -521,7 +521,7 @@ export default class Train extends PIXI.Graphics {
         });
     }
 
-    private moveToStop(nextStop: WayPoint): Promise<void> {
+    private moveToStop(nextStop: IWayPoint): Promise<void> {
         return new Promise((resolve, reject) => {
             if (this.moving) {
                 reject();

@@ -1,7 +1,7 @@
 import { Line } from "./units/line";
 import PIXI = require("pixi.js");
 import StationSprite from "./station.sprite";
-import Station from "./units/station";
+import { Station } from "./units/station";
 import WayPointSprite from "./waypoint.sprite";
 
 export default class RailWay extends PIXI.Graphics {

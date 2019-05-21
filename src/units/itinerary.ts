@@ -1,4 +1,4 @@
-import Route from "./route";
+import { Route, next } from "./route";
 import { IWayPoint } from "./waypoint";
 
 export const nextRoute = (routes: Route[], current: Route): Route => {
@@ -11,13 +11,13 @@ export const nextWayPoint = (
     route: Route,
     current: IWayPoint
 ): Promise<IWayPoint> => {
-    const next = route.getNext(current);
+    const n = next(route.wayPoints, current);
 
-    if (!next) {
+    if (!n) {
         return Promise.reject("no waypoint");
     }
 
-    return Promise.resolve(next);
+    return Promise.resolve(n);
 };
 
 export interface IItinerary {
