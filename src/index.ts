@@ -73,8 +73,8 @@ layers
     .on("pointerupoutside", onDragEnd)
     .on("pointermove", e => {
         if (dragging) {
-            layers.x += e.data.originalEvent.movementX;
-            layers.y += e.data.originalEvent.movementY;
+            layers.x += e.data.originalEvent["movementX"];
+            layers.y += e.data.originalEvent["movementY"];
         }
     });
 

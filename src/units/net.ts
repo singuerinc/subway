@@ -46,20 +46,28 @@ const parseWayPoints = (all: Map<string, Station>, data): Station[] => {
     return stations;
 };
 
+const createRoutes = (lines: Line[]): Map<string, Route> => {
+    const routes = new Map<string, Route>();
+    lines.forEach(line => {
+        const route = new Route(line.id, line.color);
+
+        line.wayPoints.forEach(wayPoint => {
+            route.addWaypoint(wayPoint);
+        });
+
+        routes.set(route.id, route);
+    });
+
+    return routes;
+};
+
 export default class Net {
-    private _stations: Map<string, Station>;
-    private _wayPoints: Map<string, WayPoint>;
-    private _lines: Map<string, Line>;
-    private _routes: Map<string, Route>;
-    private _trains: Train[];
+    public stations = new Map<string, Station>();
+    public wayPoints = new Map<string, WayPoint>();
+    public lines = new Map<string, Line>();
+    public trains: Train[] = [];
 
     constructor() {
-        this._stations = new Map();
-        this._wayPoints = new Map();
-        this._lines = new Map();
-        this._routes = new Map();
-        this._trains = [];
-
         const l1 = [...l1Data, ...l1rData];
         const l2 = [...l2Data, ...l2rData];
         const l3 = [...l3Data, ...l3rData];
@@ -71,53 +79,24 @@ export default class Net {
 
         const all = [l1, l2, l3, l4, l5, l9, l10, l11];
 
+        let lines = [];
+
         all.forEach(line => {
-            const waypoints = parseWayPoints(this._stations, line);
-            waypoints.forEach(w => this._stations.set(w.id, w));
+            const waypoints = parseWayPoints(this.stations, line);
+            waypoints.forEach(w => this.stations.set(w.id, w));
+
+            const parsed: Line = this._parseLine(line, 0xff2136);
+
+            this.lines.set(parsed.id, parsed);
+
+            lines = [...lines, parsed];
         });
 
-        const line1 = this._parseLine(l1, 0xff2136);
-        const line2 = this._parseLine(l2, 0xb22aa1);
-        const line3 = this._parseLine(l3, 0x00c03a);
-        const line4 = this._parseLine(l4, 0xffb901);
-        const line5 = this._parseLine(l5, 0x007bcd);
-        const line9 = this._parseLine(l9, 0xff8615);
-        const line10 = this._parseLine(l10, 0x00b0f2);
-        const line11 = this._parseLine(l11, 0x89d748);
+        const routes = createRoutes(lines);
 
-        this.lines.set(line1.id, line1);
-        this.lines.set(line2.id, line2);
-        this.lines.set(line3.id, line3);
-        this.lines.set(line4.id, line4);
-        this.lines.set(line5.id, line5);
-        this.lines.set(line9.id, line9);
-        this.lines.set(line10.id, line10);
-        this.lines.set(line11.id, line11);
+        routes.forEach((route: Route) => {
+            const itineraryRoutes: Route[] = [route];
 
-        this._createRoutes([
-            line1,
-            line2,
-            line3,
-            line4,
-            line5,
-            line9,
-            line10,
-            line11
-        ]);
-
-        const itineraries = [
-            [this._routes.get("L1")],
-            [this._routes.get("L2")],
-            [this._routes.get("L3")],
-            [this._routes.get("L4")],
-            [this._routes.get("L5")],
-            [this._routes.get("L9")],
-            [this._routes.get("L10")],
-            [this._routes.get("L11")]
-        ];
-
-        for (let j = 0; j < itineraries.length; j += 1) {
-            const itineraryRoutes: Route[] = itineraries[j] as Route[];
             const numTrains = Math.floor(itineraryRoutes[0].size() * 0.25);
 
             // console.log(numTrains);
@@ -135,7 +114,7 @@ export default class Net {
                 this._addTrains(`${i}`, itinerary);
                 // this._addTrains(line1.onlyStations.length / 2, itinerary, 0xFF2136);
             }
-        }
+        });
     }
 
     private _addTrains(id: string, itinerary: IItinerary): void {
@@ -143,19 +122,7 @@ export default class Net {
             itinerary
         });
 
-        this._trains.push(train);
-    }
-
-    get stations(): Map<string, Station> {
-        return this._stations;
-    }
-
-    get lines(): Map<string, Line> {
-        return this._lines;
-    }
-
-    get trains(): Train[] {
-        return this._trains;
+        this.trains = [...this.trains, train];
     }
 
     private _parseLine(
@@ -174,10 +141,8 @@ export default class Net {
                 const station: Station = this.stations.get(info.id);
 
                 if (prevStation) {
-                    const px = prevStation.position.x;
-                    const py = prevStation.position.y;
-                    const sx = station.position.x;
-                    const sy = station.position.y;
+                    const { x: px, y: py } = prevStation.position;
+                    const { x: sx, y: sy } = station.position;
                     const distanceBtwStations = MathUtils.distance(
                         sx,
                         sy,
@@ -200,15 +165,15 @@ export default class Net {
                         }-wp-${j}`;
                         let wayPoint;
 
-                        if (!this._wayPoints.has(wpId)) {
+                        if (!this.wayPoints.has(wpId)) {
                             wayPoint = new WayPoint(wpId, wpId, {
                                 x,
                                 y
                             });
 
-                            this._wayPoints.set(wpId, wayPoint);
+                            this.wayPoints.set(wpId, wayPoint);
                         } else {
-                            wayPoint = this._wayPoints.get(wpId);
+                            wayPoint = this.wayPoints.get(wpId);
                         }
                         addWayPoint(line.wayPoints, wayPoint);
                     }
@@ -222,17 +187,5 @@ export default class Net {
         }
 
         return line;
-    }
-
-    private _createRoutes(lines: Line[]): void {
-        lines.forEach(line => {
-            const route = new Route(line.id, line.color);
-
-            line.wayPoints.forEach(wayPoint => {
-                route.addWaypoint(wayPoint);
-            });
-
-            this._routes.set(route.id, route);
-        });
     }
 }
