@@ -12,7 +12,7 @@
         "typescript": "^3.4.5"
     },
     "dependencies": {
-        "animejs": "^2.0.2",
+        "animejs": "^3.0.1",
         "fbemitter": "^2.1.1",
         "keymaster": "^1.6.2",
         "pixi.js": "^4.5.3"
