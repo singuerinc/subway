@@ -9,7 +9,7 @@
         "@types/keymaster": "^1.6.28",
         "@types/pixi.js": "^4.5.1",
         "parcel-bundler": "^1.12.3",
-        "typescript": "^3.4.5"
+        "typescript": "^3.5.1"
     },
     "dependencies": {
         "animejs": "^2.0.2",
