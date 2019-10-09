@@ -2,7 +2,7 @@
 
 A metro/subway flow simulation.
 
-[Demo](https://singuerinc-labs.gitlab.io/subway/)
+[Demo](https://subway-singuerinc.netlify.com/)
 
 ![Subway](./subway.jpg)
 
