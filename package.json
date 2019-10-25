@@ -7,9 +7,9 @@
         "@types/animejs": "kohashi/types-npm-animejs",
         "@types/fbemitter": "^2.0.32",
         "@types/keymaster": "^1.6.28",
-        "@types/pixi.js": "^4.8.8",
-        "parcel-bundler": "^1.12.3",
-        "typescript": "^3.5.1"
+        "@types/pixi.js": "^4.8.9",
+        "parcel-bundler": "^1.12.4",
+        "typescript": "^3.6.4"
     },
     "dependencies": {
         "animejs": "^2.0.2",
