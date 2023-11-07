@@ -16,27 +16,27 @@ I was always fascinated by the (almost) perfect synchronization that the train s
 
 A few statements about this experiment:
 
-- There is no API connected to the app: I was considering the idea to use an API to get the data, but the problem in that case is than becomes a "visualization" rather that a simulation.
+- There is no API connected to the app: I was considering the idea of using an API to get the data, but the problem is that it becomes a "visualization" rather than a simulation.
 
-- Is based on the Barcelona subway net
+- It is based on the Barcelona subway net, but can be easely modified to display any system.
 
-- It includes a simple AI:
+- It includes a simple "AI":
 
-    - Trains unload and loads cargo on each station
+    - Trains unload and load cargo on each station
     - Trains decide when to wait or enter to a waypoint/station by status (free/occupied)
     - Trains have a predefined itinerary and routes that have to follow
-    - Stations get cargo (passengers) continuously to be delivered to other stations
+    - Stations get cargo (passengers) to be delivered to other stations
     - Trains have different capacity (1, 2, 3 or more wagons)
     - Trains max speed is affected by the cargo and the size of the train
     - Trains may have failures (not yet implemented)
 
 ## Tech
 
-I was using this project as a fun way to learn a bit more about [Typescript](https://www.typescriptlang.org/) and [PIXI.js](http://www.pixijs.com/)
+I created this project as a fun way to learn a bit more about [Typescript](https://www.typescriptlang.org/) and [PIXI.js](http://www.pixijs.com/)
 
 ## Other cities
 
-The simulation is fixed in the Barcelona subway, but is very easy to change to any city, you just need to define a Subway line and the coords for each station. Take a look the `src/lines` folder.
+The simulation is fixed to display the Barcelona subway, but it is very easy to change to any city, you just need to define a Subway line and the coords for each station. Take a look the `src/lines` folder.
 
 ## License
 
