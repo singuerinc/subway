@@ -13,7 +13,7 @@
     },
     "dependencies": {
         "animejs": "^2.0.2",
-        "fbemitter": "^2.1.1",
+        "fbemitter": "^3.0.0",
         "keymaster": "^1.6.2",
         "pixi.js": "^4.5.3"
     },
